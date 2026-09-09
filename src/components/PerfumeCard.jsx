@@ -1,0 +1,197 @@
+import React, { useRef, useState } from 'react';
+import { 
+  Heart, 
+  ShoppingBag, 
+  Scale, 
+  Eye, 
+  Sparkles, 
+  Check, 
+  Flame,
+  Sun,
+  Moon,
+  CloudSnow,
+  Flower2
+} from 'lucide-react';
+
+export default function PerfumeCard({ 
+  perfume, 
+  onSelect, 
+  onAddToCart, 
+  isFavorite, 
+  onToggleFavorite, 
+  isCompared, 
+  onToggleCompare 
+}) {
+  const cardRef = useRef(null);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rX = ((y - centerY) / centerY) * -7;
+    const rY = ((x - centerX) / centerX) * 7;
+
+    setRotateX(rX);
+    setRotateY(rY);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setRotateX(0);
+    setRotateY(0);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: isHovered 
+          ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)` 
+          : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+        transition: isHovered ? 'transform 0.1s ease-out' : 'transform 0.5s ease-out',
+      }}
+      className="group relative bg-gradient-to-b from-obsidian-850/90 via-obsidian-900/90 to-obsidian-950/95 rounded-3xl border border-white/10 hover:border-gold-500/40 p-4 sm:p-5 flex flex-col justify-between shadow-luxury hover:shadow-luxury-hover transition-all duration-300"
+    >
+      
+      {/* Top Floating Bar: Number, Brand & Badges */}
+      <div className="flex items-center justify-between z-20 mb-3">
+        <div className="flex items-center gap-1.5">
+          <span className="px-2 py-0.5 rounded-full bg-obsidian-950/90 border border-white/10 font-mono text-[11px] font-bold text-slate-300">
+            #{perfume.num}
+          </span>
+          <span className="text-[11px] uppercase tracking-widest text-gold-400 font-semibold">
+            {perfume.brand}
+          </span>
+        </div>
+
+        {/* Favorite & Compare Quick Icons */}
+        <div className="flex items-center gap-1">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleCompare(perfume);
+            }}
+            title={isCompared ? 'Quitar del comparador' : 'Agregar al comparador'}
+            className={`p-1.5 rounded-full transition-all ${
+              isCompared 
+                ? 'bg-gold-500 text-black shadow-sm font-bold' 
+                : 'bg-black/40 text-slate-400 hover:text-white hover:bg-black/70'
+            }`}
+          >
+            <Scale className="w-3.5 h-3.5" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFavorite(perfume);
+            }}
+            title={isFavorite ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+            className={`p-1.5 rounded-full transition-all ${
+              isFavorite 
+                ? 'bg-rose-500/20 text-rose-500' 
+                : 'bg-black/40 text-slate-400 hover:text-rose-400 hover:bg-black/70'
+            }`}
+          >
+            <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-rose-500' : ''}`} />
+          </button>
+        </div>
+      </div>
+
+      {/* Main Image Container */}
+      <div 
+        onClick={() => onSelect(perfume)}
+        className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-black/60 cursor-pointer flex items-center justify-center p-2 mb-4"
+      >
+        <img
+          src={perfume.image}
+          alt={perfume.name}
+          loading="lazy"
+          className="w-full h-full object-cover rounded-xl transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+
+        {/* Dynamic Light Specular Reflection */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
+        />
+
+        {/* Badge in image */}
+        {perfume.badge && (
+          <div className="absolute bottom-3 left-3 z-10 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-gold-500/30 text-[10px] text-gold-300 font-medium">
+            {perfume.badge}
+          </div>
+        )}
+
+        {/* Quick View Button on Hover */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+          <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gold-500 text-black font-semibold text-xs tracking-wider uppercase shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-transform">
+            <Eye className="w-3.5 h-3.5" />
+            <span>Ficha Sensorial</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Content & Details */}
+      <div className="space-y-2.5 flex-1 flex flex-col justify-between">
+        <div>
+          {/* Category / Accord tag */}
+          <div className="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+            <span className="truncate max-w-[170px] text-gold-300/80 font-medium">
+              {perfume.category}
+            </span>
+            <span className="px-1.5 py-0.5 rounded bg-white/5 text-[10px] text-slate-400">
+              {perfume.season_badge || 'Versátil'}
+            </span>
+          </div>
+
+          {/* Perfume Name */}
+          <h3 
+            onClick={() => onSelect(perfume)}
+            className="font-cinzel text-lg font-bold text-white group-hover:text-gold-300 transition-colors cursor-pointer leading-snug line-clamp-1"
+          >
+            {perfume.name}
+          </h3>
+
+          {/* Quick Notes preview */}
+          <div className="pt-1 flex flex-wrap gap-1">
+            {perfume.notes.salida.slice(0, 3).map((note, idx) => (
+              <span 
+                key={idx} 
+                className="px-2 py-0.5 rounded-md bg-obsidian-800/80 text-[10px] text-slate-300 border border-white/5"
+              >
+                {note}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Button: Add to Cart */}
+        <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+          <button
+            onClick={() => onAddToCart(perfume)}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 bg-white/5 hover:bg-gold-500 text-slate-200 hover:text-black font-semibold text-xs tracking-wider uppercase rounded-xl border border-white/10 hover:border-gold-500 transition-all duration-200 active:scale-95"
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>Agregar a Pedido</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
