@@ -10,7 +10,7 @@ import ScentQuizModal from './components/ScentQuizModal';
 import ComparatorModal from './components/ComparatorModal';
 import CartDrawer from './components/CartDrawer';
 import CatalogViewerModal from './components/CatalogViewerModal';
-import AdminPanel from './components/AdminPanel';
+import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
 import { 
   Sparkles, 
@@ -28,13 +28,17 @@ import {
 export default function App() {
   const [perfumes, setPerfumes] = useState(perfumesData);
 
+  // View state: 'store' vs 'admin'
+  const [isAdminView, setIsAdminView] = useState(() => {
+    return window.location.hash === '#admin' || window.location.search.includes('admin');
+  });
+
   // Modal and drawer states
   const [selectedPerfume, setSelectedPerfume] = useState(null);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isComparatorOpen, setIsComparatorOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLookbookOpen, setIsLookbookOpen] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   // Fetch perfumes from Supabase
@@ -46,7 +50,7 @@ export default function App() {
         .order('num', { ascending: true });
 
       if (error) {
-        console.warn('Supabase no disponible o tabla aún no creada. Usando catálogo local.');
+        console.warn('Usando catálogo local:', error.message);
         return;
       }
       if (data && data.length > 0) {
@@ -60,11 +64,27 @@ export default function App() {
   useEffect(() => {
     loadPerfumes();
 
-    // Check if URL has #admin or ?admin
-    if (window.location.hash.includes('admin') || window.location.search.includes('admin')) {
-      setIsAdminOpen(true);
-    }
+    const handleHash = () => {
+      if (window.location.hash === '#admin' || window.location.search.includes('admin')) {
+        setIsAdminView(true);
+      } else {
+        setIsAdminView(false);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, []);
+
+  const handleOpenAdmin = () => {
+    setIsAdminView(true);
+    window.location.hash = 'admin';
+  };
+
+  const handleCloseAdmin = () => {
+    setIsAdminView(false);
+    window.history.pushState(null, '', window.location.pathname);
+  };
 
   // Cart & Comparison & Favorites
   const [cartItems, setCartItems] = useState(() => {
@@ -262,6 +282,15 @@ export default function App() {
     setShowFavoritesOnly(false);
   };
 
+  if (isAdminView) {
+    return (
+      <AdminDashboard 
+        onBackToStore={handleCloseAdmin} 
+        onDataChanged={loadPerfumes} 
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col justify-between selection:bg-gold-500 selection:text-black">
       
@@ -436,7 +465,7 @@ export default function App() {
       <Footer 
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenLookbook={() => setIsLookbookOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenAdmin={handleOpenAdmin}
       />
 
       {/* Modals & Drawers */}
@@ -481,14 +510,6 @@ export default function App() {
       <CatalogViewerModal
         isOpen={isLookbookOpen}
         onClose={() => setIsLookbookOpen(false)}
-      />
-
-      {/* Panel de Control para el Cliente */}
-      <AdminPanel
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        onRefreshData={loadPerfumes}
-        allPerfumes={perfumes}
       />
 
     </div>
