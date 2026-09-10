@@ -1,0 +1,25 @@
+﻿name: Supabase Keep-Alive (Previene Pausa)
+
+on:
+  schedule:
+    # Se ejecuta automáticamente cada 3 días a las 12:00 PM UTC
+    - cron: '0 12 */3 * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database
+        run: |
+          echo "Haciendo ping a Supabase para mantenerlo activo..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY || 'sb_publishable_86kFOYqLdl2-kptoyp6J0Q_PLOEyADo' }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY || 'sb_publishable_86kFOYqLdl2-kptoyp6J0Q_PLOEyADo' }}" \
+            "https://ojfyaolnrjmkbkcsnfwp.supabase.co/rest/v1/perfumes?select=id&limit=1")
+          echo "Respuesta HTTP: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -eq 200 ] || [ "$HTTP_STATUS" -eq 206 ]; then
+            echo "✅ Supabase está activo y respondiendo correctamente!"
+          else
+            echo "⚠️ Alerta: Código HTTP recibido: $HTTP_STATUS"
+          fi

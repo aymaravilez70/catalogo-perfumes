@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkles, MessageCircle, ShieldCheck, Truck, Clock } from 'lucide-react';
 
-export default function Footer({ onOpenQuiz, onOpenLookbook }) {
+export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenAdmin }) {
   return (
     <footer className="bg-obsidian-950 border-t border-white/10 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,6 +75,12 @@ export default function Footer({ onOpenQuiz, onOpenLookbook }) {
             </button>
             <button onClick={onOpenLookbook} className="hover:text-gold-400 transition-colors">
               Catálogo Original PDF
+            </button>
+            <button 
+              onClick={onOpenAdmin}
+              className="text-gold-400/80 hover:text-gold-300 font-medium transition-colors flex items-center gap-1 bg-white/5 px-2.5 py-1 rounded-lg border border-gold-500/20"
+            >
+              <span>Panel Admin 🔐</span>
             </button>
             <a 
               href="https://wa.me/" 

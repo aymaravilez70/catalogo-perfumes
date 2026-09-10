@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import perfumesData from './data/perfumesData.json';
+import { supabase } from './supabaseClient';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FilterBar from './components/FilterBar';
@@ -9,6 +10,7 @@ import ScentQuizModal from './components/ScentQuizModal';
 import ComparatorModal from './components/ComparatorModal';
 import CartDrawer from './components/CartDrawer';
 import CatalogViewerModal from './components/CatalogViewerModal';
+import AdminPanel from './components/AdminPanel';
 import Footer from './components/Footer';
 import { 
   Sparkles, 
@@ -19,11 +21,12 @@ import {
   Search, 
   BookOpen, 
   ArrowUp,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Lock
 } from 'lucide-react';
 
 export default function App() {
-  const [perfumes] = useState(perfumesData);
+  const [perfumes, setPerfumes] = useState(perfumesData);
 
   // Modal and drawer states
   const [selectedPerfume, setSelectedPerfume] = useState(null);
@@ -31,7 +34,37 @@ export default function App() {
   const [isComparatorOpen, setIsComparatorOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLookbookOpen, setIsLookbookOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  // Fetch perfumes from Supabase
+  const loadPerfumes = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('perfumes')
+        .select('*')
+        .order('num', { ascending: true });
+
+      if (error) {
+        console.warn('Supabase no disponible o tabla aún no creada. Usando catálogo local.');
+        return;
+      }
+      if (data && data.length > 0) {
+        setPerfumes(data.filter(p => p.is_active !== false));
+      }
+    } catch (err) {
+      console.warn('Usando catálogo local:', err);
+    }
+  };
+
+  useEffect(() => {
+    loadPerfumes();
+
+    // Check if URL has #admin or ?admin
+    if (window.location.hash.includes('admin') || window.location.search.includes('admin')) {
+      setIsAdminOpen(true);
+    }
+  }, []);
 
   // Cart & Comparison & Favorites
   const [cartItems, setCartItems] = useState(() => {
@@ -403,6 +436,7 @@ export default function App() {
       <Footer 
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenLookbook={() => setIsLookbookOpen(true)}
+        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       {/* Modals & Drawers */}
@@ -447,6 +481,14 @@ export default function App() {
       <CatalogViewerModal
         isOpen={isLookbookOpen}
         onClose={() => setIsLookbookOpen(false)}
+      />
+
+      {/* Panel de Control para el Cliente */}
+      <AdminPanel
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        onRefreshData={loadPerfumes}
+        allPerfumes={perfumes}
       />
 
     </div>
