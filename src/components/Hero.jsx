@@ -18,26 +18,12 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
           
           {/* Left Column: Text & CTAs */}
           <div className="lg:col-span-7 text-center lg:text-left space-y-6">
-            
-            {/* Top Badge */}
-            <button 
-              onClick={onOpenStory}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 hover:border-gold-400/60 backdrop-blur-md transition-all hover:scale-105 active:scale-95 group text-left"
-              title="Leer historia y dedicatoria"
-            >
-              <Sparkles className="w-4 h-4 text-gold-400 group-hover:rotate-12 transition-transform" />
-              <span className="text-xs uppercase tracking-[0.25em] text-gold-300 font-medium">
-                Catálogo Oficial 2026 • Ver Dedicatoria
-              </span>
-            </button>
-
             {/* Main Title */}
-            <div className="space-y-2">
-              <h1 className="font-cinzel text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[1.08] text-white">
-                WHERE ELEGANCE <br />
-                <span className="gold-text-gradient italic">MEETS OBSESSION</span>
+            <div className="space-y-3">
+              <h1 className="font-cinzel text-4xl sm:text-6xl xl:text-7xl font-bold tracking-wider leading-[1.08] text-white uppercase">
+                WHERE ELEGANCE<br />MEETS OBSESSION
               </h1>
-              <p className="font-serif text-lg sm:text-xl text-slate-300 tracking-widest uppercase">
+              <p className="text-xs sm:text-sm tracking-[0.35em] text-gold-400 uppercase font-sans font-medium">
                 The Fragrance Collection — Joufab
               </p>
             </div>
