@@ -12,7 +12,7 @@ export default function CatalogViewerModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 24;
+  const totalPages = 18;
 
   const pageImagePath = `/assets/all_pages/page_${String(currentPage).padStart(2, '0')}.png`;
 
@@ -35,7 +35,7 @@ export default function CatalogViewerModal({ isOpen, onClose }) {
           <div className="flex items-center gap-3">
             <BookOpen className="w-5 h-5 text-gold-400" />
             <h3 className="font-cinzel text-sm sm:text-base font-bold text-white">
-              Catálogo Digital Joufab (Página {currentPage} de {totalPages})
+              Catálogo Oficial Joufab 2026 (Página {currentPage} de {totalPages})
             </h3>
           </div>
 

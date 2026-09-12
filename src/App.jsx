@@ -10,6 +10,7 @@ import ScentQuizModal from './components/ScentQuizModal';
 import ComparatorModal from './components/ComparatorModal';
 import CartDrawer from './components/CartDrawer';
 import CatalogViewerModal from './components/CatalogViewerModal';
+import StoryModal from './components/StoryModal';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
 import { 
@@ -39,6 +40,7 @@ export default function App() {
   const [isComparatorOpen, setIsComparatorOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLookbookOpen, setIsLookbookOpen] = useState(false);
+  const [isStoryOpen, setIsStoryOpen] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   // Fetch perfumes from Supabase
@@ -316,6 +318,7 @@ export default function App() {
         onOpenComparator={() => setIsComparatorOpen(true)}
         comparatorCount={comparedList.length}
         onOpenLookbook={() => setIsLookbookOpen(true)}
+        onOpenStory={() => setIsStoryOpen(true)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
@@ -328,6 +331,7 @@ export default function App() {
         }}
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenLookbook={() => setIsLookbookOpen(true)}
+        onOpenStory={() => setIsStoryOpen(true)}
         onSelectPerfume={setSelectedPerfume}
         featuredPerfumes={[perfumes[0], perfumes[2], perfumes[5]]}
       />
@@ -449,7 +453,7 @@ export default function App() {
 
       {/* Floating WhatsApp Action Button */}
       <a
-        href="https://wa.me/?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
+        href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 left-6 z-40 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-2"
@@ -465,6 +469,7 @@ export default function App() {
       <Footer 
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenLookbook={() => setIsLookbookOpen(true)}
+        onOpenStory={() => setIsStoryOpen(true)}
         onOpenAdmin={handleOpenAdmin}
       />
 
@@ -510,6 +515,12 @@ export default function App() {
       <CatalogViewerModal
         isOpen={isLookbookOpen}
         onClose={() => setIsLookbookOpen(false)}
+      />
+
+      <StoryModal
+        isOpen={isStoryOpen}
+        onClose={() => setIsStoryOpen(false)}
+        onOpenLookbook={() => setIsLookbookOpen(true)}
       />
 
     </div>

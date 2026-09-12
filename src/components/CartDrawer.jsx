@@ -45,7 +45,7 @@ export default function CartDrawer({
     message += `¿Tienen disponibilidad y cuáles son los métodos de pago? ¡Muchas gracias!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?phone=593984526114&text=${encoded}`, '_blank');
   };
 
   return (

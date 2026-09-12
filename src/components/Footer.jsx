@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkles, MessageCircle, ShieldCheck, Truck, Clock } from 'lucide-react';
 
-export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenAdmin }) {
+export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenStory, onOpenAdmin }) {
   return (
     <footer className="bg-obsidian-950 border-t border-white/10 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,7 +74,10 @@ export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenAdmin }) {
               Test Olfativo
             </button>
             <button onClick={onOpenLookbook} className="hover:text-gold-400 transition-colors">
-              Catálogo Original PDF
+              Catálogo PDF 2026
+            </button>
+            <button onClick={onOpenStory} className="hover:text-rose-400 transition-colors flex items-center gap-1 text-rose-300/90">
+              <span>Nuestra Historia ❤️</span>
             </button>
             <button 
               onClick={onOpenAdmin}
@@ -83,13 +86,13 @@ export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenAdmin }) {
               <span>Panel Admin 🔐</span>
             </button>
             <a 
-              href="https://wa.me/" 
+              href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes" 
               target="_blank" 
               rel="noreferrer"
               className="px-4 py-2 rounded-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-600/30 transition-all font-semibold flex items-center gap-1.5"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              <span>Contactar por WhatsApp</span>
+              <span>WhatsApp: 0984526114</span>
             </a>
           </div>
 

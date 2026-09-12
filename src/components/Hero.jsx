@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkles, ArrowRight, ShieldCheck, Flame, Compass, Star } from 'lucide-react';
 
-export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onSelectPerfume, featuredPerfumes }) {
+export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStory, onSelectPerfume, featuredPerfumes }) {
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-obsidian-950">
       
@@ -20,12 +20,16 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onSelectPe
           <div className="lg:col-span-7 text-center lg:text-left space-y-6">
             
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 backdrop-blur-md">
-              <Sparkles className="w-4 h-4 text-gold-400" />
+            <button 
+              onClick={onOpenStory}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 hover:border-gold-400/60 backdrop-blur-md transition-all hover:scale-105 active:scale-95 group text-left"
+              title="Leer historia y dedicatoria"
+            >
+              <Sparkles className="w-4 h-4 text-gold-400 group-hover:rotate-12 transition-transform" />
               <span className="text-xs uppercase tracking-[0.25em] text-gold-300 font-medium">
-                Catálogo Oficial 2026 • Colección Exclusiva
+                Catálogo Oficial 2026 • Ver Historia ❤️
               </span>
-            </div>
+            </button>
 
             {/* Main Title */}
             <div className="space-y-2">

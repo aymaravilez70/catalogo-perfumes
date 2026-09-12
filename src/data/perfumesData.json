@@ -1,256 +1,10 @@
 [
   {
-    "id": "khamrah-qahwa",
-    "num": "01",
-    "name": "Khamrah Qahwa",
-    "brand": "Lattafa",
-    "page": 2,
-    "category": "Gourmand Especiado",
-    "gender": "Unisex",
-    "description": "Khamrah Qahwa envuelve con una dulzura cálida y sofisticada, donde el café aporta profundidad a un acorde especiado, cremoso y gourmand.",
-    "occasions": "Ideal para noches frescas, citas especiales, cenas elegantes y celebraciones nocturnas, especialmente en climas fríos y ambientes cerrados.",
-    "votes": {
-      "invierno": 11700,
-      "primavera": 1900,
-      "verano": 751,
-      "otoño": 9300,
-      "dia": 3800,
-      "noche": 9700
-    },
-    "notes": {
-      "salida": [
-        "Canela",
-        "Cardamomo",
-        "Jengibre"
-      ],
-      "corazon": [
-        "Praliné",
-        "Frutas Confitadas",
-        "Flores Blancas"
-      ],
-      "base": [
-        "Café",
-        "Vainilla",
-        "Haba Tonka",
-        "Benjuí",
-        "Almizcle"
-      ]
-    },
-    "banner_page": null,
-    "image": "/assets/perfumes/khamrah-qahwa.jpg",
-    "page_image": "/assets/perfumes/khamrah-qahwa_page.jpg",
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Top Gourmand ☕",
-    "season_badge": "Invierno / Otoño",
-    "best_season": "invierno",
-    "best_moment": "noche",
-    "tags": [
-      "Café",
-      "Canela",
-      "Dulce",
-      "Cálido",
-      "Citas"
-    ],
-    "accords": [
-      "Cálido Especiado",
-      "Café",
-      "Dulce Gourmand",
-      "Avainillado"
-    ],
-    "price": 55,
-    "rating": 4.9
-  },
-  {
-    "id": "hawas-kobra",
-    "num": "02",
-    "name": "Hawas Kobra",
-    "brand": "Rasasi",
-    "page": 3,
-    "category": "Cítrico Especiado",
-    "gender": "Masculino",
-    "description": "Una estimulante y especiada apertura de jengibre y cítricos vibrantes que evoluciona hacia un elegante corazón de té verde y canela. Su fondo ambarino y amaderado sella una estela limpia, magnética y sofisticada.",
-    "occasions": "Ideal para salidas nocturnas en clima fresco, citas especiales por la noche, eventos formales y reuniones corporativas importantes.",
-    "votes": {
-      "invierno": 417,
-      "primavera": 1400,
-      "verano": 1600,
-      "otoño": 879,
-      "dia": 1500,
-      "noche": 690
-    },
-    "notes": {
-      "salida": [
-        "Jengibre",
-        "Bergamota",
-        "Naranja Tangerina"
-      ],
-      "corazon": [
-        "Canela",
-        "Té Verde",
-        "Neroli"
-      ],
-      "base": [
-        "Almizcle",
-        "Amaderado",
-        "Ámbar"
-      ]
-    },
-    "banner_page": null,
-    "image": "/assets/perfumes/hawas-kobra.jpg",
-    "page_image": "/assets/perfumes/hawas-kobra_page.jpg",
-    "banner_image": null,
-    "bottle_side": "RIGHT",
-    "badge": "Nuevo Lanzamiento 🐍",
-    "season_badge": "Versátil / Primavera",
-    "best_season": "primavera",
-    "best_moment": "versatil",
-    "tags": [
-      "Jengibre",
-      "Té Verde",
-      "Cítrico",
-      "Limpio",
-      "Elegante"
-    ],
-    "accords": [
-      "Cítrico Especiado",
-      "Té Verde",
-      "Amaderado",
-      "Ámbar"
-    ],
-    "price": 50,
-    "rating": 4.8
-  },
-  {
-    "id": "hawas-ice",
-    "num": "03",
-    "name": "Hawas Ice",
-    "brand": "Rasasi",
-    "page": 4,
-    "category": "Acuático Frutal Fresco",
-    "gender": "Masculino",
-    "description": "Una revitalizante y gélida explosión frutal de manzana y limón italiano con un toque especiado de anís, que evoluciona hacia un corazón de ciruela y azahar. Fondo moderno de ámbar y almizcle.",
-    "occasions": "Ideal para actividades al aire libre en clima cálido, salidas casuales durante el día, eventos deportivos veraniegos y citas informales.",
-    "votes": {
-      "invierno": 1300,
-      "primavera": 5300,
-      "verano": 6200,
-      "otoño": 2600,
-      "dia": 5500,
-      "noche": 2300
-    },
-    "notes": {
-      "salida": [
-        "Manzana",
-        "Limón Italiano",
-        "Bergamota",
-        "Anís Estrellado"
-      ],
-      "corazon": [
-        "Ciruela",
-        "Flor Azahar de Naranjo",
-        "Cardamomo"
-      ],
-      "base": [
-        "Trozos de Madera",
-        "Musgo",
-        "Almizcle",
-        "Ámbar"
-      ]
-    },
-    "banner_page": 5,
-    "image": "/assets/perfumes/hawas-ice.jpg",
-    "page_image": "/assets/perfumes/hawas-ice_page.jpg",
-    "banner_image": "/assets/banners/hawas-ice_banner.jpg",
-    "bottle_side": "LEFT",
-    "badge": "Best Seller Verano ❄️",
-    "season_badge": "Verano / Calor",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Manzana",
-      "Menta",
-      "Fresco",
-      "Acuático",
-      "Verano"
-    ],
-    "accords": [
-      "Aromático Frutal",
-      "Acuático",
-      "Cítrico Gélido",
-      "Almizclado"
-    ],
-    "price": 60,
-    "rating": 5.0
-  },
-  {
-    "id": "fakhar-black",
-    "num": "04",
-    "name": "Fakhar Black",
-    "brand": "Lattafa",
-    "page": 6,
-    "category": "Fougère Amaderado Aromático",
-    "gender": "Masculino",
-    "description": "Una sofisticada y magnética armonía que combina la frescura chispeante de la manzana y la bergamota con un corazón aromático de lavanda y salvia, sobre un fondo cálido de haba tonka y cedro.",
-    "occasions": "Ideal para el uso diario en la oficina, salidas casuales en clima templado, citas nocturnas especiales y eventos sociales versátiles.",
-    "votes": {
-      "invierno": 1100,
-      "primavera": 3800,
-      "verano": 3200,
-      "otoño": 2400,
-      "dia": 4100,
-      "noche": 2700
-    },
-    "notes": {
-      "salida": [
-        "Jengibre",
-        "Bergamota",
-        "Manzana"
-      ],
-      "corazon": [
-        "Lavanda",
-        "Salvia",
-        "Geranio",
-        "Bayas de Enebro"
-      ],
-      "base": [
-        "Haba Tonka",
-        "Cedro",
-        "Vetiver",
-        "Madera de Ámbar"
-      ]
-    },
-    "banner_page": null,
-    "image": "/assets/perfumes/fakhar-black.jpg",
-    "page_image": "/assets/perfumes/fakhar-black_page.jpg",
-    "banner_image": null,
-    "bottle_side": "RIGHT",
-    "badge": "Firma Elegante 🖤",
-    "season_badge": "Todo el Año",
-    "best_season": "primavera",
-    "best_moment": "versatil",
-    "tags": [
-      "Manzana",
-      "Lavanda",
-      "Oficina",
-      "Fougère",
-      "Versátil"
-    ],
-    "accords": [
-      "Fougère Fresco",
-      "Aromático",
-      "Amaderado",
-      "Limpio"
-    ],
-    "price": 45,
-    "rating": 4.7
-  },
-  {
     "id": "khamrah",
-    "num": "05",
+    "num": "01",
     "name": "Khamrah",
     "brand": "Lattafa",
-    "page": 7,
+    "page": 3,
     "category": "Gourmand Cálido Dulce",
     "gender": "Unisex",
     "description": "Khamrah envuelve con una dulzura cálida, especiada y sofisticada, combinando frutos maduros, vainilla y maderas en un aroma gourmand de presencia inolvidable.",
@@ -310,253 +64,73 @@
     "rating": 4.9
   },
   {
-    "id": "honor-and-glory",
-    "num": "06",
-    "name": "Bade'e Al Oud Honor & Glory",
+    "id": "khamrah-qahwa",
+    "num": "02",
+    "name": "Khamrah Qahwa",
     "brand": "Lattafa",
-    "page": 8,
-    "category": "Gourmand Frutal Especiado",
+    "page": 4,
+    "category": "Gourmand Especiado",
     "gender": "Unisex",
-    "description": "Una opulenta y envolvente armonía que fusiona la cremosidad de la piña caramelizada con la calidez especiada de la cúrcuma y la canela, sobre un fondo adictivo de crème brûlée, vainilla y sándalo.",
-    "occasions": "Ideal para citas especiales por la noche, eventos elegantes en clima fresco, salidas nocturnas formales y ocasiones memorables durante el invierno.",
+    "description": "Khamrah Qahwa envuelve con una dulzura cálida y sofisticada, donde el café aporta profundidad a un acorde especiado, cremoso y gourmand.",
+    "occasions": "Ideal para noches frescas, citas especiales, cenas elegantes y celebraciones nocturnas, especialmente en climas fríos y ambientes cerrados.",
     "votes": {
-      "invierno": 8900,
-      "primavera": 2400,
-      "verano": 950,
-      "otoño": 7100,
-      "dia": 3500,
-      "noche": 7800
+      "invierno": 11700,
+      "primavera": 1900,
+      "verano": 751,
+      "otoño": 9300,
+      "dia": 3800,
+      "noche": 9700
     },
     "notes": {
       "salida": [
-        "Piña Caramelizada",
-        "Crème Brûlée"
+        "Canela",
+        "Cardamomo",
+        "Jengibre"
       ],
       "corazon": [
-        "Canela",
-        "Benjuí",
-        "Pimienta Negra",
-        "Azafrán de la India"
+        "Praliné",
+        "Frutas Confitadas",
+        "Flores Blancas"
       ],
       "base": [
+        "Café",
         "Vainilla",
-        "Sándalo",
-        "Musgo",
-        "Cachemira"
+        "Haba Tonka",
+        "Benjuí",
+        "Almizcle"
       ]
     },
-    "banner_page": 9,
-    "image": "/assets/perfumes/honor-and-glory.jpg",
-    "page_image": "/assets/perfumes/honor-and-glory_page.jpg",
-    "banner_image": "/assets/banners/honor-and-glory_banner.jpg",
+    "banner_page": null,
+    "image": "/assets/perfumes/khamrah-qahwa.jpg",
+    "page_image": "/assets/perfumes/khamrah-qahwa_page.jpg",
+    "banner_image": null,
     "bottle_side": "RIGHT",
-    "badge": "Exótico & Adictivo 🍍",
-    "season_badge": "Otoño / Invierno",
+    "badge": "Top Gourmand ☕",
+    "season_badge": "Invierno / Otoño",
     "best_season": "invierno",
     "best_moment": "noche",
     "tags": [
-      "Piña",
-      "Crème Brûlée",
+      "Café",
       "Canela",
-      "Sándalo",
-      "Gourmand"
-    ],
-    "accords": [
-      "Piña Caramelizada",
-      "Cremoso Dulce",
-      "Especias Cálidas",
-      "Sándalo"
-    ],
-    "price": 58,
-    "rating": 4.9
-  },
-  {
-    "id": "odyssey-homme",
-    "num": "07",
-    "name": "Odyssey Homme White Edition",
-    "brand": "Armaf",
-    "page": 10,
-    "category": "Acuático Cítrico Especiado",
-    "gender": "Masculino",
-    "description": "Una luminosa y envolvente armonía que fusiona la frescura chispeante de los cítricos y notas acuáticas con un corazón especiado y un fondo cálido de vainilla y maderas preciosas.",
-    "occasions": "Ideal para salidas informales en clima cálido, uso diario en la oficina, citas románticas veraniegas y eventos casuales al aire libre.",
-    "votes": {
-      "invierno": 1400,
-      "primavera": 4900,
-      "verano": 5800,
-      "otoño": 2800,
-      "dia": 5100,
-      "noche": 2600
-    },
-    "notes": {
-      "salida": [
-        "Cardamomo",
-        "Pimienta Rosa",
-        "Menta"
-      ],
-      "corazon": [
-        "Salvia",
-        "Notas Acuáticas",
-        "Piña"
-      ],
-      "base": [
-        "Cedro",
-        "Amberwood",
-        "Vainilla"
-      ]
-    },
-    "banner_page": 11,
-    "image": "/assets/perfumes/odyssey-homme.jpg",
-    "page_image": "/assets/perfumes/odyssey-homme_page.jpg",
-    "banner_image": "/assets/banners/odyssey-homme_banner.jpg",
-    "bottle_side": "LEFT",
-    "badge": "Frescura Imponente 🌊",
-    "season_badge": "Verano / Primavera",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Acuático",
-      "Cardamomo",
-      "Menta",
-      "Oficina",
-      "Limpio"
-    ],
-    "accords": [
-      "Acuático Cítrico",
-      "Especiado Fresco",
-      "Vainilla Suave",
-      "Maderas"
-    ],
-    "price": 48,
-    "rating": 4.6
-  },
-  {
-    "id": "odyssey-mandarin-sky",
-    "num": "14",
-    "name": "Odyssey Mandarin Sky",
-    "brand": "Armaf",
-    "page": 12,
-    "category": "Cítrico Acaramelado Ambarino",
-    "gender": "Masculino",
-    "description": "Una deslumbrante fusión de cítricos luminosos y un irresistible corazón ambarino con matices de caramelo. Equilibra a la perfección la frescura frutal con la elegancia dulce moderna.",
-    "occasions": "Ideal para salidas informales en clima cálido, citas nocturnas memorables, uso diario en la oficina y eventos sociales todo el año.",
-    "votes": {
-      "invierno": 2800,
-      "primavera": 5200,
-      "verano": 4100,
-      "otoño": 4600,
-      "dia": 4800,
-      "noche": 4200
-    },
-    "notes": {
-      "salida": [
-        "Mandarina",
-        "Naranja",
-        "Salvia",
-        "Azafrán"
-      ],
-      "corazon": [
-        "Caramelo",
-        "Haba Tonka",
-        "Cempasúchil"
-      ],
-      "base": [
-        "Ambroxán",
-        "Vetiver",
-        "Cedro"
-      ]
-    },
-    "banner_page": 13,
-    "image": "/assets/perfumes/odyssey-mandarin-sky.jpg",
-    "page_image": "/assets/perfumes/odyssey-mandarin-sky_page.jpg",
-    "banner_image": "/assets/banners/odyssey-mandarin-sky_banner.jpg",
-    "bottle_side": "RIGHT",
-    "badge": "Adictivo & Cítrico 🍊",
-    "season_badge": "Todo el Año",
-    "best_season": "primavera",
-    "best_moment": "versatil",
-    "tags": [
-      "Mandarina",
-      "Caramelo",
-      "Haba Tonka",
-      "Moderno",
+      "Dulce",
+      "Cálido",
       "Citas"
     ],
     "accords": [
-      "Cítrico Brillante",
-      "Caramelo Dulce",
-      "Ambarino",
-      "Almizcle"
+      "Cálido Especiado",
+      "Café",
+      "Dulce Gourmand",
+      "Avainillado"
     ],
-    "price": 50,
-    "rating": 4.8
-  },
-  {
-    "id": "club-de-nuit-milestone",
-    "num": "08",
-    "name": "Club De Nuit Milestone",
-    "brand": "Armaf",
-    "page": 14,
-    "category": "Marino Frutal Amaderado",
-    "gender": "Unisex",
-    "description": "Una vibrante y sofisticada fusión de notas marinas, frutos rojos y bergamota con un corazón amaderado y un fondo cálido de almizcle y sándalo. Un aroma fresco, elegante y distintivo.",
-    "occasions": "Ideal para el uso diario en la oficina, salidas casuales en clima cálido, eventos diurnos al aire libre y citas especiales en verano.",
-    "votes": {
-      "invierno": 900,
-      "primavera": 4800,
-      "verano": 6500,
-      "otoño": 2300,
-      "dia": 6100,
-      "noche": 1900
-    },
-    "notes": {
-      "salida": [
-        "Notas Acuáticas",
-        "Frutas Rojas",
-        "Bergamota"
-      ],
-      "corazon": [
-        "Sándalo",
-        "Maderas Blancas",
-        "Violeta"
-      ],
-      "base": [
-        "Almizcle",
-        "Vetiver",
-        "Ambroxan"
-      ]
-    },
-    "banner_page": 15,
-    "image": "/assets/perfumes/club-de-nuit-milestone.jpg",
-    "page_image": "/assets/perfumes/club-de-nuit-milestone_page.jpg",
-    "banner_image": "/assets/banners/club-de-nuit-milestone_banner.jpg",
-    "bottle_side": "RIGHT",
-    "badge": "Lujo Marino & Salado 💎",
-    "season_badge": "Verano / Calor",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Marino",
-      "Frutos Rojos",
-      "Brisa Salada",
-      "Elegante",
-      "Verano"
-    ],
-    "accords": [
-      "Marino Mineral",
-      "Frutas Rojas",
-      "Amaderado Refinado",
-      "Almizcle"
-    ],
-    "price": 54,
-    "rating": 4.8
+    "price": 55,
+    "rating": 4.9
   },
   {
     "id": "9-pm",
-    "num": "09",
+    "num": "03",
     "name": "9 PM",
     "brand": "Afnan",
-    "page": 16,
+    "page": 5,
     "category": "Dulce Avainillado Seductor",
     "gender": "Masculino",
     "description": "Una irresistible y seductora armonía que funde la dulzura de la manzana y la canela con un corazón de flor de azahar, sobre un fondo adictivo de vainilla y ámbar. Un aroma audaz, cálido y magnético.",
@@ -614,10 +188,10 @@
   },
   {
     "id": "9-am-dive",
-    "num": "10",
+    "num": "04",
     "name": "9 AM Dive",
     "brand": "Afnan",
-    "page": 17,
+    "page": 6,
     "category": "Acuático Cítrico Menta Fresco",
     "gender": "Unisex",
     "description": "Una revitalizante y luminosa armonía que fusiona la frescura chispeante de la menta, los cítricos y la grosella negra con un corazón especiado y un fondo amaderado y almizclado.",
@@ -649,10 +223,10 @@
         "Pachulí"
       ]
     },
-    "banner_page": 18,
+    "banner_page": null,
     "image": "/assets/perfumes/9-am-dive.jpg",
     "page_image": "/assets/perfumes/9-am-dive_page.jpg",
-    "banner_image": "/assets/banners/9-am-dive_banner.jpg",
+    "banner_image": null,
     "bottle_side": "RIGHT",
     "badge": "Chute de Energía ⚡",
     "season_badge": "Verano / Deporte",
@@ -675,11 +249,133 @@
     "rating": 4.7
   },
   {
+    "id": "hawas-ice",
+    "num": "05",
+    "name": "Hawas Ice",
+    "brand": "Rasasi",
+    "page": 7,
+    "category": "Acuático Frutal Fresco",
+    "gender": "Masculino",
+    "description": "Una revitalizante y gélida explosión frutal de manzana y limón italiano con un toque especiado de anís, que evoluciona hacia un corazón de ciruela y azahar. Fondo moderno de ámbar y almizcle.",
+    "occasions": "Ideal para actividades al aire libre en clima cálido, salidas casuales durante el día, eventos deportivos veraniegos y citas informales.",
+    "votes": {
+      "invierno": 1300,
+      "primavera": 5300,
+      "verano": 6200,
+      "otoño": 2600,
+      "dia": 5500,
+      "noche": 2300
+    },
+    "notes": {
+      "salida": [
+        "Manzana",
+        "Limón Italiano",
+        "Bergamota",
+        "Anís Estrellado"
+      ],
+      "corazon": [
+        "Ciruela",
+        "Flor Azahar de Naranjo",
+        "Cardamomo"
+      ],
+      "base": [
+        "Trozos de Madera",
+        "Musgo",
+        "Almizcle",
+        "Ámbar"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/hawas-ice.jpg",
+    "page_image": "/assets/perfumes/hawas-ice_page.jpg",
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Best Seller Verano ❄️",
+    "season_badge": "Verano / Calor",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Manzana",
+      "Menta",
+      "Fresco",
+      "Acuático",
+      "Verano"
+    ],
+    "accords": [
+      "Aromático Frutal",
+      "Acuático",
+      "Cítrico Gélido",
+      "Almizclado"
+    ],
+    "price": 60,
+    "rating": 5.0
+  },
+  {
+    "id": "hawas-kobra",
+    "num": "06",
+    "name": "Hawas Kobra",
+    "brand": "Rasasi",
+    "page": 8,
+    "category": "Cítrico Especiado",
+    "gender": "Masculino",
+    "description": "Una estimulante y especiada apertura de jengibre y cítricos vibrantes que evoluciona hacia un elegante corazón de té verde y canela. Su fondo ambarino y amaderado sella una estela limpia, magnética y sofisticada.",
+    "occasions": "Ideal para salidas nocturnas en clima fresco, citas especiales por la noche, eventos formales y reuniones corporativas importantes.",
+    "votes": {
+      "invierno": 417,
+      "primavera": 1400,
+      "verano": 1600,
+      "otoño": 879,
+      "dia": 1500,
+      "noche": 690
+    },
+    "notes": {
+      "salida": [
+        "Jengibre",
+        "Bergamota",
+        "Naranja Tangerina"
+      ],
+      "corazon": [
+        "Canela",
+        "Té Verde",
+        "Neroli"
+      ],
+      "base": [
+        "Almizcle",
+        "Amaderado",
+        "Ámbar"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/hawas-kobra.jpg",
+    "page_image": "/assets/perfumes/hawas-kobra_page.jpg",
+    "banner_image": null,
+    "bottle_side": "RIGHT",
+    "badge": "Nuevo Lanzamiento 🐍",
+    "season_badge": "Versátil / Primavera",
+    "best_season": "primavera",
+    "best_moment": "versatil",
+    "tags": [
+      "Jengibre",
+      "Té Verde",
+      "Cítrico",
+      "Limpio",
+      "Elegante"
+    ],
+    "accords": [
+      "Cítrico Especiado",
+      "Té Verde",
+      "Amaderado",
+      "Ámbar"
+    ],
+    "price": 50,
+    "rating": 4.8
+  },
+  {
     "id": "asad",
-    "num": "11",
+    "num": "07",
     "name": "Asad",
     "brand": "Lattafa",
-    "page": 19,
+    "page": 9,
     "category": "Especiado Cálido Ámbar Tabaco",
     "gender": "Masculino",
     "description": "Una imponente y especiada armonía que fusiona la calidez de la pimienta negra, el tabaco y la piña con un corazón profundo de café y pachulí, sobre un fondo adictivo de vainilla, ládano y ámbar.",
@@ -737,11 +433,255 @@
     "rating": 4.8
   },
   {
+    "id": "fakhar-black",
+    "num": "08",
+    "name": "Fakhar Black",
+    "brand": "Lattafa",
+    "page": 10,
+    "category": "Fougère Amaderado Aromático",
+    "gender": "Masculino",
+    "description": "Una sofisticada y magnética armonía que combina la frescura chispeante de la manzana y la bergamota con un corazón aromático de lavanda y salvia, sobre un fondo cálido de haba tonka y cedro.",
+    "occasions": "Ideal para el uso diario en la oficina, salidas casuales en clima templado, citas nocturnas especiales y eventos sociales versátiles.",
+    "votes": {
+      "invierno": 1100,
+      "primavera": 3800,
+      "verano": 3200,
+      "otoño": 2400,
+      "dia": 4100,
+      "noche": 2700
+    },
+    "notes": {
+      "salida": [
+        "Jengibre",
+        "Bergamota",
+        "Manzana"
+      ],
+      "corazon": [
+        "Lavanda",
+        "Salvia",
+        "Geranio",
+        "Bayas de Enebro"
+      ],
+      "base": [
+        "Haba Tonka",
+        "Cedro",
+        "Vetiver",
+        "Madera de Ámbar"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/fakhar-black.jpg",
+    "page_image": "/assets/perfumes/fakhar-black_page.jpg",
+    "banner_image": null,
+    "bottle_side": "RIGHT",
+    "badge": "Firma Elegante 🖤",
+    "season_badge": "Todo el Año",
+    "best_season": "primavera",
+    "best_moment": "versatil",
+    "tags": [
+      "Manzana",
+      "Lavanda",
+      "Oficina",
+      "Fougère",
+      "Versátil"
+    ],
+    "accords": [
+      "Fougère Fresco",
+      "Aromático",
+      "Amaderado",
+      "Limpio"
+    ],
+    "price": 45,
+    "rating": 4.7
+  },
+  {
+    "id": "odyssey-homme",
+    "num": "09",
+    "name": "Odyssey Homme White Edition",
+    "brand": "Armaf",
+    "page": 11,
+    "category": "Acuático Cítrico Especiado",
+    "gender": "Masculino",
+    "description": "Una luminosa y envolvente armonía que fusiona la frescura chispeante de los cítricos y notas acuáticas con un corazón especiado y un fondo cálido de vainilla y maderas preciosas.",
+    "occasions": "Ideal para salidas informales en clima cálido, uso diario en la oficina, citas románticas veraniegas y eventos casuales al aire libre.",
+    "votes": {
+      "invierno": 1400,
+      "primavera": 4900,
+      "verano": 5800,
+      "otoño": 2800,
+      "dia": 5100,
+      "noche": 2600
+    },
+    "notes": {
+      "salida": [
+        "Cardamomo",
+        "Pimienta Rosa",
+        "Menta"
+      ],
+      "corazon": [
+        "Salvia",
+        "Notas Acuáticas",
+        "Piña"
+      ],
+      "base": [
+        "Cedro",
+        "Amberwood",
+        "Vainilla"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/odyssey-homme.jpg",
+    "page_image": "/assets/perfumes/odyssey-homme_page.jpg",
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Frescura Imponente 🌊",
+    "season_badge": "Verano / Primavera",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Acuático",
+      "Cardamomo",
+      "Menta",
+      "Oficina",
+      "Limpio"
+    ],
+    "accords": [
+      "Acuático Cítrico",
+      "Especiado Fresco",
+      "Vainilla Suave",
+      "Maderas"
+    ],
+    "price": 48,
+    "rating": 4.6
+  },
+  {
+    "id": "odyssey-mandarin-sky",
+    "num": "10",
+    "name": "Odyssey Mandarin Sky",
+    "brand": "Armaf",
+    "page": 12,
+    "category": "Cítrico Acaramelado Ambarino",
+    "gender": "Masculino",
+    "description": "Una deslumbrante fusión de cítricos luminosos y un irresistible corazón ambarino con matices de caramelo. Equilibra a la perfección la frescura frutal con la elegancia dulce moderna.",
+    "occasions": "Ideal para salidas informales en clima cálido, citas nocturnas memorables, uso diario en la oficina y eventos sociales todo el año.",
+    "votes": {
+      "invierno": 2800,
+      "primavera": 5200,
+      "verano": 4100,
+      "otoño": 4600,
+      "dia": 4800,
+      "noche": 4200
+    },
+    "notes": {
+      "salida": [
+        "Mandarina",
+        "Naranja",
+        "Salvia",
+        "Azafrán"
+      ],
+      "corazon": [
+        "Caramelo",
+        "Haba Tonka",
+        "Cempasúchil"
+      ],
+      "base": [
+        "Ambroxán",
+        "Vetiver",
+        "Cedro"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/odyssey-mandarin-sky.jpg",
+    "page_image": "/assets/perfumes/odyssey-mandarin-sky_page.jpg",
+    "banner_image": null,
+    "bottle_side": "RIGHT",
+    "badge": "Adictivo & Cítrico 🍊",
+    "season_badge": "Todo el Año",
+    "best_season": "primavera",
+    "best_moment": "versatil",
+    "tags": [
+      "Mandarina",
+      "Caramelo",
+      "Haba Tonka",
+      "Moderno",
+      "Citas"
+    ],
+    "accords": [
+      "Cítrico Brillante",
+      "Caramelo Dulce",
+      "Ambarino",
+      "Almizcle"
+    ],
+    "price": 50,
+    "rating": 4.8
+  },
+  {
+    "id": "honor-and-glory",
+    "num": "11",
+    "name": "Bade'e Al Oud Honor & Glory",
+    "brand": "Lattafa",
+    "page": 13,
+    "category": "Gourmand Frutal Especiado",
+    "gender": "Unisex",
+    "description": "Una opulenta y envolvente armonía que fusiona la cremosidad de la piña caramelizada con la calidez especiada de la cúrcuma y la canela, sobre un fondo adictivo de crème brûlée, vainilla y sándalo.",
+    "occasions": "Ideal para citas especiales por la noche, eventos elegantes en clima fresco, salidas nocturnas formales y ocasiones memorables durante el invierno.",
+    "votes": {
+      "invierno": 8900,
+      "primavera": 2400,
+      "verano": 950,
+      "otoño": 7100,
+      "dia": 3500,
+      "noche": 7800
+    },
+    "notes": {
+      "salida": [
+        "Piña Caramelizada",
+        "Crème Brûlée"
+      ],
+      "corazon": [
+        "Canela",
+        "Benjuí",
+        "Pimienta Negra",
+        "Azafrán de la India"
+      ],
+      "base": [
+        "Vainilla",
+        "Sándalo",
+        "Musgo",
+        "Cachemira"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/honor-and-glory.jpg",
+    "page_image": "/assets/perfumes/honor-and-glory_page.jpg",
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Exótico & Adictivo 🍍",
+    "season_badge": "Otoño / Invierno",
+    "best_season": "invierno",
+    "best_moment": "noche",
+    "tags": [
+      "Piña",
+      "Crème Brûlée",
+      "Canela",
+      "Sándalo",
+      "Gourmand"
+    ],
+    "accords": [
+      "Piña Caramelizada",
+      "Cremoso Dulce",
+      "Especias Cálidas",
+      "Sándalo"
+    ],
+    "price": 58,
+    "rating": 4.9
+  },
+  {
     "id": "nitro-red",
     "num": "12",
     "name": "Nitro Red",
     "brand": "Dumont",
-    "page": 20,
+    "page": 14,
     "category": "Frutal Acuático Dulce",
     "gender": "Masculino",
     "description": "Una explosión frutal vibrante y moderna que fusiona la frescura chispeante de la sandía y la manzana con un fondo ambarino y magnético. Audaz, enérgico y altamente cumplidor.",
@@ -771,10 +711,10 @@
         "Pachulí"
       ]
     },
-    "banner_page": 21,
+    "banner_page": null,
     "image": "/assets/perfumes/nitro-red.jpg",
     "page_image": "/assets/perfumes/nitro-red_page.jpg",
-    "banner_image": "/assets/banners/nitro-red_banner.jpg",
+    "banner_image": null,
     "bottle_side": "RIGHT",
     "badge": "Bomba de Sandía 🍉",
     "season_badge": "Primavera / Verano",
@@ -797,11 +737,71 @@
     "rating": 4.9
   },
   {
-    "id": "eclaire",
+    "id": "club-de-nuit-milestone",
     "num": "13",
+    "name": "Club De Nuit Milestone",
+    "brand": "Armaf",
+    "page": 15,
+    "category": "Marino Frutal Amaderado",
+    "gender": "Unisex",
+    "description": "Una vibrante y sofisticada fusión de notas marinas, frutos rojos y bergamota con un corazón amaderado y un fondo cálido de almizcle y sándalo. Un aroma fresco, elegante y distintivo.",
+    "occasions": "Ideal para el uso diario en la oficina, salidas casuales en clima cálido, eventos diurnos al aire libre y citas especiales en verano.",
+    "votes": {
+      "invierno": 900,
+      "primavera": 4800,
+      "verano": 6500,
+      "otoño": 2300,
+      "dia": 6100,
+      "noche": 1900
+    },
+    "notes": {
+      "salida": [
+        "Notas Acuáticas",
+        "Frutas Rojas",
+        "Bergamota"
+      ],
+      "corazon": [
+        "Sándalo",
+        "Maderas Blancas",
+        "Violeta"
+      ],
+      "base": [
+        "Almizcle",
+        "Vetiver",
+        "Ambroxan"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/club-de-nuit-milestone.jpg",
+    "page_image": "/assets/perfumes/club-de-nuit-milestone_page.jpg",
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Lujo Marino & Salado 💎",
+    "season_badge": "Verano / Calor",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Marino",
+      "Frutos Rojos",
+      "Brisa Salada",
+      "Elegante",
+      "Verano"
+    ],
+    "accords": [
+      "Marino Mineral",
+      "Frutas Rojas",
+      "Amaderado Refinado",
+      "Almizcle"
+    ],
+    "price": 54,
+    "rating": 4.8
+  },
+  {
+    "id": "eclaire",
+    "num": "14",
     "name": "Eclaire",
     "brand": "Lattafa",
-    "page": 22,
+    "page": 16,
     "category": "Gourmand Lactónico Dulce",
     "gender": "Unisex / Femenino",
     "description": "Una deliciosa y envolvente armonía gourmand que fusiona la calidez del caramelo y la leche con un corazón de miel y flores blancas, sobre un fondo adictivo de vainilla y praliné.",
@@ -834,7 +834,7 @@
     "image": "/assets/perfumes/eclaire.jpg",
     "page_image": "/assets/perfumes/eclaire_page.jpg",
     "banner_image": null,
-    "bottle_side": "LEFT",
+    "bottle_side": "RIGHT",
     "badge": "Dulzura Gourmet 🍨",
     "season_badge": "Otoño / Invierno",
     "best_season": "invierno",
@@ -860,7 +860,7 @@
     "num": "15",
     "name": "Yara Pink",
     "brand": "Lattafa",
-    "page": 23,
+    "page": 17,
     "category": "Dulce Tropical Almizclado",
     "gender": "Femenino",
     "description": "Una delicada y envolvente armonía tropical que fusiona la suavidad de la orquídea y el heliotropo con un corazón cremoso de frutas exóticas, sobre un fondo adictivo de vainilla y almizcle.",
@@ -875,12 +875,12 @@
     },
     "notes": {
       "salida": [
-        "Heliotropo",
         "Orquídea",
-        "Mandarina"
+        "Heliotropo",
+        "Naranja Tangerina"
       ],
       "corazon": [
-        "Acorde Gourmand",
+        "Acorde Goloso",
         "Frutas Tropicales"
       ],
       "base": [

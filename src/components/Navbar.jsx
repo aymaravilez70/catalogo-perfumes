@@ -20,6 +20,7 @@ export default function Navbar({
   onOpenComparator, 
   comparatorCount,
   onOpenLookbook,
+  onOpenStory,
   onSearchChange,
   searchQuery
 }) {
@@ -95,6 +96,14 @@ export default function Navbar({
           >
             <BookOpen className="w-4 h-4 text-slate-400" />
             <span>Catálogo PDF</span>
+          </button>
+
+          <button 
+            onClick={onOpenStory}
+            className="flex items-center gap-1.5 hover:text-rose-400 transition-colors py-1 text-slate-300"
+          >
+            <Heart className="w-3.5 h-3.5 text-rose-400" />
+            <span>Nuestra Historia</span>
           </button>
         </nav>
 
@@ -199,10 +208,18 @@ export default function Navbar({
 
             <button 
               onClick={() => { onOpenLookbook(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2 py-2 text-slate-200 hover:text-gold-400 text-left"
+              className="flex items-center gap-2 py-2 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
             >
               <BookOpen className="w-4 h-4 text-slate-400" />
-              <span>Ver Catálogo PDF Original (24 Págs)</span>
+              <span>Ver Catálogo PDF 2026 (18 Págs)</span>
+            </button>
+
+            <button 
+              onClick={() => { onOpenStory(); setMobileMenuOpen(false); }}
+              className="flex items-center gap-2 py-2 text-rose-300 hover:text-rose-400 text-left"
+            >
+              <Heart className="w-4 h-4 text-rose-400" />
+              <span>Nuestra Historia (Dedicatoria a Faby)</span>
             </button>
           </nav>
         </div>

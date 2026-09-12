@@ -41,7 +41,7 @@ export default function PerfumeModal({
     const text = encodeURIComponent(
       `¡Hola Joufab! Me interesa información y disponibilidad de la fragancia *#${perfume.num} ${perfume.name}* (${perfume.brand}). ¿Tienen unidades disponibles?`
     );
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    window.open(`https://wa.me/593984526114?text=${text}`, '_blank');
   };
 
   // Find maximum votes to calculate percentage bar
