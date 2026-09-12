@@ -93,7 +93,27 @@ export default function App() {
         return;
       }
       if (data && data.length > 0) {
-        setPerfumes(data.filter(p => p.is_active !== false));
+        const normalized = data.map(p => {
+          const pVotes = p.votes || {};
+          return {
+            ...p,
+            num: p.num || '01',
+            inspired_by: p.inspired_by || pVotes.inspired_by || '',
+            niche_house: p.niche_house || pVotes.niche_house || '',
+            longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
+            sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
+            votes: {
+              invierno: Number(pVotes.invierno) || 5000,
+              primavera: Number(pVotes.primavera) || 2000,
+              verano: Number(pVotes.verano) || 1000,
+              otoño: Number(pVotes.otoño) || 4000,
+              dia: Number(pVotes.dia) || 3000,
+              noche: Number(pVotes.noche) || 7000,
+              ...pVotes
+            }
+          };
+        });
+        setPerfumes(normalized.filter(p => p.is_active !== false));
       }
     } catch (err) {
       console.warn('Usando catálogo local:', err);

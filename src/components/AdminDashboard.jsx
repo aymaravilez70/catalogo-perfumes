@@ -6,7 +6,8 @@ import {
   DollarSign, Tag, Layers, ArrowLeft, LayoutDashboard, Package, 
   Settings, ExternalLink, TrendingUp, ShieldCheck, Flame, 
   Filter, ChevronRight, BarChart3, HelpCircle, CheckCircle2,
-  PieChart, Users, Phone, ArrowUpRight, Copy
+  PieChart, Users, Phone, ArrowUpRight, Copy,
+  CloudSnow, Flower2, Umbrella, Leaf, Sun, Moon, Clock, Compass, Hash, Star
 } from 'lucide-react';
 
 const DEFAULT_PIN = 'admin123';
@@ -43,6 +44,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   // Form State
   const initialForm = {
     id: '',
+    num: '',
+    rating: '4.9',
     name: '',
     brand: '',
     price: '',
@@ -60,7 +63,17 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     notes_base: '',
     tags: '',
     accords: '',
-    is_active: true
+    is_active: true,
+    inspired_by: '',
+    niche_house: '',
+    longevity: '8 - 10 horas',
+    sillage: 'Alta / Pesada',
+    votes_invierno: '8500',
+    votes_primavera: '2500',
+    votes_verano: '1200',
+    votes_otono: '7000',
+    votes_dia: '3500',
+    votes_noche: '9200'
   };
   const [formData, setFormData] = useState(initialForm);
 
@@ -84,7 +97,27 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
 
       if (error) throw error;
       if (data) {
-        setProducts(data);
+        const normalized = data.map(p => {
+          const pVotes = p.votes || {};
+          return {
+            ...p,
+            num: p.num || '',
+            inspired_by: p.inspired_by || pVotes.inspired_by || '',
+            niche_house: p.niche_house || pVotes.niche_house || '',
+            longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
+            sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
+            votes: {
+              invierno: Number(pVotes.invierno) || 5000,
+              primavera: Number(pVotes.primavera) || 2000,
+              verano: Number(pVotes.verano) || 1000,
+              otoño: Number(pVotes.otoño) || 4000,
+              dia: Number(pVotes.dia) || 3000,
+              noche: Number(pVotes.noche) || 7000,
+              ...pVotes
+            }
+          };
+        });
+        setProducts(normalized);
       }
     } catch (err) {
       console.error('Error cargando catálogo:', err);
@@ -128,25 +161,93 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   const handleGoCreate = () => {
     setIsEditing(false);
     setCurrentEditId(null);
-    setFormData(initialForm);
+    const nextNum = String(products.length + 1).padStart(2, '0');
+    setFormData({
+      ...initialForm,
+      num: nextNum
+    });
     setActiveTab('create');
+  };
+
+  // Preset handler for season/moment votes
+  const handleApplyVotePreset = (presetKey) => {
+    if (presetKey === 'invernal') {
+      setFormData(prev => ({
+        ...prev,
+        votes_invierno: '12500',
+        votes_primavera: '2000',
+        votes_verano: '800',
+        votes_otono: '9500',
+        votes_dia: '2800',
+        votes_noche: '11800',
+        season_badge: 'Invierno / Noches',
+        best_season: 'invierno',
+        best_moment: 'noche'
+      }));
+      showToast('Plantilla aplicada: Invernal & Nocturno Intenso');
+    } else if (presetKey === 'veraniego') {
+      setFormData(prev => ({
+        ...prev,
+        votes_invierno: '1200',
+        votes_primavera: '7500',
+        votes_verano: '13000',
+        votes_otono: '3000',
+        votes_dia: '11500',
+        votes_noche: '3200',
+        season_badge: 'Verano / Día',
+        best_season: 'verano',
+        best_moment: 'dia'
+      }));
+      showToast('Plantilla aplicada: Fresco & Veraniego');
+    } else if (presetKey === 'versatil') {
+      setFormData(prev => ({
+        ...prev,
+        votes_invierno: '6500',
+        votes_primavera: '7000',
+        votes_verano: '5800',
+        votes_otono: '6400',
+        votes_dia: '7200',
+        votes_noche: '6800',
+        season_badge: 'Versátil / Todo el Año',
+        best_season: 'todo-el-ano',
+        best_moment: 'versatil'
+      }));
+      showToast('Plantilla aplicada: Versátil Todo el Año');
+    } else if (presetKey === 'otonal') {
+      setFormData(prev => ({
+        ...prev,
+        votes_invierno: '8500',
+        votes_primavera: '3600',
+        votes_verano: '1800',
+        votes_otono: '11000',
+        votes_dia: '3800',
+        votes_noche: '9500',
+        season_badge: 'Otoño / Citas',
+        best_season: 'otono',
+        best_moment: 'noche'
+      }));
+      showToast('Plantilla aplicada: Otoño Sensual & Citas');
+    }
   };
 
   // Switch to Edit Mode
   const handleGoEdit = (product) => {
     setIsEditing(true);
     setCurrentEditId(product.id);
+    const pVotes = product.votes || {};
     setFormData({
       id: product.id,
+      num: product.num || '',
+      rating: product.rating != null ? String(product.rating) : '4.9',
       name: product.name || '',
       brand: product.brand || '',
-      price: product.price || '',
+      price: product.price != null ? String(product.price) : '',
       gender: product.gender || 'Unisex',
       category: product.category || '',
       description: product.description || '',
       occasions: product.occasions || '',
       badge: product.badge || '',
-      season_badge: product.season_badge || '',
+      season_badge: product.season_badge || 'Versátil',
       best_season: product.best_season || 'todo-el-ano',
       best_moment: product.best_moment || 'versatil',
       image: product.image || '',
@@ -155,7 +256,17 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       notes_base: product.notes?.base?.join(', ') || '',
       tags: Array.isArray(product.tags) ? product.tags.join(', ') : '',
       accords: Array.isArray(product.accords) ? product.accords.join(', ') : '',
-      is_active: product.is_active !== false
+      is_active: product.is_active !== false,
+      inspired_by: product.inspired_by || pVotes.inspired_by || '',
+      niche_house: product.niche_house || pVotes.niche_house || '',
+      longevity: product.longevity || pVotes.longevity || '8 - 10 horas',
+      sillage: product.sillage || pVotes.sillage || 'Alta / Pesada',
+      votes_invierno: String(pVotes.invierno ?? 8500),
+      votes_primavera: String(pVotes.primavera ?? 2500),
+      votes_verano: String(pVotes.verano ?? 1200),
+      votes_otono: String(pVotes.otoño ?? 7000),
+      votes_dia: String(pVotes.dia ?? 3500),
+      votes_noche: String(pVotes.noche ?? 9200)
     });
     setActiveTab('create');
   };
@@ -207,9 +318,11 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
 
       const payload = {
         id: slugId,
+        num: formData.num?.trim() || String(products.length + 1).padStart(2, '0'),
         name: formData.name.trim(),
         brand: formData.brand.trim(),
         price: parseFloat(formData.price) || 0,
+        rating: parseFloat(formData.rating) || 4.9,
         gender: formData.gender,
         category: formData.category.trim(),
         description: formData.description.trim(),
@@ -219,6 +332,18 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         best_season: formData.best_season,
         best_moment: formData.best_moment,
         image: formData.image.trim() || '/assets/perfumes/default.jpg',
+        votes: {
+          invierno: parseInt(formData.votes_invierno, 10) || 5000,
+          primavera: parseInt(formData.votes_primavera, 10) || 2000,
+          verano: parseInt(formData.votes_verano, 10) || 1000,
+          otoño: parseInt(formData.votes_otono, 10) || 4000,
+          dia: parseInt(formData.votes_dia, 10) || 3000,
+          noche: parseInt(formData.votes_noche, 10) || 7000,
+          inspired_by: formData.inspired_by?.trim() || '',
+          niche_house: formData.niche_house?.trim() || '',
+          longevity: formData.longevity?.trim() || '8 - 10 horas',
+          sillage: formData.sillage?.trim() || 'Alta / Pesada'
+        },
         notes: {
           salida: formData.notes_salida.split(',').map(s => s.trim()).filter(Boolean),
           corazon: formData.notes_corazon.split(',').map(s => s.trim()).filter(Boolean),
@@ -673,9 +798,21 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                                   )}
                                 </div>
                                 <div>
-                                  <span className="font-serif font-bold text-stone-100 text-sm block">
-                                    {p.name}
-                                  </span>
+                                  <div className="flex items-center gap-1.5">
+                                    {p.num && (
+                                      <span className="font-mono text-[10px] font-bold text-amber-400 bg-stone-950 px-1.5 py-0.5 rounded border border-stone-800">
+                                        #{p.num}
+                                      </span>
+                                    )}
+                                    <span className="font-serif font-bold text-stone-100 text-sm block">
+                                      {p.name}
+                                    </span>
+                                  </div>
+                                  {p.inspired_by && (
+                                    <span className="text-[10px] text-stone-400 block truncate max-w-[200px] mt-0.5">
+                                      Insp: <span className="text-amber-300 font-medium">{p.inspired_by}</span>
+                                    </span>
+                                  )}
                                   {p.badge && (
                                     <span className="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 inline-block mt-0.5">
                                       {p.badge}
@@ -918,8 +1055,9 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
 
               <form onSubmit={handleSaveProduct} className="space-y-6">
                 
+                {/* BLOQUE 1: DATOS GENERALES */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                  <div>
+                  <div className="sm:col-span-2">
                     <label className="block text-xs font-semibold text-stone-300 mb-1.5">Nombre del Perfume *</label>
                     <input
                       type="text"
@@ -942,6 +1080,22 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                       className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-stone-100 px-4 py-3 rounded-xl text-sm focus:outline-none"
                     />
                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-300 mb-1.5 flex items-center gap-1">
+                      <Hash size={13} className="text-amber-400" />
+                      <span>Número de Catálogo (#)</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej. 16"
+                      value={formData.num}
+                      onChange={(e) => setFormData({ ...formData, num: e.target.value })}
+                      className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-amber-300 font-mono font-bold px-4 py-3 rounded-xl text-sm focus:outline-none"
+                    />
+                  </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-stone-300 mb-1.5">Precio ($ USD / Moneda)</label>
@@ -952,6 +1106,23 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                       className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-amber-400 font-bold px-4 py-3 rounded-xl text-sm focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-300 mb-1.5 flex items-center gap-1">
+                      <Star size={13} className="text-amber-400" />
+                      <span>Calificación (Rating / 5.0)</span>
+                    </label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="1.0"
+                      max="5.0"
+                      placeholder="4.9"
+                      value={formData.rating}
+                      onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                      className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-stone-100 font-bold px-4 py-3 rounded-xl text-sm focus:outline-none"
                     />
                   </div>
                 </div>
@@ -991,6 +1162,290 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                       className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-stone-100 px-4 py-3 rounded-xl text-sm focus:outline-none"
                     />
                   </div>
+                </div>
+
+                {/* BLOQUE 2: INSPIRACIÓN DE ALTA GAMA Y RENDIMIENTO */}
+                <div className="bg-stone-950/90 p-5 rounded-2xl border border-amber-500/30 space-y-4">
+                  <div className="flex items-center justify-between border-b border-stone-800 pb-3">
+                    <div className="flex items-center gap-2 text-amber-400 font-serif font-bold text-sm">
+                      <Sparkles size={16} />
+                      <span>Inspiración de Alta Perfumería & Rendimiento</span>
+                    </div>
+                    <span className="text-[10px] text-stone-400 bg-stone-900 px-2.5 py-1 rounded-full border border-stone-800">
+                      Ficha Sensorial Boutique
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5">
+                        Inspiración Olfativa / Perfume de Referencia
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. Angels' Share (Kilian Paris), Aventus (Creed)..."
+                        value={formData.inspired_by}
+                        onChange={(e) => setFormData({ ...formData, inspired_by: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-100 px-3.5 py-2.5 rounded-xl text-xs focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5">
+                        Casa Matriz de Referencia (Nicho / Diseñador)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. Kilian Paris, Creed, Parfums de Marly..."
+                        value={formData.niche_house}
+                        onChange={(e) => setFormData({ ...formData, niche_house: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-100 px-3.5 py-2.5 rounded-xl text-xs focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5 flex items-center gap-1.5">
+                        <Clock size={13} className="text-amber-400" />
+                        <span>Fijación en Piel / Longevidad</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. 10 - 12 horas, 8 - 10 horas, +14 horas..."
+                        value={formData.longevity}
+                        onChange={(e) => setFormData({ ...formData, longevity: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-100 px-3.5 py-2.5 rounded-xl text-xs focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5 flex items-center gap-1.5">
+                        <Flame size={13} className="text-amber-400" />
+                        <span>Estela / Proyección Olfativa</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. Alta / Pesada, Moderada, Envolvente..."
+                        value={formData.sillage}
+                        onChange={(e) => setFormData({ ...formData, sillage: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-100 px-3.5 py-2.5 rounded-xl text-xs focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* BLOQUE 3: CUÁNDO USARLO - VOTOS Y ESTACIONES */}
+                <div className="bg-stone-950/90 p-5 rounded-2xl border border-stone-800 space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-800 pb-3">
+                    <div>
+                      <div className="flex items-center gap-2 text-stone-200 font-serif font-bold text-sm">
+                        <Flame size={16} className="text-amber-400" />
+                        <span>Cuándo Usarlo (Votos y Rendimiento)</span>
+                      </div>
+                      <p className="text-[11px] text-stone-400 mt-0.5">
+                        Alimenta las barras estadísticas de popularidad y temporadas en la ficha del perfume
+                      </p>
+                    </div>
+
+                    {/* Quick Presets */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[10px] uppercase font-semibold tracking-wider text-stone-500 mr-1">Plantillas:</span>
+                      <button
+                        type="button"
+                        onClick={() => handleApplyVotePreset('invernal')}
+                        className="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-cyan-300 text-[11px] font-medium flex items-center gap-1 transition"
+                        title="Aplicar votos altos para invierno y noche"
+                      >
+                        <CloudSnow size={12} />
+                        <span>Invernal</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleApplyVotePreset('veraniego')}
+                        className="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-rose-300 text-[11px] font-medium flex items-center gap-1 transition"
+                        title="Aplicar votos altos para verano y día"
+                      >
+                        <Umbrella size={12} />
+                        <span>Verano</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleApplyVotePreset('versatil')}
+                        className="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-emerald-300 text-[11px] font-medium flex items-center gap-1 transition"
+                        title="Aplicar votos equilibrados para todo el año"
+                      >
+                        <Leaf size={12} />
+                        <span>Versátil</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleApplyVotePreset('otonal')}
+                        className="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-amber-300 text-[11px] font-medium flex items-center gap-1 transition"
+                        title="Aplicar votos altos para otoño y citas"
+                      >
+                        <Sparkles size={12} />
+                        <span>Otoño</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 4 Seasons Inputs */}
+                  <div className="space-y-1.5">
+                    <span className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider block">
+                      Votos por Temporada / Clima
+                    </span>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      
+                      {/* Invierno */}
+                      <div className="bg-stone-900/90 p-3 rounded-xl border border-stone-800">
+                        <label className="text-xs font-semibold text-cyan-300 flex items-center gap-1.5 mb-1.5">
+                          <CloudSnow size={14} />
+                          <span>Invierno</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="8500"
+                          value={formData.votes_invierno}
+                          onChange={(e) => setFormData({ ...formData, votes_invierno: e.target.value })}
+                          className="w-full bg-stone-950 border border-stone-800 focus:border-cyan-400 text-stone-100 font-mono text-xs px-3 py-2 rounded-lg focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Primavera */}
+                      <div className="bg-stone-900/90 p-3 rounded-xl border border-stone-800">
+                        <label className="text-xs font-semibold text-emerald-300 flex items-center gap-1.5 mb-1.5">
+                          <Flower2 size={14} />
+                          <span>Primavera</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="2500"
+                          value={formData.votes_primavera}
+                          onChange={(e) => setFormData({ ...formData, votes_primavera: e.target.value })}
+                          className="w-full bg-stone-950 border border-stone-800 focus:border-emerald-400 text-stone-100 font-mono text-xs px-3 py-2 rounded-lg focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Verano */}
+                      <div className="bg-stone-900/90 p-3 rounded-xl border border-stone-800">
+                        <label className="text-xs font-semibold text-rose-300 flex items-center gap-1.5 mb-1.5">
+                          <Umbrella size={14} />
+                          <span>Verano</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="1200"
+                          value={formData.votes_verano}
+                          onChange={(e) => setFormData({ ...formData, votes_verano: e.target.value })}
+                          className="w-full bg-stone-950 border border-stone-800 focus:border-rose-400 text-stone-100 font-mono text-xs px-3 py-2 rounded-lg focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Otoño */}
+                      <div className="bg-stone-900/90 p-3 rounded-xl border border-stone-800">
+                        <label className="text-xs font-semibold text-amber-300 flex items-center gap-1.5 mb-1.5">
+                          <Leaf size={14} />
+                          <span>Otoño</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="7000"
+                          value={formData.votes_otono}
+                          onChange={(e) => setFormData({ ...formData, votes_otono: e.target.value })}
+                          className="w-full bg-stone-950 border border-stone-800 focus:border-amber-400 text-stone-100 font-mono text-xs px-3 py-2 rounded-lg focus:outline-none"
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* 2 Moments Inputs */}
+                  <div className="space-y-1.5 pt-1">
+                    <span className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider block">
+                      Votos por Momento del Día
+                    </span>
+                    <div className="grid grid-cols-2 gap-3">
+                      
+                      {/* Día */}
+                      <div className="bg-stone-900/90 p-3 rounded-xl border border-stone-800">
+                        <label className="text-xs font-semibold text-amber-300 flex items-center gap-1.5 mb-1.5">
+                          <Sun size={14} />
+                          <span>Día</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="3500"
+                          value={formData.votes_dia}
+                          onChange={(e) => setFormData({ ...formData, votes_dia: e.target.value })}
+                          className="w-full bg-stone-950 border border-stone-800 focus:border-amber-400 text-stone-100 font-mono text-xs px-3 py-2 rounded-lg focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Noche */}
+                      <div className="bg-stone-900/90 p-3 rounded-xl border border-stone-800">
+                        <label className="text-xs font-semibold text-indigo-300 flex items-center gap-1.5 mb-1.5">
+                          <Moon size={14} />
+                          <span>Noche</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="9200"
+                          value={formData.votes_noche}
+                          onChange={(e) => setFormData({ ...formData, votes_noche: e.target.value })}
+                          className="w-full bg-stone-950 border border-stone-800 focus:border-indigo-400 text-stone-100 font-mono text-xs px-3 py-2 rounded-lg focus:outline-none"
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* Season Badge & Filter Tags */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-stone-800">
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5">
+                        Insignia de Temporada (Badge)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. Invierno / Noches, Todo el Año..."
+                        value={formData.season_badge}
+                        onChange={(e) => setFormData({ ...formData, season_badge: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-200 px-3 py-2.5 rounded-xl text-xs focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5">
+                        Mejor Estación (Filtro)
+                      </label>
+                      <select
+                        value={formData.best_season}
+                        onChange={(e) => setFormData({ ...formData, best_season: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-200 px-3 py-2.5 rounded-xl text-xs focus:outline-none"
+                      >
+                        <option value="invierno">Invierno</option>
+                        <option value="primavera">Primavera</option>
+                        <option value="verano">Verano</option>
+                        <option value="otono">Otoño</option>
+                        <option value="todo-el-ano">Todo el Año</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-300 mb-1.5">
+                        Momento Recomendado (Filtro)
+                      </label>
+                      <select
+                        value={formData.best_moment}
+                        onChange={(e) => setFormData({ ...formData, best_moment: e.target.value })}
+                        className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-200 px-3 py-2.5 rounded-xl text-xs focus:outline-none"
+                      >
+                        <option value="noche">Noche</option>
+                        <option value="dia">Día</option>
+                        <option value="versatil">Versátil / Día y Noche</option>
+                      </select>
+                    </div>
+                  </div>
+
                 </div>
 
                 <div className="bg-stone-950/80 p-5 rounded-2xl border border-stone-800 space-y-3">

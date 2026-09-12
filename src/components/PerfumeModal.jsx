@@ -47,9 +47,22 @@ export default function PerfumeModal({
   };
 
   // Find maximum votes to calculate percentage bar
-  const votes = perfume.votes || { invierno: 1000, primavera: 1000, verano: 1000, otoño: 1000, dia: 1000, noche: 1000 };
-  const maxSeasonVotes = Math.max(votes.invierno, votes.primavera, votes.verano, votes.otoño);
-  const maxMomentVotes = Math.max(votes.dia, votes.noche);
+  const pVotes = perfume.votes || {};
+  const votes = {
+    invierno: Number(pVotes.invierno) || 5000,
+    primavera: Number(pVotes.primavera) || 2000,
+    verano: Number(pVotes.verano) || 1000,
+    otoño: Number(pVotes.otoño) || 4000,
+    dia: Number(pVotes.dia) || 3000,
+    noche: Number(pVotes.noche) || 7000
+  };
+  const maxSeasonVotes = Math.max(votes.invierno, votes.primavera, votes.verano, votes.otoño) || 1;
+  const maxMomentVotes = Math.max(votes.dia, votes.noche) || 1;
+
+  const inspiredBy = perfume.inspired_by || pVotes.inspired_by;
+  const nicheHouse = perfume.niche_house || pVotes.niche_house;
+  const longevity = perfume.longevity || pVotes.longevity || '8 - 10 horas';
+  const sillage = perfume.sillage || pVotes.sillage || 'Alta / Pesada';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/85 backdrop-blur-md animate-fadeIn">
@@ -168,7 +181,7 @@ export default function PerfumeModal({
           <div className="lg:col-span-7 space-y-6">
             
             {/* Luxury Inspiration & Performance Card */}
-            {perfume.inspired_by && (
+            {(inspiredBy || perfume.longevity || perfume.sillage) && (
               <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-gold-950/40 via-obsidian-900 to-obsidian-950 border border-gold-500/30 space-y-2.5 shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -184,11 +197,22 @@ export default function PerfumeModal({
                   )}
                 </div>
 
-                <div className="flex items-baseline gap-2">
-                  <span className="text-base sm:text-lg font-cinzel font-bold text-white">
-                    {perfume.inspired_by}
-                  </span>
-                </div>
+                {inspiredBy ? (
+                  <div className="flex flex-wrap items-baseline gap-2">
+                    <span className="text-base sm:text-lg font-cinzel font-bold text-white">
+                      {inspiredBy}
+                    </span>
+                    {nicheHouse && (
+                      <span className="text-xs text-gold-300/80 font-medium">
+                        • {nicheHouse}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-400 font-light">
+                    Composición exclusiva seleccionada por Joufab Perfumes
+                  </p>
+                )}
 
                 {/* Performance Specs */}
                 <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10 text-xs">
@@ -196,14 +220,14 @@ export default function PerfumeModal({
                     <Clock className="w-4 h-4 text-gold-400 shrink-0" />
                     <div>
                       <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Fijación en Piel</span>
-                      <span className="font-semibold text-white">{perfume.longevity || '8-10 horas'}</span>
+                      <span className="font-semibold text-white">{longevity}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-slate-300">
                     <Flame className="w-4 h-4 text-amber-400 shrink-0" />
                     <div>
                       <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Proyección / Estela</span>
-                      <span className="font-semibold text-white">{perfume.sillage || 'Alta'}</span>
+                      <span className="font-semibold text-white">{sillage}</span>
                     </div>
                   </div>
                 </div>
@@ -273,17 +297,45 @@ export default function PerfumeModal({
             </div>
 
             {/* Cuándo usarlo: Votos y Temporadas */}
-            <div className="space-y-3 bg-obsidian-950/60 p-5 rounded-2xl border border-white/10">
-              <h3 className="text-xs uppercase tracking-widest text-gold-400 font-semibold">
-                Cuándo Usarlo (Votos y Rendimiento)
-              </h3>
+            <div className="space-y-4 bg-obsidian-950/60 p-5 sm:p-6 rounded-2xl border border-white/10">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs uppercase tracking-widest text-gold-400 font-semibold flex items-center gap-2">
+                  <Flame className="w-3.5 h-3.5" />
+                  <span>Cuándo Usarlo (Votos y Rendimiento)</span>
+                </h3>
+                {perfume.season_badge && (
+                  <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-300 font-medium">
+                    {perfume.season_badge}
+                  </span>
+                )}
+              </div>
 
-              <p className="text-xs text-slate-300 italic mb-3">
-                "{perfume.occasions}"
-              </p>
+              {perfume.occasions && (
+                <p className="text-xs text-slate-300 italic">
+                  "{perfume.occasions}"
+                </p>
+              )}
+
+              {/* Performance Quick Badges */}
+              <div className="grid grid-cols-2 gap-3 py-2 border-y border-white/5 text-xs">
+                <div className="flex items-center gap-2 text-slate-300 bg-obsidian-900/60 p-2.5 rounded-xl border border-white/5">
+                  <Clock className="w-4 h-4 text-gold-400 shrink-0" />
+                  <div>
+                    <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-medium">Fijación en Piel</span>
+                    <span className="font-semibold text-white text-xs">{longevity}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-slate-300 bg-obsidian-900/60 p-2.5 rounded-xl border border-white/5">
+                  <Flame className="w-4 h-4 text-amber-400 shrink-0" />
+                  <div>
+                    <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-medium">Proyección / Estela</span>
+                    <span className="font-semibold text-white text-xs">{sillage}</span>
+                  </div>
+                </div>
+              </div>
 
               {/* Season Bars */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
                 
                 {/* Invierno */}
                 <div className="bg-obsidian-900/80 p-2.5 rounded-xl border border-white/5 space-y-1.5">
@@ -292,13 +344,13 @@ export default function PerfumeModal({
                       <CloudSnow className="w-3.5 h-3.5" /> Invierno
                     </span>
                     <span className="font-mono text-slate-300 text-[10px] font-bold">
-                      {votes.invierno}
+                      {votes.invierno.toLocaleString()}
                     </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-cyan-400 h-full rounded-full transition-all duration-1000"
-                      style={{ width: `${(votes.invierno / maxSeasonVotes) * 100}%` }}
+                      style={{ width: `${Math.min(100, Math.max(6, (votes.invierno / maxSeasonVotes) * 100))}%` }}
                     />
                   </div>
                 </div>
@@ -310,13 +362,13 @@ export default function PerfumeModal({
                       <Flower2 className="w-3.5 h-3.5" /> Primavera
                     </span>
                     <span className="font-mono text-slate-300 text-[10px] font-bold">
-                      {votes.primavera}
+                      {votes.primavera.toLocaleString()}
                     </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-emerald-400 h-full rounded-full transition-all duration-1000"
-                      style={{ width: `${(votes.primavera / maxSeasonVotes) * 100}%` }}
+                      style={{ width: `${Math.min(100, Math.max(6, (votes.primavera / maxSeasonVotes) * 100))}%` }}
                     />
                   </div>
                 </div>
@@ -328,13 +380,13 @@ export default function PerfumeModal({
                       <Umbrella className="w-3.5 h-3.5" /> Verano
                     </span>
                     <span className="font-mono text-slate-300 text-[10px] font-bold">
-                      {votes.verano}
+                      {votes.verano.toLocaleString()}
                     </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-rose-400 h-full rounded-full transition-all duration-1000"
-                      style={{ width: `${(votes.verano / maxSeasonVotes) * 100}%` }}
+                      style={{ width: `${Math.min(100, Math.max(6, (votes.verano / maxSeasonVotes) * 100))}%` }}
                     />
                   </div>
                 </div>
@@ -346,13 +398,13 @@ export default function PerfumeModal({
                       <Leaf className="w-3.5 h-3.5" /> Otoño
                     </span>
                     <span className="font-mono text-slate-300 text-[10px] font-bold">
-                      {votes.otoño}
+                      {votes.otoño.toLocaleString()}
                     </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-amber-400 h-full rounded-full transition-all duration-1000"
-                      style={{ width: `${(votes.otoño / maxSeasonVotes) * 100}%` }}
+                      style={{ width: `${Math.min(100, Math.max(6, (votes.otoño / maxSeasonVotes) * 100))}%` }}
                     />
                   </div>
                 </div>
@@ -367,13 +419,13 @@ export default function PerfumeModal({
                       <Sun className="w-3.5 h-3.5" /> Día
                     </span>
                     <span className="font-mono text-slate-300 text-[10px] font-bold">
-                      {votes.dia}
+                      {votes.dia.toLocaleString()}
                     </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-amber-400 h-full rounded-full transition-all duration-1000"
-                      style={{ width: `${(votes.dia / maxMomentVotes) * 100}%` }}
+                      style={{ width: `${Math.min(100, Math.max(6, (votes.dia / maxMomentVotes) * 100))}%` }}
                     />
                   </div>
                 </div>
@@ -384,13 +436,13 @@ export default function PerfumeModal({
                       <Moon className="w-3.5 h-3.5" /> Noche
                     </span>
                     <span className="font-mono text-slate-300 text-[10px] font-bold">
-                      {votes.noche}
+                      {votes.noche.toLocaleString()}
                     </span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div 
                       className="bg-indigo-400 h-full rounded-full transition-all duration-1000"
-                      style={{ width: `${(votes.noche / maxMomentVotes) * 100}%` }}
+                      style={{ width: `${Math.min(100, Math.max(6, (votes.noche / maxMomentVotes) * 100))}%` }}
                     />
                   </div>
                 </div>

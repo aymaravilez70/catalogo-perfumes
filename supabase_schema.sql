@@ -32,6 +32,12 @@ CREATE TABLE IF NOT EXISTS public.perfumes (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Columnas complementarias de alta gama
+ALTER TABLE public.perfumes ADD COLUMN IF NOT EXISTS inspired_by TEXT;
+ALTER TABLE public.perfumes ADD COLUMN IF NOT EXISTS niche_house TEXT;
+ALTER TABLE public.perfumes ADD COLUMN IF NOT EXISTS longevity TEXT;
+ALTER TABLE public.perfumes ADD COLUMN IF NOT EXISTS sillage TEXT;
+
 -- Habilitar Seguridad RLS
 ALTER TABLE public.perfumes ENABLE ROW LEVEL SECURITY;
 
