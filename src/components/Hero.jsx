@@ -142,6 +142,16 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
                       {featuredPerfumes[0].category}
                     </span>
                   </div>
+
+                  {featuredPerfumes[0].inspired_by && (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gold-500/10 border border-gold-500/20 text-[11px] text-gold-300">
+                      <Sparkles className="w-3 h-3 text-gold-400 shrink-0" />
+                      <span className="truncate">
+                        <span className="text-slate-400 text-[9px] uppercase font-bold mr-1">Inspiración:</span>
+                        <span className="font-semibold text-white">{featuredPerfumes[0].inspired_by}</span>
+                      </span>
+                    </div>
+                  )}
                   
                   <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                     {featuredPerfumes[0].description}

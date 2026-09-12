@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkles, MessageCircle, ShieldCheck, Truck, Clock, Heart, Lock } from 'lucide-react';
 
-export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenStory, onOpenAdmin }) {
+export default function Footer({ onNavigate, onOpenQuiz, onOpenLookbook, onOpenStory, onOpenAdmin }) {
   return (
     <footer className="bg-obsidian-950 border-t border-white/10 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,19 +46,24 @@ export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenStory, onOpen
           
           <div className="md:col-span-6 text-center md:text-left space-y-3">
             <div className="flex items-center justify-center md:justify-start gap-3">
-              <img 
-                src="/assets/brand/logo.png" 
-                alt="Joufab Logo" 
-                className="h-10 w-auto object-contain"
-              />
-              <div>
-                <span className="font-cinzel text-xl font-bold tracking-[0.2em] text-white block">
-                  JOUFAB
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block -mt-1">
-                  Perfume House
-                </span>
-              </div>
+              <button 
+                onClick={() => onNavigate && onNavigate('home')} 
+                className="flex items-center gap-3 text-left"
+              >
+                <img 
+                  src="/assets/brand/logo.png" 
+                  alt="Joufab Logo" 
+                  className="h-10 w-auto object-contain"
+                />
+                <div>
+                  <span className="font-cinzel text-xl font-bold tracking-[0.2em] text-white block">
+                    JOUFAB
+                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block -mt-1">
+                    Perfume House
+                  </span>
+                </div>
+              </button>
             </div>
 
             <p className="text-xs text-slate-400 max-w-sm mx-auto md:mx-0 leading-relaxed">
@@ -67,9 +72,12 @@ export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenStory, onOpen
           </div>
 
           <div className="md:col-span-6 flex flex-wrap items-center justify-center md:justify-end gap-6 text-xs text-slate-300">
-            <a href="#catalogo" className="hover:text-gold-400 transition-colors">
-              Colección Completa
-            </a>
+            <button 
+              onClick={() => onNavigate && onNavigate('catalog')} 
+              className="hover:text-gold-400 transition-colors"
+            >
+              Boutique Catálogo
+            </button>
             <button onClick={onOpenQuiz} className="hover:text-gold-400 transition-colors">
               Test Olfativo
             </button>

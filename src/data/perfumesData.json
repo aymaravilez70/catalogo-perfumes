@@ -61,7 +61,12 @@
       "Ámbar"
     ],
     "price": 52,
-    "rating": 4.9
+    "rating": 4.9,
+    "inspired_by": "Angels' Share (Kilian Paris)",
+    "niche_house": "Kilian Paris",
+    "longevity": "10 - 12 horas",
+    "sillage": "Alta / Pesada",
+    "highlight_note": "Canela, Dátiles & Praliné"
   },
   {
     "id": "khamrah-qahwa",
@@ -123,7 +128,12 @@
       "Avainillado"
     ],
     "price": 55,
-    "rating": 4.9
+    "rating": 4.9,
+    "inspired_by": "Angels' Share + Café Arábica Tostado",
+    "niche_house": "Kilian Paris / Edición Café",
+    "longevity": "10 - 14 horas",
+    "sillage": "Modo Bestia Gourmand",
+    "highlight_note": "Café, Cardamomo & Vainilla"
   },
   {
     "id": "9-pm",
@@ -184,7 +194,12 @@
       "Ámbar"
     ],
     "price": 46,
-    "rating": 4.9
+    "rating": 4.9,
+    "inspired_by": "Ultra Male (Jean Paul Gaultier)",
+    "niche_house": "Jean Paul Gaultier",
+    "longevity": "9 - 11 horas",
+    "sillage": "Pesada / Seductora",
+    "highlight_note": "Manzana, Canela & Vainilla"
   },
   {
     "id": "9-am-dive",
@@ -246,7 +261,12 @@
       "Almizclado"
     ],
     "price": 48,
-    "rating": 4.7
+    "rating": 4.7,
+    "inspired_by": "Bleu de Chanel + Y EDP (YSL)",
+    "niche_house": "Chanel / Yves Saint Laurent",
+    "longevity": "7 - 9 horas",
+    "sillage": "Moderada a Alta",
+    "highlight_note": "Menta Fresca, Manzana & Cedro"
   },
   {
     "id": "hawas-ice",
@@ -308,7 +328,12 @@
       "Almizclado"
     ],
     "price": 60,
-    "rating": 5.0
+    "rating": 5.0,
+    "inspired_by": "Invictus Aqua (Paco Rabanne)",
+    "niche_house": "Paco Rabanne",
+    "longevity": "10 - 12 horas",
+    "sillage": "Bestial / Fresca",
+    "highlight_note": "Ciruela, Bergamota Escarchada & Marino"
   },
   {
     "id": "hawas-kobra",
@@ -368,7 +393,12 @@
       "Ámbar"
     ],
     "price": 50,
-    "rating": 4.8
+    "rating": 4.8,
+    "inspired_by": "L'Immensité (Louis Vuitton)",
+    "niche_house": "Louis Vuitton",
+    "longevity": "9 - 11 horas",
+    "sillage": "Alta / Sofisticada",
+    "highlight_note": "Jengibre, Pomelo & Ambroxan"
   },
   {
     "id": "asad",
@@ -430,7 +460,12 @@
       "Ámbar Cálido"
     ],
     "price": 45,
-    "rating": 4.8
+    "rating": 4.8,
+    "inspired_by": "Sauvage Elixir (Dior)",
+    "niche_house": "Christian Dior",
+    "longevity": "9 - 11 horas",
+    "sillage": "Pesada / Especiada",
+    "highlight_note": "Pimienta Negra, Café & Tabaco"
   },
   {
     "id": "fakhar-black",
@@ -492,7 +527,12 @@
       "Limpio"
     ],
     "price": 45,
-    "rating": 4.7
+    "rating": 4.7,
+    "inspired_by": "Y EDP (Yves Saint Laurent)",
+    "niche_house": "Yves Saint Laurent",
+    "longevity": "8 - 10 horas",
+    "sillage": "Moderada a Alta",
+    "highlight_note": "Manzana Verde, Salvia & Jengibre"
   },
   {
     "id": "odyssey-homme",
@@ -552,7 +592,12 @@
       "Maderas"
     ],
     "price": 48,
-    "rating": 4.6
+    "rating": 4.6,
+    "inspired_by": "Stronger With You (Armani) + Invictus",
+    "niche_house": "Giorgio Armani",
+    "longevity": "8 - 10 horas",
+    "sillage": "Moderada a Alta",
+    "highlight_note": "Avellana, Iris & Ámbar"
   },
   {
     "id": "odyssey-mandarin-sky",
@@ -613,7 +658,12 @@
       "Almizcle"
     ],
     "price": 50,
-    "rating": 4.8
+    "rating": 4.8,
+    "inspired_by": "Scandal Pour Homme (Jean Paul Gaultier)",
+    "niche_house": "Jean Paul Gaultier",
+    "longevity": "8 - 10 horas",
+    "sillage": "Pesada / Dulce",
+    "highlight_note": "Mandarina Dulce, Caramelo & Tonka"
   },
   {
     "id": "honor-and-glory",
@@ -674,7 +724,12 @@
       "Sándalo"
     ],
     "price": 58,
-    "rating": 4.9
+    "rating": 4.9,
+    "inspired_by": "Tribeca (Bond No. 9) / Piña Brûlée",
+    "niche_house": "Bond No. 9 New York",
+    "longevity": "9 - 12 horas",
+    "sillage": "Alta / Cremosa",
+    "highlight_note": "Piña Caramelizada, Crème Brûlée & Canela"
   },
   {
     "id": "nitro-red",
@@ -734,7 +789,12 @@
       "Pachulí"
     ],
     "price": 52,
-    "rating": 4.9
+    "rating": 4.9,
+    "inspired_by": "Invictus + Baccarat Rouge 540",
+    "niche_house": "Paco Rabanne / MFK",
+    "longevity": "10 - 14 horas",
+    "sillage": "Modo Bestia Nuclear",
+    "highlight_note": "Sandía Jugosa, Manzana & Ámbar Gris"
   },
   {
     "id": "club-de-nuit-milestone",
@@ -794,7 +854,12 @@
       "Almizcle"
     ],
     "price": 54,
-    "rating": 4.8
+    "rating": 4.8,
+    "inspired_by": "Millésime Impérial (Creed)",
+    "niche_house": "Creed",
+    "longevity": "8 - 10 horas",
+    "sillage": "Moderada / Marina de Lujo",
+    "highlight_note": "Melón Marino, Frutas Rojas & Brisa Salada"
   },
   {
     "id": "eclaire",
@@ -853,7 +918,12 @@
       "Miel"
     ],
     "price": 55,
-    "rating": 5.0
+    "rating": 5.0,
+    "inspired_by": "Bianco Latte (Giardini di Toscana)",
+    "niche_house": "Giardini di Toscana",
+    "longevity": "10 - 12 horas",
+    "sillage": "Alta / Envolvente",
+    "highlight_note": "Leche Tibia, Caramelo, Miel & Vainilla"
   },
   {
     "id": "yara-pink",
@@ -912,6 +982,11 @@
       "Almizclado"
     ],
     "price": 42,
-    "rating": 4.8
+    "rating": 4.8,
+    "inspired_by": "Poison Girl (Dior) / Strawberry Milkshake",
+    "niche_house": "Christian Dior",
+    "longevity": "7 - 9 horas",
+    "sillage": "Moderada / Femenina y Dulce",
+    "highlight_note": "Orquídea, Heliotropo & Acorde Goloso"
   }
 ]

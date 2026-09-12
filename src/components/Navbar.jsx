@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 
 export default function Navbar({ 
+  currentView = 'home',
+  onNavigate,
   cartCount, 
   onOpenCart, 
   favoriteCount, 
@@ -43,7 +45,10 @@ export default function Navbar({
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
         
         {/* Left Zone: Brand & Monogram Logo */}
-        <a href="#" className="flex items-center gap-3.5 group shrink-0">
+        <button 
+          onClick={() => onNavigate && onNavigate('home')} 
+          className="flex items-center gap-3.5 group shrink-0 text-left cursor-pointer"
+        >
           <img 
             src="/assets/brand/logo.png" 
             alt="Joufab Logo" 
@@ -57,17 +62,33 @@ export default function Navbar({
               Perfume House
             </span>
           </div>
-        </a>
+        </button>
 
         {/* Center Zone: Clean, Spacious Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8 xl:gap-11 text-xs xl:text-[13px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-          <a 
-            href="#catalogo" 
-            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group"
+          <button 
+            onClick={() => onNavigate && onNavigate('home')} 
+            className={`transition-colors py-2 whitespace-nowrap relative group ${
+              currentView === 'home' ? 'text-gold-400 font-bold' : 'text-slate-300 hover:text-gold-400'
+            }`}
           >
-            <span>Colección</span>
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
-          </a>
+            <span>Inicio</span>
+            <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 transition-all duration-300 ${
+              currentView === 'home' ? 'w-full' : 'w-0 group-hover:w-full'
+            }`} />
+          </button>
+
+          <button 
+            onClick={() => onNavigate && onNavigate('catalog')} 
+            className={`transition-colors py-2 whitespace-nowrap relative group ${
+              currentView === 'catalog' ? 'text-gold-400 font-bold' : 'text-slate-300 hover:text-gold-400'
+            }`}
+          >
+            <span>Boutique & Catálogo</span>
+            <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 transition-all duration-300 ${
+              currentView === 'catalog' ? 'w-full' : 'w-0 group-hover:w-full'
+            }`} />
+          </button>
 
           <button 
             onClick={onOpenQuiz}
@@ -106,7 +127,12 @@ export default function Navbar({
               type="text"
               placeholder="Buscar fragancia..."
               value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
+              onChange={(e) => {
+                onSearchChange(e.target.value);
+                if (currentView !== 'catalog' && onNavigate && e.target.value.trim() !== '') {
+                  onNavigate('catalog');
+                }
+              }}
               className="w-32 lg:w-40 xl:w-48 focus:w-56 bg-obsidian-900/80 border border-white/15 focus:border-gold-500/70 rounded-full py-1.5 pl-8 pr-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-gold-500/30 transition-all duration-300"
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
@@ -179,14 +205,24 @@ export default function Navbar({
           </div>
 
           <nav className="flex flex-col space-y-3 text-sm font-medium tracking-wider uppercase">
-            <a 
-              href="#catalogo" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2.5 text-slate-200 hover:text-gold-400 border-b border-white/5 flex items-center justify-between"
+            <button 
+              onClick={() => { if (onNavigate) onNavigate('home'); setMobileMenuOpen(false); }}
+              className={`py-2.5 border-b border-white/5 flex items-center justify-between text-left ${
+                currentView === 'home' ? 'text-gold-400 font-bold' : 'text-slate-200 hover:text-gold-400'
+              }`}
             >
-              <span>Colección Oficial</span>
+              <span>Portada / Inicio</span>
+            </button>
+
+            <button 
+              onClick={() => { if (onNavigate) onNavigate('catalog'); setMobileMenuOpen(false); }}
+              className={`py-2.5 border-b border-white/5 flex items-center justify-between text-left ${
+                currentView === 'catalog' ? 'text-gold-400 font-bold' : 'text-slate-200 hover:text-gold-400'
+              }`}
+            >
+              <span>Boutique & Catálogo Completo</span>
               <span className="text-[11px] text-gold-400 font-mono">15 Perfumes</span>
-            </a>
+            </button>
 
             <button 
               onClick={() => { onOpenQuiz(); setMobileMenuOpen(false); }}

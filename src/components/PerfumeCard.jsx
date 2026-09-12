@@ -166,8 +166,19 @@ export default function PerfumeCard({
             {perfume.name}
           </h3>
 
+          {/* Luxury Inspiration Tag */}
+          {perfume.inspired_by && (
+            <div className="mt-1.5 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gold-500/10 border border-gold-500/20 text-[11px] text-gold-300">
+              <Sparkles className="w-3 h-3 text-gold-400 shrink-0" />
+              <span className="truncate font-sans">
+                <span className="text-slate-400 text-[9px] uppercase tracking-wider font-bold mr-1">Inspiración:</span>
+                <span className="font-semibold text-gold-200">{perfume.inspired_by}</span>
+              </span>
+            </div>
+          )}
+
           {/* Quick Notes preview */}
-          <div className="pt-1 flex flex-wrap gap-1">
+          <div className="pt-2 flex flex-wrap gap-1">
             {perfume.notes.salida.slice(0, 3).map((note, idx) => (
               <span 
                 key={idx} 

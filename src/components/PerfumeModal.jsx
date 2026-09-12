@@ -14,7 +14,9 @@ import {
   Sparkles, 
   BookOpen, 
   Layers,
-  Check
+  Check,
+  Clock,
+  Flame
 } from 'lucide-react';
 
 export default function PerfumeModal({ 
@@ -165,6 +167,49 @@ export default function PerfumeModal({
           {/* Right Sensory & Pyramid Column */}
           <div className="lg:col-span-7 space-y-6">
             
+            {/* Luxury Inspiration & Performance Card */}
+            {perfume.inspired_by && (
+              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-gold-950/40 via-obsidian-900 to-obsidian-950 border border-gold-500/30 space-y-2.5 shadow-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-gold-400" />
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-gold-400">
+                      Inspiración de Alta Perfumería
+                    </span>
+                  </div>
+                  {perfume.gender && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] text-slate-300 font-medium">
+                      {perfume.gender}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <span className="text-base sm:text-lg font-cinzel font-bold text-white">
+                    {perfume.inspired_by}
+                  </span>
+                </div>
+
+                {/* Performance Specs */}
+                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10 text-xs">
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <Clock className="w-4 h-4 text-gold-400 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Fijación en Piel</span>
+                      <span className="font-semibold text-white">{perfume.longevity || '8-10 horas'}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <Flame className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Proyección / Estela</span>
+                      <span className="font-semibold text-white">{perfume.sillage || 'Alta'}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Description */}
             <div>
               <h3 className="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-2 flex items-center gap-1.5">
