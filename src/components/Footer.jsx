@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, MessageCircle, ShieldCheck, Truck, Clock } from 'lucide-react';
+import { Sparkles, MessageCircle, ShieldCheck, Truck, Clock, Heart, Lock } from 'lucide-react';
 
 export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenStory, onOpenAdmin }) {
   return (
@@ -76,14 +76,16 @@ export default function Footer({ onOpenQuiz, onOpenLookbook, onOpenStory, onOpen
             <button onClick={onOpenLookbook} className="hover:text-gold-400 transition-colors">
               Catálogo PDF 2026
             </button>
-            <button onClick={onOpenStory} className="hover:text-rose-400 transition-colors flex items-center gap-1 text-rose-300/90">
-              <span>Nuestra Historia ❤️</span>
+            <button onClick={onOpenStory} className="hover:text-rose-400 transition-colors flex items-center gap-1.5 text-rose-300/90">
+              <Heart className="w-3.5 h-3.5 text-rose-400" />
+              <span>Nuestra Historia</span>
             </button>
             <button 
               onClick={onOpenAdmin}
-              className="text-gold-400/80 hover:text-gold-300 font-medium transition-colors flex items-center gap-1 bg-white/5 px-2.5 py-1 rounded-lg border border-gold-500/20"
+              className="text-gold-400/80 hover:text-gold-300 font-medium transition-colors flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-lg border border-gold-500/20"
             >
-              <span>Panel Admin 🔐</span>
+              <Lock className="w-3.5 h-3.5 text-gold-400" />
+              <span>Panel Admin</span>
             </button>
             <a 
               href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes" 

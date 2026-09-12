@@ -146,7 +146,7 @@ export default function App() {
       }
       return [...prev, { ...perfume, quantity: 1 }];
     });
-    showToast(`"${perfume.name}" agregado a tu pedido 🛍️`);
+    showToast(`"${perfume.name}" agregado a tu pedido`);
   };
 
   const handleUpdateQuantity = (id, newQty) => {
@@ -174,7 +174,7 @@ export default function App() {
         showToast(`Eliminado de favoritos`);
         return prev.filter((id) => id !== perfume.id);
       } else {
-        showToast(`"${perfume.name}" guardado en favoritos ❤️`);
+        showToast(`"${perfume.name}" guardado en favoritos`);
         return [...prev, perfume.id];
       }
     });
@@ -188,7 +188,7 @@ export default function App() {
         return prev.filter((p) => p.id !== perfume.id);
       }
       if (prev.length >= 3) {
-        showToast('Máximo 3 perfumes en el comparador ⚖️');
+        showToast('Máximo 3 perfumes en el comparador');
         return prev;
       }
       showToast(`"${perfume.name}" agregado al comparador`);

@@ -883,8 +883,9 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-stone-800 text-xs text-stone-400 leading-relaxed">
-                    💡 <strong>Tip para el cliente:</strong> Las fragancias Unisex y Masculinas son actualmente las de mayor rotación en perfumería árabe de nicho.
+                  <div className="pt-4 border-t border-stone-800 text-xs text-stone-400 leading-relaxed flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span><strong>Tip para el cliente:</strong> Las fragancias Unisex y Masculinas son actualmente las de mayor rotación en perfumería árabe de nicho.</span>
                   </div>
                 </div>
 
@@ -984,7 +985,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                     <label className="block text-xs font-semibold text-stone-300 mb-1.5">Insignia / Badge Destacada (Opcional)</label>
                     <input
                       type="text"
-                      placeholder="Ej. Top Ventas 🔥 o Best Seller"
+                      placeholder="Ej. Top Ventas o Best Seller"
                       value={formData.badge}
                       onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
                       className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-stone-100 px-4 py-3 rounded-xl text-sm focus:outline-none"

@@ -28,7 +28,7 @@ export default function CartDrawer({
   const handleSendWhatsApp = () => {
     if (cartItems.length === 0) return;
 
-    let message = `⚜️ *PEDIDO - JOUFAB PERFUME HOUSE* ⚜️\n`;
+    let message = `*PEDIDO - JOUFAB PERFUME HOUSE*\n`;
     if (customerName.trim()) {
       message += `*Cliente:* ${customerName.trim()}\n`;
     }

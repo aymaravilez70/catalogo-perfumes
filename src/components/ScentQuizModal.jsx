@@ -8,7 +8,16 @@ import {
   ShoppingBag, 
   Eye, 
   Flame,
-  Heart
+  Heart,
+  Briefcase,
+  Crown,
+  Waves,
+  Coffee,
+  Wind,
+  Zap,
+  CloudSnow,
+  Sun,
+  Compass
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -27,10 +36,10 @@ export default function ScentQuizModal({ perfumes, onClose, onSelectPerfume, onA
       title: '1. ¿Para qué ocasión principal deseas tu perfume?',
       subtitle: 'Elige el escenario donde quieres destacar con tu estela',
       options: [
-        { id: 'citas', label: 'Citas románticas & Seducción', desc: 'Atractivo, cautivador, dulce o especiado', icon: '🌹' },
-        { id: 'oficina', label: 'Uso diario & Oficina', desc: 'Limpio, profesional, elegante y no invasivo', icon: '💼' },
-        { id: 'fiesta', label: 'Fiestas & Noches de gala', desc: 'Potente, imponente, con gran proyección', icon: '✨' },
-        { id: 'casual', label: 'Casual, Verano & Aire libre', desc: 'Fresco, energizante, gélido y marino', icon: '🌊' }
+        { id: 'citas', label: 'Citas románticas & Seducción', desc: 'Atractivo, cautivador, dulce o especiado', icon: Heart },
+        { id: 'oficina', label: 'Uso diario & Oficina', desc: 'Limpio, profesional, elegante y no invasivo', icon: Briefcase },
+        { id: 'fiesta', label: 'Fiestas & Noches de gala', desc: 'Potente, imponente, con gran proyección', icon: Crown },
+        { id: 'casual', label: 'Casual, Verano & Aire libre', desc: 'Fresco, energizante, gélido y marino', icon: Waves }
       ]
     },
     {
@@ -38,11 +47,11 @@ export default function ScentQuizModal({ perfumes, onClose, onSelectPerfume, onA
       title: '2. ¿Qué familia o sensación aromática prefieres?',
       subtitle: 'El tipo de notas que más disfrutas oler',
       options: [
-        { id: 'gourmand', label: 'Gourmand Dulce (Café, Canela, Caramelo)', desc: 'Cálido, apetitoso y reconfortante', icon: '☕' },
-        { id: 'acuatico', label: 'Fresco Acuático & Menta Gélida', desc: 'Sensación de brisa de mar y frutas heladas', icon: '❄️' },
-        { id: 'citrico', label: 'Cítrico & Té Verde Chispeante', desc: 'Vibrante, moderno, limpio y distinguido', icon: '🍋' },
-        { id: 'especiado', label: 'Especiado Oscuro (Tabaco, Maderas, Café)', desc: 'Masculinidad imponente y madura', icon: '🪵' },
-        { id: 'frutal', label: 'Frutas Jugosas (Sandía, Piña caramelizada)', desc: 'Explosivo, juvenil, alegre y adictivo', icon: '🍉' }
+        { id: 'gourmand', label: 'Gourmand Dulce (Café, Canela, Caramelo)', desc: 'Cálido, apetitoso y reconfortante', icon: Coffee },
+        { id: 'acuatico', label: 'Fresco Acuático & Menta Gélida', desc: 'Sensación de brisa de mar y frutas heladas', icon: Wind },
+        { id: 'citrico', label: 'Cítrico & Té Verde Chispeante', desc: 'Vibrante, moderno, limpio y distinguido', icon: Zap },
+        { id: 'especiado', label: 'Especiado Oscuro (Tabaco, Maderas, Café)', desc: 'Masculinidad imponente y madura', icon: Flame },
+        { id: 'frutal', label: 'Frutas Jugosas (Sandía, Piña caramelizada)', desc: 'Explosivo, juvenil, alegre y adictivo', icon: Sparkles }
       ]
     },
     {
@@ -50,9 +59,9 @@ export default function ScentQuizModal({ perfumes, onClose, onSelectPerfume, onA
       title: '3. ¿Bajo qué clima o momento lo usarás más?',
       subtitle: 'La temperatura influye enormemente en la evolución de las notas',
       options: [
-        { id: 'frio', label: 'Clima frío, templado o noches frescas', desc: 'Donde los aromas densos y cálidos brillan', icon: '❄️' },
-        { id: 'calor', label: 'Días calurosos de verano y sol', desc: 'Aromas que refrescan y no sofocan', icon: '☀️' },
-        { id: 'versatil', label: 'Versátil para todo el año (Día y Noche)', desc: 'Tu fragancia comodín para cualquier momento', icon: '🔄' }
+        { id: 'frio', label: 'Clima frío, templado o noches frescas', desc: 'Donde los aromas densos y cálidos brillan', icon: CloudSnow },
+        { id: 'calor', label: 'Días calurosos de verano y sol', desc: 'Aromas que refrescan y no sofocan', icon: Sun },
+        { id: 'versatil', label: 'Versátil para todo el año (Día y Noche)', desc: 'Tu fragancia comodín para cualquier momento', icon: Compass }
       ]
     }
   ];
@@ -180,15 +189,17 @@ export default function ScentQuizModal({ perfumes, onClose, onSelectPerfume, onA
 
               {/* Options Grid */}
               <div className="grid grid-cols-1 gap-3">
-                {questions[step - 1].options.map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => handleSelectOption(questions[step - 1].id, opt.id)}
-                    className="p-4 rounded-2xl bg-obsidian-850 hover:bg-obsidian-750 border border-white/10 hover:border-gold-500/50 flex items-center gap-4 text-left transition-all duration-200 group hover:scale-[1.01] active:scale-[0.99]"
-                  >
-                    <span className="text-2xl p-2 rounded-xl bg-black/40 border border-white/5 group-hover:scale-110 transition-transform">
-                      {opt.icon}
-                    </span>
+                {questions[step - 1].options.map((opt) => {
+                  const Icon = opt.icon;
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => handleSelectOption(questions[step - 1].id, opt.id)}
+                      className="p-4 rounded-2xl bg-obsidian-850 hover:bg-obsidian-750 border border-white/10 hover:border-gold-500/50 flex items-center gap-4 text-left transition-all duration-200 group hover:scale-[1.01] active:scale-[0.99]"
+                    >
+                      <div className="p-3 rounded-xl bg-gold-500/10 border border-gold-500/20 text-gold-400 group-hover:scale-110 group-hover:bg-gold-500/20 transition-all flex items-center justify-center">
+                        <Icon className="w-5 h-5" />
+                      </div>
                     <div className="flex-1">
                       <span className="font-semibold text-sm text-white group-hover:text-gold-300 transition-colors block">
                         {opt.label}
@@ -199,8 +210,9 @@ export default function ScentQuizModal({ perfumes, onClose, onSelectPerfume, onA
                     </div>
                     <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-gold-400 group-hover:translate-x-1 transition-all" />
                   </button>
-                ))}
-              </div>
+                );
+              })}
+            </div>
             </div>
           )}
 

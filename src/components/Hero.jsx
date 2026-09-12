@@ -27,7 +27,7 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
             >
               <Sparkles className="w-4 h-4 text-gold-400 group-hover:rotate-12 transition-transform" />
               <span className="text-xs uppercase tracking-[0.25em] text-gold-300 font-medium">
-                Catálogo Oficial 2026 • Ver Historia ❤️
+                Catálogo Oficial 2026 • Ver Dedicatoria
               </span>
             </button>
 

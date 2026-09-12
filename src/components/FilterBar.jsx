@@ -35,10 +35,10 @@ export default function FilterBar({
   ];
 
   const moments = [
-    { id: 'all', label: 'Cualquier Momento' },
-    { id: 'dia', label: '☀️ Día / Oficina' },
-    { id: 'noche', label: '🌙 Noche / Citas / Fiesta' },
-    { id: 'versatil', label: '✨ Versátil (Día y Noche)' },
+    { id: 'all', label: 'Cualquier Momento', icon: null },
+    { id: 'dia', label: 'Día / Oficina', icon: Sun },
+    { id: 'noche', label: 'Noche / Citas / Fiesta', icon: Moon },
+    { id: 'versatil', label: 'Versátil (Día y Noche)', icon: Sparkles },
   ];
 
   const categories = [
@@ -136,17 +136,19 @@ export default function FilterBar({
           <div className="flex items-center gap-1.5 bg-obsidian-900 border border-white/10 rounded-2xl p-1">
             {moments.map((m) => {
               const isSelected = selectedMoment === m.id;
+              const Icon = m.icon;
               return (
                 <button
                   key={m.id}
                   onClick={() => setSelectedMoment(m.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-white/15 text-gold-300 shadow-sm border border-gold-500/30'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  {m.label}
+                  {Icon && <Icon className="w-3.5 h-3.5 text-gold-400" />}
+                  <span>{m.label}</span>
                 </button>
               );
             })}
