@@ -51,14 +51,14 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-              <a
-                href="#catalogo"
+              <button
+                type="button"
                 onClick={onExplore}
                 className="group relative inline-flex items-center gap-3 px-7 py-3.5 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-black font-semibold text-sm tracking-wider uppercase rounded-full shadow-luxury hover:shadow-luxury-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
               >
                 <span>Explorar Colección</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </button>
 
               <button
                 onClick={onOpenQuiz}

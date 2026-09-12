@@ -403,17 +403,20 @@ export default function CatalogView({
         <div className="pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Desktop Left Sidebar Filters */}
-          <aside className="hidden lg:block lg:col-span-3 space-y-6 sticky top-28 bg-obsidian-900/70 p-6 rounded-3xl border border-white/10 backdrop-blur-xl">
+          <aside className="hidden lg:block lg:col-span-3 space-y-5 sticky top-24 max-h-[calc(100vh-6.5rem)] overflow-y-auto pr-2 bg-obsidian-900/80 p-5 rounded-3xl border border-white/10 backdrop-blur-xl">
             
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <span className="font-cinzel text-sm font-bold uppercase tracking-widest text-white flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-gold-400" />
-                Filtros Boutique
-              </span>
+            <div className="flex items-center justify-between pb-3.5 border-b border-white/10 gap-2">
+              <div className="flex items-center gap-2 shrink-0">
+                <SlidersHorizontal className="w-4 h-4 text-gold-400 shrink-0" />
+                <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-white">
+                  Filtros
+                </span>
+              </div>
               {hasActiveFilters && (
                 <button
+                  type="button"
                   onClick={handleResetFilters}
-                  className="text-[11px] text-rose-400 hover:text-rose-300"
+                  className="text-[11px] text-rose-400 hover:text-rose-300 font-medium px-2 py-0.5 rounded-md bg-rose-500/10 border border-rose-500/20 transition-all shrink-0 hover:bg-rose-500/20"
                 >
                   Restablecer
                 </button>
@@ -561,7 +564,33 @@ export default function CatalogView({
           </aside>
 
           {/* Right Perfume Grid / List Area */}
-          <div className="lg:col-span-9 space-y-8">
+          <div className="lg:col-span-9 space-y-6 min-h-[750px]">
+            
+            {/* Quick Horizontal Brand Filter Bar */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+              <span className="text-xs uppercase tracking-wider text-slate-400 font-medium whitespace-nowrap mr-1 flex items-center gap-1.5">
+                Marcas:
+              </span>
+              {brands.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() => setSelectedBrand(b.id)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide whitespace-nowrap transition-all ${
+                    selectedBrand === b.id
+                      ? 'bg-gold-500 text-black shadow-gold-sm font-semibold'
+                      : 'bg-obsidian-900 hover:bg-obsidian-850 text-slate-300 border border-white/10'
+                  }`}
+                >
+                  <span>{b.id === 'Todas' ? 'Todas' : b.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                    selectedBrand === b.id ? 'bg-black text-gold-400 font-bold' : 'bg-white/10 text-slate-400'
+                  }`}>
+                    {b.count}
+                  </span>
+                </button>
+              ))}
+            </div>
             
             {filteredPerfumes.length === 0 ? (
               <div className="py-24 text-center space-y-4 rounded-3xl bg-obsidian-900/60 border border-white/10 p-8">

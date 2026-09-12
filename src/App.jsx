@@ -364,11 +364,11 @@ export default function App() {
         href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 left-6 z-40 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-2"
-        title="Chat de WhatsApp"
+        className="fixed bottom-6 left-6 z-40 h-14 w-14 group-hover:w-auto rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-[0_8px_30px_rgba(16,185,129,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 group flex items-center justify-center group-hover:px-4.5 overflow-hidden"
+        title="Chat de WhatsApp Directo"
       >
-        <MessageCircle className="w-6 h-6 fill-white" />
-        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 text-xs font-bold font-sans">
+        <MessageCircle className="w-6 h-6 fill-white shrink-0" />
+        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2.5 transition-all duration-300 text-xs font-bold font-sans">
           WhatsApp Directo
         </span>
       </a>
