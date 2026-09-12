@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Sparkles, 
   ShoppingBag, 
   Heart, 
   Search, 
@@ -8,7 +7,7 @@ import {
   Scale, 
   Menu, 
   X,
-  Compass
+  Sparkles
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -29,120 +28,125 @@ export default function Navbar({
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
       scrolled 
-        ? 'bg-obsidian-950/90 backdrop-blur-xl border-b border-gold-500/20 shadow-2xl py-3' 
-        : 'bg-gradient-to-b from-obsidian-950 via-obsidian-950/60 to-transparent py-5'
+        ? 'bg-obsidian-950/95 backdrop-blur-2xl border-b border-gold-500/20 shadow-2xl py-3' 
+        : 'bg-gradient-to-b from-obsidian-950/90 via-obsidian-950/40 to-transparent py-5'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
         
-        {/* Brand / Logo */}
-        <a href="#" className="flex items-center gap-3 group">
+        {/* Left Zone: Brand & Monogram Logo */}
+        <a href="#" className="flex items-center gap-3.5 group shrink-0">
           <img 
             src="/assets/brand/logo.png" 
             alt="Joufab Logo" 
-            className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_2px_12px_rgba(212,175,55,0.4)] group-hover:scale-105 transition-transform duration-300"
+            className="h-10 sm:h-11 w-auto object-contain drop-shadow-[0_2px_12px_rgba(212,175,55,0.35)] group-hover:scale-105 transition-transform duration-300"
           />
-          <div className="hidden sm:block">
-            <span className="block font-cinzel text-lg tracking-[0.25em] text-white font-bold group-hover:text-gold-400 transition-colors">
+          <div className="flex flex-col">
+            <span className="font-cinzel text-lg sm:text-xl tracking-[0.28em] text-white font-bold group-hover:text-gold-400 transition-colors leading-none">
               JOUFAB
             </span>
-            <span className="block text-[9px] uppercase tracking-[0.35em] text-gold-400/90 font-sans -mt-0.5">
+            <span className="text-[9px] uppercase tracking-[0.38em] text-gold-400 font-sans mt-1 leading-none">
               Perfume House
             </span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wider uppercase text-slate-300">
+        {/* Center Zone: Clean, Spacious Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-8 xl:gap-11 text-xs xl:text-[13px] font-semibold tracking-[0.22em] uppercase text-slate-300">
           <a 
             href="#catalogo" 
-            className="hover:text-gold-400 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-gold-500 hover:after:w-full after:transition-all duration-300"
+            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group"
           >
-            Colección
+            <span>Colección</span>
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
           </a>
 
           <button 
             onClick={onOpenQuiz}
-            className="flex items-center gap-1.5 hover:text-gold-400 transition-colors py-1 text-gold-300 group"
+            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5 text-gold-300/90 hover:text-gold-300"
           >
-            <Sparkles className="w-4 h-4 text-gold-400 group-hover:rotate-12 transition-transform" />
+            <Sparkles className="w-3.5 h-3.5 text-gold-400 group-hover:rotate-12 transition-transform" />
             <span>Test Olfativo</span>
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
           </button>
 
           <button 
-            onClick={onOpenComparator}
-            className="flex items-center gap-1.5 hover:text-gold-400 transition-colors py-1 relative"
+            onClick={onOpenLookbook}
+            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5"
           >
-            <Scale className="w-4 h-4 text-slate-400 group-hover:text-gold-400" />
-            <span>Comparador</span>
+            <BookOpen className="w-3.5 h-3.5 text-slate-400 group-hover:text-gold-400 transition-colors" />
+            <span>Catálogo PDF</span>
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
+          </button>
+
+          <button 
+            onClick={onOpenStory}
+            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5"
+          >
+            <Heart className="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-400 transition-colors" />
+            <span>Nuestra Historia</span>
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
+          </button>
+        </nav>
+
+        {/* Right Zone: Interactive Utility Bar */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          
+          {/* Elegant Search Input */}
+          <div className="relative hidden md:block">
+            <input 
+              type="text"
+              placeholder="Buscar fragancia..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="w-32 lg:w-40 xl:w-48 focus:w-56 bg-obsidian-900/80 border border-white/15 focus:border-gold-500/70 rounded-full py-1.5 pl-8 pr-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-gold-500/30 transition-all duration-300"
+            />
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
+          </div>
+
+          {/* Comparador Quick Action */}
+          <button
+            onClick={onOpenComparator}
+            title="Comparador de fragancias"
+            className="relative p-2 sm:p-2.5 text-slate-300 hover:text-gold-400 transition-colors rounded-full hover:bg-white/5 border border-transparent hover:border-white/10"
+          >
+            <Scale className="w-4 h-4" />
             {comparatorCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.2 text-[10px] bg-gold-500 text-black font-bold rounded-full">
+              <span className="absolute -top-0.5 -right-0.5 bg-gold-500 text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-gold-sm">
                 {comparatorCount}
               </span>
             )}
           </button>
 
-          <button 
-            onClick={onOpenLookbook}
-            className="flex items-center gap-1.5 hover:text-gold-400 transition-colors py-1 text-slate-300"
-          >
-            <BookOpen className="w-4 h-4 text-slate-400" />
-            <span>Catálogo PDF</span>
-          </button>
-
-          <button 
-            onClick={onOpenStory}
-            className="flex items-center gap-1.5 hover:text-rose-400 transition-colors py-1 text-slate-300"
-          >
-            <Heart className="w-3.5 h-3.5 text-rose-400" />
-            <span>Nuestra Historia</span>
-          </button>
-        </nav>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-4">
-          
-          {/* Quick Search */}
-          <div className="relative hidden lg:block w-48 xl:w-60">
-            <input 
-              type="text"
-              placeholder="Buscar perfume, nota..."
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full bg-obsidian-850/80 border border-white/10 rounded-full py-1.5 pl-9 pr-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-gold-500/60 focus:ring-1 focus:ring-gold-500/30 transition-all"
-            />
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
-          </div>
-
-          {/* Favorites Button */}
+          {/* Favorites Quick Action */}
           <button 
             onClick={onOpenFavorites}
-            className="relative p-2 text-slate-300 hover:text-rose-400 transition-colors rounded-full hover:bg-white/5"
-            title="Favoritos"
+            className="relative p-2 sm:p-2.5 text-slate-300 hover:text-rose-400 transition-colors rounded-full hover:bg-white/5 border border-transparent hover:border-white/10"
+            title="Fragancias Favoritas"
           >
-            <Heart className="w-5 h-5" />
+            <Heart className="w-4 h-4" />
             {favoriteCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
+              <span className="absolute -top-0.5 -right-0.5 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
                 {favoriteCount}
               </span>
             )}
           </button>
 
-          {/* Cart / WhatsApp Order Drawer Button */}
+          {/* WhatsApp Order Drawer Button */}
           <button 
             onClick={onOpenCart}
-            className="relative flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 text-black font-semibold text-xs tracking-wider rounded-full shadow-gold-sm hover:brightness-110 active:scale-95 transition-all"
+            className="relative flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 text-black font-semibold text-xs tracking-wider uppercase rounded-full shadow-gold-sm hover:brightness-110 active:scale-95 transition-all ml-1"
           >
-            <ShoppingBag className="w-4 h-4" />
-            <span className="hidden sm:inline">Pedido</span>
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span className="font-bold hidden sm:inline">Pedido</span>
             {cartCount > 0 && (
               <span className="bg-obsidian-950 text-gold-400 px-1.5 py-0.5 rounded-full text-[10px] font-bold">
                 {cartCount}
@@ -153,7 +157,7 @@ export default function Navbar({
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-300 hover:text-white"
+            className="lg:hidden p-2 text-slate-300 hover:text-white rounded-lg hover:bg-white/5 ml-1"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -162,30 +166,31 @@ export default function Navbar({
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-obsidian-900/95 backdrop-blur-2xl border-b border-gold-500/20 px-6 py-5 space-y-4 animate-fadeIn">
+        <div className="lg:hidden bg-obsidian-950/98 backdrop-blur-2xl border-b border-gold-500/20 px-6 py-6 space-y-4 animate-fadeIn">
           <div className="relative mb-3">
             <input 
               type="text"
-              placeholder="Buscar perfume, nota..."
+              placeholder="Buscar fragancia, nota..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full bg-obsidian-800 border border-white/10 rounded-xl py-2 pl-9 pr-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-gold-500"
+              className="w-full bg-obsidian-900 border border-white/15 rounded-xl py-2.5 pl-10 pr-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-gold-500"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
           </div>
 
           <nav className="flex flex-col space-y-3 text-sm font-medium tracking-wider uppercase">
             <a 
               href="#catalogo" 
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-slate-200 hover:text-gold-400 border-b border-white/5"
+              className="py-2.5 text-slate-200 hover:text-gold-400 border-b border-white/5 flex items-center justify-between"
             >
-              Colección (15 Fragancias)
+              <span>Colección Oficial</span>
+              <span className="text-[11px] text-gold-400 font-mono">15 Perfumes</span>
             </a>
 
             <button 
               onClick={() => { onOpenQuiz(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2 py-2 text-gold-300 hover:text-gold-400 text-left border-b border-white/5"
+              className="flex items-center gap-2.5 py-2.5 text-gold-300 hover:text-gold-400 text-left border-b border-white/5"
             >
               <Sparkles className="w-4 h-4 text-gold-400" />
               <span>Test Olfativo: Encuentra tu Perfume</span>
@@ -193,9 +198,9 @@ export default function Navbar({
 
             <button 
               onClick={() => { onOpenComparator(); setMobileMenuOpen(false); }}
-              className="flex items-center justify-between py-2 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
+              className="flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
             >
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2.5">
                 <Scale className="w-4 h-4 text-slate-400" />
                 Comparador de Fragancias
               </span>
@@ -208,7 +213,7 @@ export default function Navbar({
 
             <button 
               onClick={() => { onOpenLookbook(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2 py-2 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
+              className="flex items-center gap-2.5 py-2.5 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
             >
               <BookOpen className="w-4 h-4 text-slate-400" />
               <span>Ver Catálogo PDF 2026 (18 Págs)</span>
@@ -216,7 +221,7 @@ export default function Navbar({
 
             <button 
               onClick={() => { onOpenStory(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2 py-2 text-rose-300 hover:text-rose-400 text-left"
+              className="flex items-center gap-2.5 py-2.5 text-rose-300 hover:text-rose-400 text-left"
             >
               <Heart className="w-4 h-4 text-rose-400" />
               <span>Nuestra Historia (Dedicatoria a Faby)</span>
