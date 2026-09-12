@@ -43,10 +43,8 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
-              Explora una cuidada selección de las 15 fragancias árabes y de diseñador más aclamadas del mundo.
-              Desde notas gourmand cremosas de café y canela hasta explosiones gélidas de manzana y frescura marina.
-              Encuentra tu firma olfativa hoy mismo.
+            <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+              Las 15 fragancias árabes y de autor más codiciadas. Concentración extrema, fijación prolongada y presencia inolvidable.
             </p>
 
             {/* Action Buttons */}
@@ -61,11 +59,12 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
               </button>
 
               <button
+                type="button"
                 onClick={onOpenQuiz}
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-white/10 border border-gold-500/40 text-gold-200 font-medium text-sm tracking-wider uppercase rounded-full backdrop-blur-md hover:border-gold-400 transition-all duration-300 group"
               >
                 <Sparkles className="w-4 h-4 text-gold-400 group-hover:rotate-12 transition-transform" />
-                <span>¿No sabes cuál elegir? Haz el Test</span>
+                <span>Test Olfativo</span>
               </button>
             </div>
 

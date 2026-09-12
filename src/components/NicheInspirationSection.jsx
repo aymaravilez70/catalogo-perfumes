@@ -69,16 +69,15 @@ export default function NicheInspirationSection({ onNavigateToCatalogWithFilter 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-[0.25em]">
-            <Sparkles className="w-3.5 h-3.5" />
-            El Secreto de la Perfumería Árabe
-          </div>
-          <h2 className="font-cinzel text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            EL ARTE DE LA <span className="gold-text-gradient italic">ALTA INSPIRACIÓN</span>
+        <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
+          <span className="text-[10px] uppercase tracking-[0.35em] text-gold-400 font-bold block">
+            Equivalencias de Ultra Lujo
+          </span>
+          <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            ALTA INSPIRACIÓN
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-            Las grandes casas árabes —<span className="text-white font-medium">Lattafa, Rasasi, Armaf, Afnan y Dumont</span>— revolucionaron el mercado mundial al reformular los aromas más exclusivos de \$300 y \$500 (Kilian, Creed, Louis Vuitton, Dior) con concentraciones extremas (Eau de Parfum / Extrait) y fijaciones de hasta 14 horas en piel.
+          <p className="text-sm text-slate-300 font-light">
+            Formulaciones de alta concentración inspiradas en los iconos más exclusivos de la perfumería mundial.
           </p>
         </div>
 

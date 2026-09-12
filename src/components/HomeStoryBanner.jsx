@@ -29,24 +29,24 @@ export default function HomeStoryBanner({ onOpenStory, onOpenLookbook }) {
               </div>
 
               <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-                Joufab nace como un tributo a la elegancia eterna y la memoria imborrable de Faby. Cada fragancia de este catálogo 2026 fue seleccionada minuciosamente para evocar carácter, distinción y una presencia que nunca se desvanece.
+                Joufab nace como un tributo a la memoria de Faby. Fragancias seleccionadas para evocar distinción y una presencia que nunca se desvanece.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-4 pt-1">
                 <button
                   onClick={onOpenStory}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 text-xs font-semibold tracking-wider uppercase transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 text-xs font-semibold tracking-wider uppercase transition-all duration-300"
                 >
-                  <Heart className="w-4 h-4 text-rose-400" />
-                  <span>Leer Carta de Fundación Completa</span>
+                  <Heart className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Carta de Fundación</span>
                 </button>
 
                 <button
                   onClick={onOpenLookbook}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 border border-white/15 text-xs font-semibold tracking-wider uppercase transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 border border-white/15 text-xs font-semibold tracking-wider uppercase transition-all duration-300"
                 >
-                  <BookOpen className="w-4 h-4 text-gold-400" />
-                  <span>Ver Catálogo PDF 2026 (18 Páginas)</span>
+                  <BookOpen className="w-3.5 h-3.5 text-gold-400" />
+                  <span>Catálogo PDF 2026</span>
                 </button>
               </div>
 

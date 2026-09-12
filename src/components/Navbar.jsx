@@ -91,29 +91,11 @@ export default function Navbar({
           </button>
 
           <button 
-            onClick={onOpenQuiz}
-            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5 text-gold-300/90 hover:text-gold-300"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-gold-400 group-hover:rotate-12 transition-transform" />
-            <span>Test Olfativo</span>
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
-          </button>
-
-          <button 
             onClick={onOpenLookbook}
             className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5"
           >
             <BookOpen className="w-3.5 h-3.5 text-slate-400 group-hover:text-gold-400 transition-colors" />
             <span>Catálogo PDF</span>
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
-          </button>
-
-          <button 
-            onClick={onOpenStory}
-            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5"
-          >
-            <Heart className="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-400 transition-colors" />
-            <span>Nuestra Historia</span>
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
           </button>
         </nav>
@@ -225,14 +207,6 @@ export default function Navbar({
             </button>
 
             <button 
-              onClick={() => { onOpenQuiz(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2.5 py-2.5 text-gold-300 hover:text-gold-400 text-left border-b border-white/5"
-            >
-              <Sparkles className="w-4 h-4 text-gold-400" />
-              <span>Test Olfativo: Encuentra tu Perfume</span>
-            </button>
-
-            <button 
               onClick={() => { onOpenComparator(); setMobileMenuOpen(false); }}
               className="flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
             >
@@ -249,18 +223,10 @@ export default function Navbar({
 
             <button 
               onClick={() => { onOpenLookbook(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2.5 py-2.5 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
+              className="flex items-center gap-2.5 py-2.5 text-slate-200 hover:text-gold-400 text-left"
             >
               <BookOpen className="w-4 h-4 text-slate-400" />
               <span>Ver Catálogo PDF 2026 (18 Págs)</span>
-            </button>
-
-            <button 
-              onClick={() => { onOpenStory(); setMobileMenuOpen(false); }}
-              className="flex items-center gap-2.5 py-2.5 text-rose-300 hover:text-rose-400 text-left"
-            >
-              <Heart className="w-4 h-4 text-rose-400" />
-              <span>Nuestra Historia (Dedicatoria a Faby)</span>
             </button>
           </nav>
         </div>
