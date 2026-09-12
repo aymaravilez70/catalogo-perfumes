@@ -86,6 +86,7 @@ export default function App() {
       const { data, error } = await supabase
         .from('perfumes')
         .select('*')
+        .order('created_at', { ascending: false })
         .order('num', { ascending: true });
 
       if (error) {
@@ -113,6 +114,19 @@ export default function App() {
             }
           };
         });
+
+        // Sort so newest additions are first, followed by original catalog in num order
+        normalized.sort((a, b) => {
+          const timeA = new Date(a.created_at || 0).getTime();
+          const timeB = new Date(b.created_at || 0).getTime();
+          if (timeB !== timeA) {
+            return timeB - timeA;
+          }
+          const numA = parseInt(a.num, 10) || 999;
+          const numB = parseInt(b.num, 10) || 999;
+          return numA - numB;
+        });
+
         setPerfumes(normalized.filter(p => p.is_active !== false));
       }
     } catch (err) {

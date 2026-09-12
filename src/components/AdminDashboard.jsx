@@ -93,7 +93,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       const { data, error } = await supabase
         .from('perfumes')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .order('num', { ascending: true });
 
       if (error) throw error;
       if (data) {
@@ -117,6 +118,19 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
             }
           };
         });
+
+        // Ensure newly added products are at the top, followed by 01..15
+        normalized.sort((a, b) => {
+          const timeA = new Date(a.created_at || 0).getTime();
+          const timeB = new Date(b.created_at || 0).getTime();
+          if (timeB !== timeA) {
+            return timeB - timeA;
+          }
+          const numA = parseInt(a.num, 10) || 999;
+          const numB = parseInt(b.num, 10) || 999;
+          return numA - numB;
+        });
+
         setProducts(normalized);
       }
     } catch (err) {
@@ -352,6 +366,9 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         tags: formData.tags.split(',').map(s => s.trim()).filter(Boolean),
         accords: formData.accords.split(',').map(s => s.trim()).filter(Boolean),
         is_active: formData.is_active,
+        created_at: isEditing 
+          ? (products.find(p => p.id === currentEditId)?.created_at || new Date().toISOString())
+          : new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
 

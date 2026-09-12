@@ -171,7 +171,17 @@ export default function CatalogView({
 
     // Sorting
     result = [...result].sort((a, b) => {
-      if (sortBy === 'featured') return parseInt(a.num) - parseInt(b.num);
+      if (sortBy === 'featured') {
+        const timeA = new Date(a.created_at || 0).getTime();
+        const timeB = new Date(b.created_at || 0).getTime();
+        if (timeB !== timeA) {
+          return timeB - timeA; // Newly added products appear FIRST
+        }
+        return (parseInt(a.num, 10) || 999) - (parseInt(b.num, 10) || 999);
+      }
+      if (sortBy === 'catalog_num') {
+        return (parseInt(a.num, 10) || 999) - (parseInt(b.num, 10) || 999);
+      }
       if (sortBy === 'rating') return (b.rating || 4.8) - (a.rating || 4.8);
       if (sortBy === 'price_asc') return (a.price || 50) - (b.price || 50);
       if (sortBy === 'price_desc') return (b.price || 50) - (a.price || 50);
@@ -367,8 +377,11 @@ export default function CatalogView({
                 onChange={(e) => setSortBy(e.target.value)}
                 className="bg-obsidian-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-gold-500 cursor-pointer"
               >
-                <option value="featured">Catálogo Oficial (#01 a #15)</option>
+                <option value="featured">Nuevos Ingresos Primero (Recomendado)</option>
+                <option value="catalog_num">Catálogo Numérico (#01 a #15)</option>
                 <option value="rating">Mejor Calificación (Rating)</option>
+                <option value="price_asc">Precio: Menor a Mayor</option>
+                <option value="price_desc">Precio: Mayor a Menor</option>
                 <option value="name_asc">Alfabético (A - Z)</option>
               </select>
             </div>
