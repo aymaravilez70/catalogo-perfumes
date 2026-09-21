@@ -24,6 +24,10 @@ export default function CartDrawer({
   const [customerNotes, setCustomerNotes] = useState('');
 
   const totalItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = cartItems.reduce((acc, item) => {
+    const price = Number(item.price) || 50;
+    return acc + price * item.quantity;
+  }, 0);
 
   const handleSendWhatsApp = () => {
     if (cartItems.length === 0) return;
@@ -35,8 +39,12 @@ export default function CartDrawer({
     message += `\n*Fragancias Solicitadas:*\n`;
 
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. *#${item.num} ${item.name}* (${item.brand})\n   • Cantidad: ${item.quantity} unidad(es)\n   • Familia: ${item.category}\n\n`;
+      const itemPrice = Number(item.price) || 50;
+      const subtotal = itemPrice * item.quantity;
+      message += `${index + 1}. *#${item.num} ${item.name}* (${item.brand})\n   • Cantidad: ${item.quantity} unidad(es)\n   • Precio: $${itemPrice.toFixed(2)} c/u (Subtotal: $${subtotal.toFixed(2)})\n   • Familia: ${item.category}\n\n`;
     });
+
+    message += `*Total Estimado:* $${totalPrice.toFixed(2)}\n\n`;
 
     if (customerNotes.trim()) {
       message += `*Notas / Ubicación de entrega:*\n${customerNotes.trim()}\n\n`;
@@ -109,23 +117,34 @@ export default function CartDrawer({
                         {item.category}
                       </span>
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center gap-2 mt-2">
-                        <button
-                          onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                          className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300"
-                        >
-                          <Minus className="w-3 h-3" />
-                        </button>
-                        <span className="text-xs font-mono font-bold text-white px-2">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                          className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300"
-                        >
-                          <Plus className="w-3 h-3" />
-                        </button>
+                      {/* Quantity Controls & Price */}
+                      <div className="flex items-center justify-between gap-2 mt-2 pt-1 border-t border-white/5">
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                            className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300"
+                          >
+                            <Minus className="w-3 h-3" />
+                          </button>
+                          <span className="text-xs font-mono font-bold text-white px-1">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                            className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300"
+                          >
+                            <Plus className="w-3 h-3" />
+                          </button>
+                        </div>
+
+                        <div className="text-right">
+                          <span className="text-[10px] text-slate-400 block leading-none mb-0.5">
+                            ${Number(item.price || 50).toFixed(2)} c/u
+                          </span>
+                          <span className="font-mono text-xs font-bold text-gold-400 leading-none">
+                            ${(Number(item.price || 50) * item.quantity).toFixed(2)}
+                          </span>
+                        </div>
                       </div>
                     </div>
 
@@ -181,9 +200,15 @@ export default function CartDrawer({
           {/* Footer Checkout Button */}
           {cartItems.length > 0 && (
             <div className="p-6 border-t border-white/10 bg-obsidian-950 space-y-3">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Total de Fragancias:</span>
-                <span className="font-mono font-bold text-gold-400 text-sm">{totalItemsCount} unidad(es)</span>
+              <div className="space-y-1.5 pb-1">
+                <div className="flex items-center justify-between text-xs text-slate-400">
+                  <span>Total de Fragancias:</span>
+                  <span className="font-mono font-bold text-slate-200">{totalItemsCount} unidad(es)</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-300 font-medium">Total Estimado:</span>
+                  <span className="font-mono font-bold text-gold-400 text-base">${totalPrice.toFixed(2)}</span>
+                </div>
               </div>
 
               <button

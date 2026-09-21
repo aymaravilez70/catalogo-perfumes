@@ -99,9 +99,14 @@ export default function ComparatorModal({
                     <h3 className="font-cinzel text-lg font-bold text-white">
                       {perfume.name}
                     </h3>
-                    <span className="inline-block px-2 py-0.5 rounded bg-white/5 text-[11px] text-gold-300 font-medium mt-1">
-                      {perfume.category}
-                    </span>
+                    <div className="flex items-center justify-center gap-2 mt-1.5">
+                      <span className="inline-block px-2 py-0.5 rounded bg-white/5 text-[11px] text-gold-300 font-medium">
+                        {perfume.category}
+                      </span>
+                      <span className="font-mono text-xs font-bold text-gold-400">
+                        ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Notes comparison */}
@@ -184,7 +189,7 @@ export default function ComparatorModal({
                     className="w-full py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-black font-semibold text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-all shadow"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>Agregar a Pedido</span>
+                    <span>Agregar a Pedido • ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}</span>
                   </button>
 
                 </div>

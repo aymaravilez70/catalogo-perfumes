@@ -40,8 +40,9 @@ export default function PerfumeModal({
   };
 
   const handleWhatsAppInquiry = () => {
+    const priceFormatted = perfume.price ? `$${Number(perfume.price).toFixed(2)}` : '$50.00';
     const text = encodeURIComponent(
-      `¡Hola Joufab! Me interesa información y disponibilidad de la fragancia *#${perfume.num} ${perfume.name}* (${perfume.brand}). ¿Tienen unidades disponibles?`
+      `¡Hola Joufab! Me interesa información y disponibilidad de la fragancia *#${perfume.num} ${perfume.name}* (${perfume.brand}) - Precio: *${priceFormatted}*. ¿Tienen unidades disponibles?`
     );
     window.open(`https://wa.me/593984526114?text=${text}`, '_blank');
   };
@@ -86,6 +87,12 @@ export default function PerfumeModal({
               <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white leading-none">
                 {perfume.name}
               </h2>
+            </div>
+            <div className="ml-2 sm:ml-4 px-3 py-1 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-baseline gap-1.5">
+              <span className="text-[10px] uppercase text-slate-400 font-semibold">Precio</span>
+              <span className="font-mono text-base sm:text-lg font-bold text-gold-400">
+                ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+              </span>
             </div>
           </div>
 
@@ -468,7 +475,7 @@ export default function PerfumeModal({
                 ) : (
                   <>
                     <ShoppingBag className="w-4 h-4" />
-                    <span>Agregar a mi Pedido</span>
+                    <span>Agregar a mi Pedido • ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}</span>
                   </>
                 )}
               </button>

@@ -663,6 +663,9 @@ export default function CatalogView({
                         <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-slate-300 font-bold">
                           #{perfume.num}
                         </div>
+                        <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-gold-400 font-bold border border-gold-500/30">
+                          ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+                        </div>
                       </div>
 
                       {/* Content Area */}
@@ -721,12 +724,19 @@ export default function CatalogView({
                       </div>
 
                       {/* Right Action Column */}
-                      <div className="flex sm:flex-col items-center gap-2 shrink-0 w-full sm:w-auto">
+                      <div className="flex sm:flex-col items-center justify-between sm:justify-center gap-2.5 shrink-0 w-full sm:w-36 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-white/10 sm:pl-5">
+                        <div className="text-left sm:text-center">
+                          <span className="text-[9px] text-slate-400 uppercase tracking-widest block font-semibold leading-none mb-1">Precio</span>
+                          <span className="font-mono text-lg font-bold text-gold-400 leading-none">
+                            ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+                          </span>
+                        </div>
+
                         <button
                           onClick={() => onAddToCart(perfume)}
-                          className="flex-1 sm:flex-initial flex items-center justify-center gap-2 py-3 px-5 rounded-2xl bg-gold-500 hover:bg-gold-400 text-black font-semibold text-xs tracking-wider uppercase shadow-gold-sm transition-all active:scale-95"
+                          className="flex-1 sm:w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gold-500 hover:bg-gold-400 text-black font-semibold text-xs tracking-wider uppercase shadow-gold-sm transition-all active:scale-95"
                         >
-                          <ShoppingBag className="w-4 h-4" />
+                          <ShoppingBag className="w-3.5 h-3.5" />
                           <span>Pedir</span>
                         </button>
 

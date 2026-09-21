@@ -269,9 +269,12 @@ export default function ScentQuizModal({ perfumes, onClose, onSelectPerfume, onA
                         {item.notes.salida.join(', ')}
                       </p>
 
-                      <div className="mt-1 flex items-center gap-2">
+                      <div className="mt-1 flex items-center justify-between pr-2">
                         <span className="text-xs font-mono font-bold text-gold-400">
                           {item.matchPercentage}% de afinidad
+                        </span>
+                        <span className="font-mono text-xs font-bold text-gold-300">
+                          ${item.price ? Number(item.price).toFixed(2) : '50.00'}
                         </span>
                       </div>
                     </div>

@@ -129,7 +129,11 @@ export default function PerfumeCard({
           className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
         />
 
-        {/* Badge in image */}
+        {/* Badge & Price in image */}
+        <div className="absolute top-2.5 right-2.5 z-10 px-2.5 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-gold-500/40 font-mono text-[11px] font-bold text-gold-400 shadow-md">
+          ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+        </div>
+
         {perfume.badge && (
           <div className="absolute bottom-3 left-3 z-10 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-gold-500/30 text-[10px] text-gold-300 font-medium">
             {perfume.badge}
@@ -190,14 +194,20 @@ export default function PerfumeCard({
           </div>
         </div>
 
-        {/* Action Button: Add to Cart */}
-        <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+        {/* Action Button: Price & Add to Cart */}
+        <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+          <div>
+            <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-semibold leading-none mb-1">Precio</span>
+            <span className="font-mono text-base font-bold text-gold-400 leading-none">
+              ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+            </span>
+          </div>
           <button
             onClick={() => onAddToCart(perfume)}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 bg-white/5 hover:bg-gold-500 text-slate-200 hover:text-black font-semibold text-xs tracking-wider uppercase rounded-xl border border-white/10 hover:border-gold-500 transition-all duration-200 active:scale-95"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-4 bg-white/5 hover:bg-gold-500 text-slate-200 hover:text-black font-semibold text-xs tracking-wider uppercase rounded-xl border border-white/10 hover:border-gold-500 transition-all duration-200 active:scale-95"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            <span>Agregar a Pedido</span>
+            <span>Pedir</span>
           </button>
         </div>
 

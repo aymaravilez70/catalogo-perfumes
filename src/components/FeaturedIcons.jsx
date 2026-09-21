@@ -114,6 +114,11 @@ export default function FeaturedIcons({
                       #{perfume.num}
                     </div>
 
+                    {/* Price Badge */}
+                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-gold-400 font-bold border border-gold-500/30">
+                      ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+                    </div>
+
                     {/* Subtle Hover Lens Badge */}
                     <div className="absolute inset-0 bg-black/30 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                       <span className="px-3.5 py-1.5 rounded-full bg-gold-500 text-black font-semibold text-[11px] tracking-wider uppercase shadow-lg">
@@ -140,6 +145,12 @@ export default function FeaturedIcons({
                         </span>
                       </div>
                     )}
+
+                    <div className="pt-1 flex items-center justify-center">
+                      <span className="font-mono text-xs font-bold text-gold-400">
+                        ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
+                      </span>
+                    </div>
                   </div>
 
                 </div>
