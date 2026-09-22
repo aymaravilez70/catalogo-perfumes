@@ -99,6 +99,15 @@ export default function Navbar({
             <span>Catálogo PDF</span>
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
           </button>
+
+          <button 
+            onClick={onOpenQuiz}
+            className="text-gold-400/90 hover:text-gold-300 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5 cursor-pointer font-bold"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+            <span>Asesor Olfativo</span>
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
+          </button>
         </nav>
 
         {/* Right Zone: Interactive Utility Bar */}
@@ -226,6 +235,19 @@ export default function Navbar({
                   {comparatorCount}
                 </span>
               )}
+            </button>
+
+            <button 
+              onClick={() => { onOpenQuiz(); setMobileMenuOpen(false); }}
+              className="flex items-center justify-between py-2.5 text-gold-400 hover:text-gold-300 text-left border-b border-white/5 font-semibold"
+            >
+              <span className="flex items-center gap-2.5">
+                <Sparkles className="w-4 h-4 text-gold-400" />
+                Asesor Olfativo & Regalos
+              </span>
+              <span className="px-2 py-0.5 text-[10px] bg-gold-500/20 text-gold-300 border border-gold-500/30 font-bold rounded-full">
+                Test & Guía
+              </span>
             </button>
 
             <button 

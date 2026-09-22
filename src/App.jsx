@@ -200,6 +200,11 @@ export default function App() {
         }
       }
 
+      // Deep link to Scent Advisor / Quiz
+      if (hash.includes('asesor') || hash.includes('quiz') || hash.includes('test') || hash.includes('regalo')) {
+        setIsQuizOpen(true);
+      }
+
       if (hash.includes('catalog') || hash.includes('catalogo') || hash.includes('coleccion')) {
         setCurrentView('catalog');
       } else if (hash === '#home' || hash === '' || hash === '#') {
@@ -525,6 +530,8 @@ export default function App() {
           onClose={() => setIsQuizOpen(false)}
           onSelectPerfume={handleSelectPerfume}
           onAddToCart={handleAddToCart}
+          onToggleCompare={handleToggleCompare}
+          comparedList={comparedList}
         />
       )}
 
