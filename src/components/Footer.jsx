@@ -3,7 +3,7 @@ import { MessageCircle, Heart, Lock } from 'lucide-react';
 
 export default function Footer({ onNavigate, onOpenQuiz, onOpenLookbook, onOpenStory, onOpenAdmin }) {
   return (
-    <footer className="bg-obsidian-950 border-t border-white/10 py-12">
+    <footer className="bg-obsidian-950 border-t border-white/10 pt-12 pb-24 md:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Info */}

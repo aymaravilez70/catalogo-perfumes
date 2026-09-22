@@ -33,7 +33,8 @@ export default function CatalogView({
   onToggleCompare,
   onOpenQuiz,
   onNavigateHome,
-  initialSearchQuery = ''
+  initialSearchQuery = '',
+  initialShowFavorites = false
 }) {
   // Filters
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
@@ -47,7 +48,13 @@ export default function CatalogView({
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'rating' | 'price_asc' | 'price_desc' | 'name_asc'
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(initialShowFavorites);
+
+  useEffect(() => {
+    if (initialShowFavorites) {
+      setShowFavoritesOnly(true);
+    }
+  }, [initialShowFavorites]);
 
   // Quick Collections (PDF p. 9, Punto 14)
   const [activeCollection, setActiveCollection] = useState('all');

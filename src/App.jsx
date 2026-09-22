@@ -21,7 +21,9 @@ import Footer from './components/Footer';
 import { 
   Sparkles, 
   MessageCircle, 
-  Scale
+  Scale,
+  Heart,
+  ShoppingBag
 } from 'lucide-react';
 
 export default function App() {
@@ -98,6 +100,17 @@ export default function App() {
   });
 
   const [comparedList, setComparedList] = useState([]);
+  const [showCatalogFavorites, setShowCatalogFavorites] = useState(false);
+
+  const handleOpenFavorites = () => {
+    setShowCatalogFavorites(true);
+    if (currentView !== 'catalog') {
+      navigateTo('catalog');
+    }
+    if (favorites.length === 0) {
+      showToast('Aún no tienes favoritos guardados');
+    }
+  };
 
   // Fetch perfumes from Supabase or fallback to local
   const loadPerfumes = async () => {
@@ -357,7 +370,7 @@ export default function App() {
       
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-full bg-obsidian-900/95 border border-gold-500/40 text-white text-xs font-semibold shadow-2xl backdrop-blur-md animate-bounce flex items-center gap-2">
+        <div className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-full bg-obsidian-900/95 border border-gold-500/40 text-white text-xs font-semibold shadow-2xl backdrop-blur-md animate-bounce flex items-center gap-2 pointer-events-none">
           <Sparkles className="w-4 h-4 text-gold-400" />
           <span>{toastMessage}</span>
         </div>
@@ -370,11 +383,7 @@ export default function App() {
         cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         onOpenCart={() => setIsCartOpen(true)}
         favoriteCount={favorites.length}
-        onOpenFavorites={() => {
-          if (currentView !== 'catalog') {
-            navigateTo('catalog');
-          }
-        }}
+        onOpenFavorites={handleOpenFavorites}
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenComparator={() => setIsComparatorOpen(true)}
         comparatorCount={comparedList.length}
@@ -455,13 +464,14 @@ export default function App() {
             onOpenQuiz={() => setIsQuizOpen(true)}
             onNavigateHome={() => navigateTo('home')}
             initialSearchQuery={searchQuery}
+            initialShowFavorites={showCatalogFavorites}
           />
         </main>
       )}
 
-      {/* Floating Bottom Bar when items are in compare list */}
+      {/* Desktop Floating Compare Button (hidden on mobile, integrated into mobile sticky bar) */}
       {comparedList.length > 0 && (
-        <div className="fixed bottom-6 right-6 z-40 animate-fadeIn">
+        <div className="hidden md:flex fixed bottom-6 right-6 z-40 animate-fadeIn">
           <button
             onClick={() => setIsComparatorOpen(true)}
             className="flex items-center gap-2.5 px-5 py-3 rounded-full bg-gold-500 text-black font-bold text-xs tracking-wider uppercase shadow-2xl hover:scale-105 active:scale-95 transition-all"
@@ -472,12 +482,12 @@ export default function App() {
         </div>
       )}
 
-      {/* Floating WhatsApp Action Button */}
+      {/* Desktop Floating WhatsApp Action Button (hidden on mobile, integrated into mobile sticky bar) */}
       <a
         href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 left-6 z-40 h-14 w-14 group-hover:w-auto rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-[0_8px_30px_rgba(16,185,129,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 group flex items-center justify-center group-hover:px-4.5 overflow-hidden"
+        className="hidden md:flex fixed bottom-6 left-6 z-40 h-14 w-14 group-hover:w-auto rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-[0_8px_30px_rgba(16,185,129,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 group items-center justify-center group-hover:px-4.5 overflow-hidden"
         title="Chat de WhatsApp Directo"
       >
         <MessageCircle className="w-6 h-6 fill-white shrink-0" />
@@ -485,6 +495,82 @@ export default function App() {
           WhatsApp Directo
         </span>
       </a>
+
+      {/* Mobile Sticky Bottom Action Bar (Ultra-clean Luxury Dock) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 backdrop-blur-2xl border-t border-gold-500/25 px-2 py-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-10px_35px_rgba(0,0,0,0.9)]">
+        <div className="grid grid-cols-4 items-center gap-1 max-w-md mx-auto">
+          
+          {/* WhatsApp Direct Action */}
+          <a
+            href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-emerald-400 hover:text-emerald-300 transition-all group"
+          >
+            <div className="relative">
+              <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+            </div>
+            <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-slate-300 group-hover:text-emerald-300">
+              WhatsApp
+            </span>
+          </a>
+
+          {/* Comparator Action */}
+          <button
+            onClick={() => setIsComparatorOpen(true)}
+            className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-slate-300 hover:text-gold-400 transition-all group relative cursor-pointer"
+          >
+            <div className="relative">
+              <Scale className="w-5 h-5 text-slate-300 group-hover:text-gold-400 group-hover:scale-110 transition-transform" />
+              {comparedList.length > 0 && (
+                <span className="absolute -top-1.5 -right-2.5 bg-gold-500 text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-gold-sm">
+                  {comparedList.length}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-slate-300 group-hover:text-gold-400">
+              Comparar
+            </span>
+          </button>
+
+          {/* Favorites Action */}
+          <button
+            onClick={handleOpenFavorites}
+            className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-slate-300 hover:text-rose-400 transition-all group relative cursor-pointer"
+          >
+            <div className="relative">
+              <Heart className={`w-5 h-5 group-hover:scale-110 transition-transform ${favorites.length > 0 ? 'text-rose-400 fill-rose-500/20' : 'text-slate-300 group-hover:text-rose-400'}`} />
+              {favorites.length > 0 && (
+                <span className="absolute -top-1.5 -right-2.5 bg-rose-500 text-white font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
+                  {favorites.length}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-slate-300 group-hover:text-rose-400">
+              Favoritos
+            </span>
+          </button>
+
+          {/* Mi Pedido Action */}
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-slate-300 hover:text-gold-400 transition-all group relative cursor-pointer"
+          >
+            <div className="relative">
+              <ShoppingBag className="w-5 h-5 text-slate-300 group-hover:text-gold-400 group-hover:scale-110 transition-transform" />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1.5 -right-2.5 bg-gold-500 text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-gold-sm">
+                  {cartItems.reduce((acc, i) => acc + i.quantity, 0)}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-slate-300 group-hover:text-gold-400">
+              Mi Pedido
+            </span>
+          </button>
+
+        </div>
+      </div>
 
       {/* Official Purchasing Guarantee & Confidence Section */}
       <PurchaseGuaranteeSection />
