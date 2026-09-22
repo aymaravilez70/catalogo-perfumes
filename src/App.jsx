@@ -4,8 +4,6 @@ import { supabase } from './supabaseClient';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FeaturedIcons from './components/FeaturedIcons';
-import NicheInspirationSection from './components/NicheInspirationSection';
-import HomeStoryBanner from './components/HomeStoryBanner';
 import CatalogView from './components/CatalogView';
 import PerfumeModal from './components/PerfumeModal';
 import PerfumeDetailView from './components/PerfumeDetailView';
@@ -434,17 +432,6 @@ export default function App() {
             onSelectPerfume={handleSelectPerfume}
             onAddToCart={handleAddToCart}
             onNavigateToCatalog={() => navigateTo('catalog')}
-          />
-
-          {/* Arab Niche Inspirations Editorial Section */}
-          <NicheInspirationSection
-            onNavigateToCatalogWithFilter={(query) => navigateTo('catalog', { search: query })}
-          />
-
-          {/* Founder Letter & Faby Dedication Magazine Banner */}
-          <HomeStoryBanner
-            onOpenStory={() => setIsStoryOpen(true)}
-            onOpenLookbook={() => setIsLookbookOpen(true)}
           />
 
           {/* Perfume Academy & Buyer Educational Guide (PDF p. 10 Punto 18) */}
