@@ -440,35 +440,6 @@ export default function App() {
             onOpenQuiz={() => setIsQuizOpen(true)}
           />
 
-          {/* Mid-Page Interactive Scent Quiz Callout */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="relative rounded-3xl overflow-hidden border border-gold-500/30 bg-gradient-to-r from-obsidian-950 via-obsidian-900 to-obsidian-950 p-8 sm:p-12 shadow-luxury flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="absolute inset-0 bg-[radial-gradient(#d4af3715_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
-              
-              <div className="relative z-10 space-y-3 text-center md:text-left max-w-xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 text-gold-400 text-xs font-semibold uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Asistente Personal de Fragancias
-                </div>
-                <h3 className="font-cinzel text-2xl sm:text-4xl font-bold text-white leading-tight">
-                  ¿Aún indeciso sobre cuál elegir?
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
-                  Responde 3 preguntas en nuestro test olfativo interactivo y te diremos exactamente cuál es el perfume que mejor combina con tu personalidad, tus planes y tu clima.
-                </p>
-              </div>
-
-              <div className="relative z-10 flex-shrink-0">
-                <button
-                  onClick={() => setIsQuizOpen(true)}
-                  className="px-8 py-4 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-black font-bold text-xs tracking-widest uppercase rounded-full shadow-luxury hover:scale-105 transition-all duration-300 active:scale-95"
-                >
-                  Comenzar Test Olfativo
-                </button>
-              </div>
-            </div>
-          </div>
-
         </main>
       ) : (
         <main className="flex-1">

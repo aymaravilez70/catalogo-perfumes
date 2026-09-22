@@ -1,48 +1,13 @@
 import React from 'react';
-import { Sparkles, MessageCircle, ShieldCheck, Truck, Clock, Heart, Lock } from 'lucide-react';
+import { MessageCircle, Heart, Lock } from 'lucide-react';
 
 export default function Footer({ onNavigate, onOpenQuiz, onOpenLookbook, onOpenStory, onOpenAdmin }) {
   return (
-    <footer className="bg-obsidian-950 border-t border-white/10 pt-16 pb-12">
+    <footer className="bg-obsidian-950 border-t border-white/10 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Value Propositions Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-white/10 text-center md:text-left">
-          
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-gold-500/10 border border-gold-500/20 text-gold-400">
-              <ShieldCheck className="w-7 h-7" />
-            </div>
-            <div>
-              <h4 className="font-cinzel text-base font-bold text-white">100% Fragancias Originales</h4>
-              <p className="text-xs text-slate-400 mt-0.5">Procedencia verificada de las casas árabes más prestigiosas.</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-gold-500/10 border border-gold-500/20 text-gold-400">
-              <Truck className="w-7 h-7" />
-            </div>
-            <div>
-              <h4 className="font-cinzel text-base font-bold text-white">Envíos & Entregas Seguras</h4>
-              <p className="text-xs text-slate-400 mt-0.5">Empaque reforzado para proteger cada frasco y caja de colección.</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-              <MessageCircle className="w-7 h-7" />
-            </div>
-            <div>
-              <h4 className="font-cinzel text-base font-bold text-white">Atención Personalizada</h4>
-              <p className="text-xs text-slate-400 mt-0.5">Asesoría directa en WhatsApp para elegir tu fragancia ideal.</p>
-            </div>
-          </div>
-
-        </div>
-
         {/* Main Footer Info */}
-        <div className="pt-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between">
           
           <div className="md:col-span-6 text-center md:text-left space-y-3">
             <div className="flex items-center justify-center md:justify-start gap-3">
