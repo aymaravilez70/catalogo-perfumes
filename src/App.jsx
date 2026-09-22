@@ -8,6 +8,7 @@ import NicheInspirationSection from './components/NicheInspirationSection';
 import HomeStoryBanner from './components/HomeStoryBanner';
 import CatalogView from './components/CatalogView';
 import PerfumeModal from './components/PerfumeModal';
+import PerfumeDetailView from './components/PerfumeDetailView';
 import ScentQuizModal from './components/ScentQuizModal';
 import ComparatorModal from './components/ComparatorModal';
 import CartDrawer from './components/CartDrawer';
@@ -26,9 +27,12 @@ import {
 export default function App() {
   const [perfumes, setPerfumes] = useState(perfumesData);
 
-  // View state: 'home' vs 'catalog'
+  // View state: 'home' | 'catalog' | 'product'
   const [currentView, setCurrentView] = useState(() => {
     const hash = window.location.hash.toLowerCase();
+    if (hash.includes('perfume/')) {
+      return 'product';
+    }
     if (hash.includes('catalog') || hash.includes('catalogo') || hash.includes('coleccion')) {
       return 'catalog';
     }
@@ -149,18 +153,21 @@ export default function App() {
     }
   };
 
-  // Open and close perfume modal with hash sync for shareable URLs
+  // Open and navigate to dedicated perfume product page
   const handleSelectPerfume = (perfume) => {
     setSelectedPerfume(perfume);
     if (perfume && perfume.id) {
       window.location.hash = `/perfume/${perfume.id}`;
+      setCurrentView('product');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleClosePerfumeModal = () => {
     setSelectedPerfume(null);
     if (window.location.hash.toLowerCase().includes('perfume')) {
-      window.location.hash = currentView === 'catalog' ? 'catalogo' : 'home';
+      window.location.hash = 'catalogo';
+      setCurrentView('catalog');
     }
   };
 
@@ -188,6 +195,7 @@ export default function App() {
         );
         if (found) {
           setSelectedPerfume(found);
+          setCurrentView('product');
           return;
         }
       }
@@ -217,6 +225,7 @@ export default function App() {
       );
       if (found) {
         setSelectedPerfume(found);
+        setCurrentView('product');
       }
     }
   }, [perfumes]);
@@ -362,7 +371,22 @@ export default function App() {
       />
 
       {/* Dynamic View Rendering */}
-      {currentView === 'home' ? (
+      {currentView === 'product' && selectedPerfume ? (
+        <main className="flex-1">
+          {/* Dedicated Standalone Product Page */}
+          <PerfumeDetailView
+            perfume={selectedPerfume}
+            allPerfumes={perfumes}
+            onAddToCart={handleAddToCart}
+            isFavorite={favorites.includes(selectedPerfume.id)}
+            onToggleFavorite={handleToggleFavorite}
+            isCompared={comparedList.some((p) => p.id === selectedPerfume.id)}
+            onToggleCompare={handleToggleCompare}
+            onNavigate={navigateTo}
+            onSelectPerfume={handleSelectPerfume}
+          />
+        </main>
+      ) : currentView === 'home' ? (
         <main className="flex-1">
           
           {/* Hero Section */}
@@ -486,16 +510,6 @@ export default function App() {
       />
 
       {/* Modals & Drawers */}
-      <PerfumeModal
-        perfume={selectedPerfume}
-        onClose={handleClosePerfumeModal}
-        onAddToCart={handleAddToCart}
-        isFavorite={selectedPerfume ? favorites.includes(selectedPerfume.id) : false}
-        onToggleFavorite={handleToggleFavorite}
-        isCompared={selectedPerfume ? comparedList.some((p) => p.id === selectedPerfume.id) : false}
-        onToggleCompare={handleToggleCompare}
-      />
-
       {/* Global Predictive Search Modal */}
       <GlobalSearchModal
         isOpen={isGlobalSearchOpen}
