@@ -42,10 +42,25 @@ export default function CatalogView({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSeason, setSelectedSeason] = useState('all');
   const [selectedMoment, setSelectedMoment] = useState('all');
+  const [selectedNote, setSelectedNote] = useState('all');
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'rating' | 'price_asc' | 'price_desc' | 'name_asc'
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  // Popular Key Notes (PDF p. 4)
+  const popularNotes = [
+    { id: 'all', label: 'Todas las Notas' },
+    { id: 'vainilla', label: 'Vainilla' },
+    { id: 'café', label: 'Café' },
+    { id: 'canela', label: 'Canela' },
+    { id: 'menta', label: 'Menta Gélida' },
+    { id: 'manzana', label: 'Manzana' },
+    { id: 'sandía', label: 'Sandía' },
+    { id: 'caramelo', label: 'Caramelo / Praliné' },
+    { id: 'maderas', label: 'Maderas' },
+    { id: 'bergamota', label: 'Bergamota / Cítricos' },
+  ];
 
   // Brands with dynamic counts
   const brands = useMemo(() => {
@@ -146,6 +161,28 @@ export default function CatalogView({
         if (selectedCategory === 'fougere' && !cat.includes('fougère') && !accords.includes('fougère') && !accords.includes('limpio')) return false;
       }
 
+      // Key Note filter (PDF p. 4)
+      if (selectedNote !== 'all') {
+        const nTarget = selectedNote.toLowerCase();
+        const allNotesAndAccords = [
+          ...(p.notes?.salida || []),
+          ...(p.notes?.corazon || []),
+          ...(p.notes?.base || []),
+          ...(p.accords || []),
+          ...(p.tags || [])
+        ].join(' ').toLowerCase();
+
+        if (nTarget === 'caramelo') {
+          if (!allNotesAndAccords.includes('caramelo') && !allNotesAndAccords.includes('praliné') && !allNotesAndAccords.includes('dulce')) return false;
+        } else if (nTarget === 'maderas') {
+          if (!allNotesAndAccords.includes('madera') && !allNotesAndAccords.includes('cedro') && !allNotesAndAccords.includes('akigalawood') && !allNotesAndAccords.includes('sándalo')) return false;
+        } else if (nTarget === 'bergamota') {
+          if (!allNotesAndAccords.includes('bergamota') && !allNotesAndAccords.includes('cítrico') && !allNotesAndAccords.includes('mandarina') && !allNotesAndAccords.includes('limón')) return false;
+        } else {
+          if (!allNotesAndAccords.includes(nTarget)) return false;
+        }
+      }
+
       // Search Query
       if (searchQuery.trim() !== '') {
         const q = searchQuery.toLowerCase().trim();
@@ -199,6 +236,7 @@ export default function CatalogView({
     selectedSeason,
     selectedMoment,
     selectedCategory,
+    selectedNote,
     searchQuery,
     sortBy
   ]);
@@ -209,6 +247,7 @@ export default function CatalogView({
     selectedSeason !== 'all' || 
     selectedMoment !== 'all' || 
     selectedCategory !== 'all' || 
+    selectedNote !== 'all' ||
     searchQuery.trim() !== '' ||
     showFavoritesOnly;
 
@@ -218,6 +257,7 @@ export default function CatalogView({
     setSelectedSeason('all');
     setSelectedMoment('all');
     setSelectedCategory('all');
+    setSelectedNote('all');
     setSearchQuery('');
     setShowFavoritesOnly(false);
   };
@@ -336,6 +376,13 @@ export default function CatalogView({
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
                 <span>Momento: {moments.find(m => m.id === selectedMoment)?.label}</span>
                 <button onClick={() => setSelectedMoment('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
+              </span>
+            )}
+
+            {selectedNote !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
+                <span>Nota: {popularNotes.find(n => n.id === selectedNote)?.label}</span>
+                <button onClick={() => setSelectedNote('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
               </span>
             )}
 
@@ -550,6 +597,28 @@ export default function CatalogView({
                     }`}
                   >
                     {m.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Key Notes Filter (PDF p. 4) */}
+            <div className="space-y-2 pt-2 border-t border-white/5">
+              <h4 className="text-[11px] uppercase tracking-widest text-gold-400 font-bold">
+                Notas Olfativas Clave
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {popularNotes.map((n) => (
+                  <button
+                    key={n.id}
+                    onClick={() => setSelectedNote(n.id)}
+                    className={`px-2.5 py-1 rounded-lg text-xs transition-all ${
+                      selectedNote === n.id 
+                        ? 'bg-gold-500 text-black font-bold shadow-sm' 
+                        : 'text-slate-300 bg-obsidian-850 hover:bg-obsidian-800 border border-white/5'
+                    }`}
+                  >
+                    {n.label}
                   </button>
                 ))}
               </div>
@@ -856,6 +925,26 @@ export default function CatalogView({
                     }`}
                   >
                     {c.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Popular Notes (Mobile) */}
+            <div className="space-y-2 pt-3 border-t border-white/10">
+              <h4 className="text-xs uppercase tracking-widest text-gold-400 font-bold">Notas Clave</h4>
+              <div className="flex flex-wrap gap-1.5">
+                {popularNotes.map((n) => (
+                  <button
+                    key={n.id}
+                    onClick={() => { setSelectedNote(n.id); setMobileFiltersOpen(false); }}
+                    className={`px-2.5 py-1 rounded-lg text-xs ${
+                      selectedNote === n.id 
+                        ? 'bg-gold-500 text-black font-bold' 
+                        : 'bg-obsidian-900 text-slate-300 border border-white/5'
+                    }`}
+                  >
+                    {n.label}
                   </button>
                 ))}
               </div>
