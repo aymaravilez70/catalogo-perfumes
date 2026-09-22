@@ -266,32 +266,17 @@ export default function CatalogView({
     <div className="pt-28 pb-20 min-h-screen">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
         
-        {/* Breadcrumb & Navigation */}
-        <div className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-          <button 
-            onClick={onNavigateHome}
-            className="hover:text-gold-400 transition-colors uppercase tracking-wider"
-          >
-            Inicio
-          </button>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-          <span className="text-gold-400 uppercase tracking-wider font-semibold">
-            Boutique Oficial 2026
-          </span>
-        </div>
-
-        {/* Header Title Bar */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-white/10">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-[0.25em]">
-              <Sparkles className="w-3.5 h-3.5" />
-              Catálogo Oficial
-            </div>
-            <h1 className="font-cinzel text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              BOUTIQUE DE FRAGANCIAS
+        {/* Clean Luxury Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+          <div>
+            <span className="text-[11px] uppercase tracking-[0.3em] text-gold-400 font-sans block mb-1">
+              Colección Oficial
+            </span>
+            <h1 className="font-cinzel text-2xl sm:text-4xl text-white font-normal tracking-wide">
+              Boutique de Fragancias
             </h1>
-            <p className="text-sm sm:text-base text-slate-400 font-light max-w-xl">
-              Mostrando <span className="text-gold-400 font-semibold">{filteredPerfumes.length}</span> de {perfumes.length} creaciones disponibles para entrega inmediata en Ecuador.
+            <p className="text-xs sm:text-sm text-slate-400 font-light mt-1">
+              {filteredPerfumes.length} {filteredPerfumes.length === 1 ? 'fragancia disponible' : 'fragancias disponibles'} para entrega inmediata en Ecuador.
             </p>
           </div>
 
