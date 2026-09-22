@@ -16,6 +16,7 @@ import CatalogViewerModal from './components/CatalogViewerModal';
 import StoryModal from './components/StoryModal';
 import AdminDashboard from './components/AdminDashboard';
 import GlobalSearchModal from './components/GlobalSearchModal';
+import ScentDiscoverySection from './components/ScentDiscoverySection';
 import PurchaseGuaranteeSection from './components/PurchaseGuaranteeSection';
 import Footer from './components/Footer';
 import { 
@@ -414,6 +415,14 @@ export default function App() {
             onToggleFavorite={handleToggleFavorite}
             comparedList={comparedList}
             onToggleCompare={handleToggleCompare}
+          />
+
+          {/* Scent Discovery: Notes, Personality & Occasion (PDF p. 5 y 6) */}
+          <ScentDiscoverySection
+            perfumes={perfumes}
+            onSelectPerfume={handleSelectPerfume}
+            onAddToCart={handleAddToCart}
+            onNavigateToCatalog={() => navigateTo('catalog')}
           />
 
           {/* Arab Niche Inspirations Editorial Section */}

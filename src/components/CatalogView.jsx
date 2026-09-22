@@ -48,6 +48,41 @@ export default function CatalogView({
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
+  // Quick Collections (PDF p. 9, Punto 14)
+  const [activeCollection, setActiveCollection] = useState('all');
+
+  const collections = [
+    { id: 'all', label: 'Todos los perfumes' },
+    { id: 'hombre', label: 'Hombre' },
+    { id: 'mujer', label: 'Mujer' },
+    { id: 'unisex', label: 'Unisex' },
+    { id: 'recomendados', label: 'Más recomendados' },
+    { id: 'recientes', label: 'Recién llegados' },
+    { id: 'tendencias', label: 'Tendencias' }
+  ];
+
+  const handleSelectCollection = (id) => {
+    setActiveCollection(id);
+    if (id === 'all') {
+      setSelectedGender('all');
+      setSortBy('featured');
+    } else if (id === 'hombre') {
+      setSelectedGender('Masculino');
+    } else if (id === 'mujer') {
+      setSelectedGender('Femenino');
+    } else if (id === 'unisex') {
+      setSelectedGender('Unisex');
+    } else if (id === 'recientes') {
+      setSelectedGender('all');
+      setSortBy('featured');
+    } else if (id === 'recomendados') {
+      setSelectedGender('all');
+      setSortBy('rating');
+    } else if (id === 'tendencias') {
+      setSelectedGender('all');
+    }
+  };
+
   // Popular Key Notes (PDF p. 4)
   const popularNotes = [
     { id: 'all', label: 'Todas las Notas' },
@@ -203,6 +238,16 @@ export default function CatalogView({
         }
       }
 
+      // Collection filter (PDF p. 9, Punto 14)
+      if (activeCollection === 'recomendados') {
+        const isRec = (p.rating || 4.8) >= 4.9 || (p.badge || '').toLowerCase().includes('rey') || (p.badge || '').toLowerCase().includes('recomendado');
+        if (!isRec) return false;
+      }
+      if (activeCollection === 'tendencias') {
+        const isTrending = ['khamrah', 'khamrah-qahwa', '9-pm', 'hawas-ice', 'asad', 'yara-pink', 'nitro-red', 'honor-and-glory'].includes(p.id);
+        if (!isTrending) return false;
+      }
+
       return true;
     });
 
@@ -237,6 +282,7 @@ export default function CatalogView({
     selectedMoment,
     selectedCategory,
     selectedNote,
+    activeCollection,
     searchQuery,
     sortBy
   ]);
@@ -248,6 +294,7 @@ export default function CatalogView({
     selectedMoment !== 'all' || 
     selectedCategory !== 'all' || 
     selectedNote !== 'all' ||
+    activeCollection !== 'all' ||
     searchQuery.trim() !== '' ||
     showFavoritesOnly;
 
@@ -258,6 +305,7 @@ export default function CatalogView({
     setSelectedMoment('all');
     setSelectedCategory('all');
     setSelectedNote('all');
+    setActiveCollection('all');
     setSearchQuery('');
     setShowFavoritesOnly(false);
   };
@@ -315,6 +363,26 @@ export default function CatalogView({
           </div>
         </div>
 
+        {/* Quick Collection Tabs (PDF p. 9, Punto 14) */}
+        <div className="pt-4 pb-1 flex items-center gap-2 overflow-x-auto no-scrollbar">
+          {collections.map((col) => {
+            const isSelected = activeCollection === col.id;
+            return (
+              <button
+                key={col.id}
+                onClick={() => handleSelectCollection(col.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-gold-500 text-black shadow-gold-sm font-bold'
+                    : 'text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10'
+                }`}
+              >
+                {col.label}
+              </button>
+            );
+          })}
+        </div>
+
         {/* Active Filters Pills & Sort Bar */}
         <div className="py-4 flex flex-wrap items-center justify-between gap-4 border-b border-white/5">
           
@@ -365,6 +433,13 @@ export default function CatalogView({
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
                 <span>Nota: {popularNotes.find(n => n.id === selectedNote)?.label}</span>
                 <button onClick={() => setSelectedNote('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
+              </span>
+            )}
+
+            {activeCollection !== 'all' && activeCollection !== 'hombre' && activeCollection !== 'mujer' && activeCollection !== 'unisex' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
+                <span>Colección: {collections.find(c => c.id === activeCollection)?.label}</span>
+                <button onClick={() => handleSelectCollection('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
               </span>
             )}
 
