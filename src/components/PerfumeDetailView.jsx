@@ -63,6 +63,43 @@ export default function PerfumeDetailView({
     }
   }, [perfume?.id]);
 
+  // Dynamic OpenGraph & Document Title Meta Tags (PDF p. 11, Punto 21)
+  useEffect(() => {
+    if (!perfume) return;
+
+    const originalTitle = document.title;
+    const priceFormatted = perfume.price ? `$${Number(perfume.price).toFixed(2)}` : '$50.00';
+    document.title = `#${perfume.num} ${perfume.name} (${perfume.brand}) - ${priceFormatted} | JOUFAB`;
+
+    const setMetaTag = (attr, val, content) => {
+      let el = document.querySelector(`meta[${attr}="${val}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, val);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+
+    const ogTitle = `#${perfume.num} ${perfume.name} - ${perfume.brand} (${priceFormatted})`;
+    const ogDesc = `${perfume.name} de ${perfume.brand}. ${perfume.category}. ${perfume.description ? perfume.description.slice(0, 130) + '...' : ''} Precio oficial: ${priceFormatted}. Entrega inmediata en Ecuador.`;
+    const fullImageUrl = perfume.image?.startsWith('http') 
+      ? perfume.image 
+      : `${window.location.origin}${perfume.image}`;
+
+    setMetaTag('property', 'og:title', ogTitle);
+    setMetaTag('property', 'og:description', ogDesc);
+    setMetaTag('property', 'og:image', fullImageUrl);
+    setMetaTag('property', 'og:url', window.location.href);
+    setMetaTag('name', 'twitter:title', ogTitle);
+    setMetaTag('name', 'twitter:description', ogDesc);
+    setMetaTag('name', 'twitter:image', fullImageUrl);
+
+    return () => {
+      document.title = originalTitle;
+    };
+  }, [perfume]);
+
   const [reviewForm, setReviewForm] = useState({
     name: '',
     city: '',
@@ -133,10 +170,28 @@ export default function PerfumeDetailView({
     setTimeout(() => setAdded(false), 2000);
   };
 
-  const handleCopyShareLink = () => {
+  // Native Social Share & Clipboard Fallback (PDF p. 11, Punto 21)
+  const handleShare = async () => {
+    const priceFormatted = perfume.price ? `$${Number(perfume.price).toFixed(2)}` : '$50.00';
     const shareUrl = `${window.location.origin}${window.location.pathname}#/perfume/${perfume.id}`;
+    const shareTitle = `#${perfume.num} ${perfume.name} (${perfume.brand}) - ${priceFormatted} | JOUFAB`;
+    const shareText = `¡Descubre #${perfume.num} ${perfume.name} de ${perfume.brand} en JOUFAB! Precio oficial: ${priceFormatted}.`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(shareUrl);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2400);
     }
@@ -149,21 +204,6 @@ export default function PerfumeDetailView({
     );
     window.open(`https://wa.me/593984526114?text=${text}`, '_blank');
   };
-
-  // Find 3-4 Similar Perfumes based on brand, category or tags
-  const similarPerfumes = allPerfumes
-    .filter((p) => p.id !== perfume.id)
-    .map((p) => {
-      let score = 0;
-      if (p.brand === perfume.brand) score += 3;
-      if (p.category === perfume.category) score += 4;
-      if (p.gender === perfume.gender) score += 1;
-      const commonTags = (p.tags || []).filter(t => (perfume.tags || []).includes(t)).length;
-      score += commonTags * 2;
-      return { ...p, similarityScore: score };
-    })
-    .sort((a, b) => b.similarityScore - a.similarityScore)
-    .slice(0, 4);
 
   // Sensory Profile indicators (1 to 5)
   const profile = perfume.olfactory_profile || {};
@@ -189,6 +229,81 @@ export default function PerfumeDetailView({
     { label: 'Duración', value: Math.min(5, Math.max(1, duracion)), desc: duracion >= 4 ? '8 - 14 Horas' : '6 - 8 Horas' },
     { label: 'Versatilidad', value: Math.min(5, Math.max(1, versatilidad)), desc: versatilidad >= 4 ? 'Todo Ocasión' : 'Ocasión Especial' },
   ];
+
+  // Comparative Relationship Helper (PDF p. 6, Punto 9)
+  const getComparativeRelation = (sim) => {
+    const curPrice = Number(perfume.price) || 50;
+    const simPrice = Number(sim.price) || 50;
+
+    // 1. Price comparison
+    if (simPrice < curPrice - 2) {
+      return {
+        label: 'Alternativa más económica',
+        color: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
+      };
+    }
+
+    const simProf = sim.olfactory_profile || {};
+    const simCat = (sim.category || '').toLowerCase();
+    const simNotes = [
+      ...(sim.notes?.salida || []),
+      ...(sim.notes?.corazon || []),
+      ...(sim.notes?.base || [])
+    ].join(' ').toLowerCase();
+
+    const sFrescura = simProf.frescura || (simCat.includes('fresco') || simCat.includes('acuático') || simCat.includes('cítrico') || simNotes.includes('bergamota') ? 5 : simCat.includes('floral') ? 4 : 2);
+    const sDulzor = simProf.dulzor || (simCat.includes('gourmand') || simCat.includes('dulce') || simNotes.includes('vainilla') || simNotes.includes('praliné') ? 5 : 2);
+    const sIntensidad = simProf.intensidad || (simCat.includes('especiado') || simCat.includes('oriental') || simCat.includes('amaderado') ? 5 : 3);
+
+    if (sFrescura - frescura >= 1.5) {
+      return {
+        label: 'Similar pero más fresco',
+        color: 'bg-cyan-500/15 border-cyan-500/30 text-cyan-300'
+      };
+    }
+    if (sDulzor - dulzor >= 1.5) {
+      return {
+        label: 'Similar pero más dulce',
+        color: 'bg-amber-500/15 border-amber-500/30 text-amber-300'
+      };
+    }
+    if (sIntensidad - intensidad >= 1.5) {
+      return {
+        label: 'Similar pero más intenso',
+        color: 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+      };
+    }
+    if (simCat.includes('amaderado') || simCat.includes('oriental') || simNotes.includes('oud')) {
+      return {
+        label: 'Similar pero más elegante',
+        color: 'bg-gold-500/15 border-gold-500/30 text-gold-300'
+      };
+    }
+
+    return {
+      label: 'Misma vibra olfativa',
+      color: 'bg-white/5 border-white/10 text-slate-300'
+    };
+  };
+
+  // Find 3-4 Similar Perfumes based on brand, category or tags with Comparative Relation (PDF p. 6, Punto 9)
+  const similarPerfumes = allPerfumes
+    .filter((p) => p.id !== perfume.id)
+    .map((p) => {
+      let score = 0;
+      if (p.brand === perfume.brand) score += 3;
+      if (p.category === perfume.category) score += 4;
+      if (p.gender === perfume.gender) score += 1;
+      const commonTags = (p.tags || []).filter(t => (perfume.tags || []).includes(t)).length;
+      score += commonTags * 2;
+      return { 
+        ...p, 
+        similarityScore: score,
+        relationBadge: getComparativeRelation(p)
+      };
+    })
+    .sort((a, b) => b.similarityScore - a.similarityScore)
+    .slice(0, 4);
 
   const pVotes = perfume.votes || {};
   const votes = {
@@ -245,9 +360,9 @@ export default function PerfumeDetailView({
             </button>
 
             <button
-              onClick={handleCopyShareLink}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gold-500/10 hover:bg-gold-500/20 border border-gold-500/30 text-xs font-semibold text-gold-300 hover:text-gold-200 transition-all"
-              title="Copiar URL directa para compartir en Instagram o WhatsApp"
+              onClick={handleShare}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gold-500/10 hover:bg-gold-500/20 border border-gold-500/30 text-xs font-semibold text-gold-300 hover:text-gold-200 transition-all cursor-pointer"
+              title="Compartir perfume por WhatsApp, redes o copiar enlace"
             >
               {copiedLink ? (
                 <>
@@ -756,31 +871,40 @@ export default function PerfumeDetailView({
                 <div
                   key={sim.id}
                   onClick={() => onSelectPerfume(sim)}
-                  className="group cursor-pointer bg-gradient-to-b from-obsidian-900/90 to-obsidian-950/90 rounded-2xl border border-white/10 hover:border-gold-500/40 p-4 shadow-luxury hover:shadow-luxury-hover transition-all duration-300 transform hover:-translate-y-1"
+                  className="group cursor-pointer bg-gradient-to-b from-obsidian-900/90 to-obsidian-950/90 rounded-2xl border border-white/10 hover:border-gold-500/40 p-4 shadow-luxury hover:shadow-luxury-hover transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between"
                 >
-                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-black/60 mb-3 flex items-center justify-center p-2">
-                    <img
-                      src={sim.image}
-                      alt={sim.name}
-                      className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-slate-300 font-bold">
-                      #{sim.num}
+                  <div>
+                    <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-black/60 mb-3 flex items-center justify-center p-2">
+                      <img
+                        src={sim.image}
+                        alt={sim.name}
+                        className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-slate-300 font-bold">
+                        #{sim.num}
+                      </div>
+                      <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-gold-400 font-bold border border-gold-500/30">
+                        ${sim.price ? Number(sim.price).toFixed(2) : '50.00'}
+                      </div>
                     </div>
-                    <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/80 font-mono text-[10px] text-gold-400 font-bold border border-gold-500/30">
-                      ${sim.price ? Number(sim.price).toFixed(2) : '50.00'}
-                    </div>
+
+                    <span className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
+                      {sim.brand}
+                    </span>
+                    <h4 className="font-cinzel text-base font-bold text-white group-hover:text-gold-300 transition-colors truncate">
+                      {sim.name}
+                    </h4>
+                    <span className="text-xs text-slate-400 block truncate mt-0.5">
+                      {sim.category}
+                    </span>
                   </div>
 
-                  <span className="text-[10px] uppercase tracking-wider text-gold-400 font-semibold block">
-                    {sim.brand}
-                  </span>
-                  <h4 className="font-cinzel text-base font-bold text-white group-hover:text-gold-300 transition-colors truncate">
-                    {sim.name}
-                  </h4>
-                  <span className="text-xs text-slate-400 block truncate mt-0.5">
-                    {sim.category}
-                  </span>
+                  {/* Comparative Relationship Tag (PDF p. 6, Punto 9) */}
+                  {sim.relationBadge && (
+                    <div className={`mt-3 px-2.5 py-1 rounded-lg text-[10px] font-medium border text-center truncate ${sim.relationBadge.color}`}>
+                      {sim.relationBadge.label}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

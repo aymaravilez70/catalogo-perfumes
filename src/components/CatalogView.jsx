@@ -43,6 +43,7 @@ export default function CatalogView({
   const [selectedSeason, setSelectedSeason] = useState('all');
   const [selectedMoment, setSelectedMoment] = useState('all');
   const [selectedNote, setSelectedNote] = useState('all');
+  const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'rating' | 'price_asc' | 'price_desc' | 'name_asc'
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -148,6 +149,14 @@ export default function CatalogView({
     { id: 'Femenino', label: 'Mujer / Femenino' },
   ];
 
+  // Price Ranges (PDF p. 4, Punto 5)
+  const priceRanges = [
+    { id: 'all', label: 'Todos los Precios' },
+    { id: 'under-50', label: 'Menos de $50' },
+    { id: '50-54', label: '$50.00 a $54.99' },
+    { id: '55-plus', label: '$55.00 o más' },
+  ];
+
   // Filter and Sort Logic
   const filteredPerfumes = useMemo(() => {
     let result = perfumes.filter(p => {
@@ -157,8 +166,16 @@ export default function CatalogView({
       }
 
       // Brand filter
-      if (selectedBrand !== 'Todas' && p.brand.toLowerCase() !== selectedBrand.toLowerCase()) {
+      if (selectedBrand !== 'Todas' && p.brand !== selectedBrand) {
         return false;
+      }
+
+      // Price range filter (PDF p. 4, Punto 5)
+      if (selectedPriceRange !== 'all') {
+        const price = Number(p.price) || 50;
+        if (selectedPriceRange === 'under-50' && price >= 50) return false;
+        if (selectedPriceRange === '50-54' && (price < 50 || price >= 55)) return false;
+        if (selectedPriceRange === '55-plus' && price < 55) return false;
       }
 
       // Gender filter
@@ -277,6 +294,7 @@ export default function CatalogView({
     showFavoritesOnly,
     favorites,
     selectedBrand,
+    selectedPriceRange,
     selectedGender,
     selectedSeason,
     selectedMoment,
@@ -289,6 +307,7 @@ export default function CatalogView({
 
   const hasActiveFilters = 
     selectedBrand !== 'Todas' || 
+    selectedPriceRange !== 'all' ||
     selectedGender !== 'all' || 
     selectedSeason !== 'all' || 
     selectedMoment !== 'all' || 
@@ -300,6 +319,7 @@ export default function CatalogView({
 
   const handleResetFilters = () => {
     setSelectedBrand('Todas');
+    setSelectedPriceRange('all');
     setSelectedGender('all');
     setSelectedSeason('all');
     setSelectedMoment('all');
@@ -405,6 +425,13 @@ export default function CatalogView({
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
                 <span>Género: {selectedGender}</span>
                 <button onClick={() => setSelectedGender('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
+              </span>
+            )}
+
+            {selectedPriceRange !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
+                <span>Precio: {priceRanges.find(p => p.id === selectedPriceRange)?.label}</span>
+                <button onClick={() => setSelectedPriceRange('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
               </span>
             )}
 
@@ -584,6 +611,28 @@ export default function CatalogView({
                     }`}
                   >
                     {g.label.split('/')[0]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Price Range Filter (PDF p. 4, Punto 5) */}
+            <div className="space-y-2 pt-2 border-t border-white/5">
+              <h4 className="text-[11px] uppercase tracking-widest text-gold-400 font-bold">
+                Rango de Precio
+              </h4>
+              <div className="space-y-1">
+                {priceRanges.map((pr) => (
+                  <button
+                    key={pr.id}
+                    onClick={() => setSelectedPriceRange(pr.id)}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all ${
+                      selectedPriceRange === pr.id 
+                        ? 'bg-gold-500 text-black font-semibold shadow-sm' 
+                        : 'text-slate-300 hover:bg-white/5'
+                    }`}
+                  >
+                    {pr.label}
                   </button>
                 ))}
               </div>
@@ -937,6 +986,26 @@ export default function CatalogView({
                     }`}
                   >
                     {g.label.split('/')[0]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Price Ranges (Mobile) */}
+            <div className="space-y-2 pt-3 border-t border-white/10">
+              <h4 className="text-xs uppercase tracking-widest text-gold-400 font-bold">Rango de Precio</h4>
+              <div className="space-y-1">
+                {priceRanges.map((pr) => (
+                  <button
+                    key={pr.id}
+                    onClick={() => { setSelectedPriceRange(pr.id); setMobileFiltersOpen(false); }}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all ${
+                      selectedPriceRange === pr.id 
+                        ? 'bg-gold-500 text-black font-semibold shadow-sm' 
+                        : 'text-slate-300 hover:bg-white/5'
+                    }`}
+                  >
+                    {pr.label}
                   </button>
                 ))}
               </div>
