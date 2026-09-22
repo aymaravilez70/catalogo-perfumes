@@ -150,16 +150,6 @@ export default function ScentQuizModal({
         { id: 'clean', label: 'Pulcritud Absoluta & Energía Vital', desc: 'Sensación de recién duchado, impecable y agradable', icon: Wind },
         { id: 'bold', label: 'Carácter Único & Presencia Dominante', desc: 'Para quien pisa fuerte y no teme sobresalir', icon: Zap }
       ]
-    },
-    {
-      id: 'budget',
-      title: '6. ¿Cuál es tu rango de presupuesto preferido?',
-      subtitle: 'Todos nuestros perfumes son originales en presentación completa',
-      options: [
-        { id: 'under_50', label: 'Gama Accesible (Hasta $45 - $48)', desc: 'Opciones de gran rendimiento con inversión moderada', icon: Sparkles },
-        { id: 'mid_range', label: 'Gama Central ($50 - $55)', desc: 'Los superventas mundiales de Lattafa, Afnan y Armaf', icon: Crown },
-        { id: 'top_range', label: 'Alta Gama Árabe ($58 - $62 o sin límite)', desc: 'Joyas nicho como Hawas Ice o Hawas Kobra', icon: Heart }
-      ]
     }
   ];
 

@@ -27,6 +27,20 @@ export default function PerfumeCard({
   const [rotateY, setRotateY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
+  // Temperature label based on best_season (PDF Punto 4)
+  const getTemperatureLabel = () => {
+    const season = (perfume.best_season || '').toLowerCase();
+    const badge = (perfume.season_badge || '').toLowerCase();
+    if (season === 'invierno' || badge.includes('invierno') || badge.includes('frío') || badge.includes('otoño')) {
+      return { text: 'Frío', icon: CloudSnow, color: 'text-sky-300', bg: 'bg-sky-500/15 border-sky-500/30' };
+    }
+    if (season === 'verano' || badge.includes('verano') || badge.includes('calor')) {
+      return { text: 'Calor', icon: Sun, color: 'text-amber-300', bg: 'bg-amber-500/15 border-amber-500/30' };
+    }
+    return { text: 'Templado', icon: Flower2, color: 'text-emerald-300', bg: 'bg-emerald-500/15 border-emerald-500/30' };
+  };
+  const tempLabel = getTemperatureLabel();
+
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -152,13 +166,14 @@ export default function PerfumeCard({
       {/* Content & Details */}
       <div className="space-y-2.5 flex-1 flex flex-col justify-between">
         <div>
-          {/* Category / Accord tag */}
+          {/* Category / Accord tag + Temperature label */}
           <div className="flex items-center justify-between text-[11px] text-slate-400 mb-1">
-            <span className="truncate max-w-[170px] text-gold-300/80 font-medium">
+            <span className="truncate max-w-[130px] text-gold-300/80 font-medium">
               {perfume.category}
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-white/5 text-[10px] text-slate-400">
-              {perfume.season_badge || 'Versátil'}
+            <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[10px] font-medium ${tempLabel.bg} ${tempLabel.color}`}>
+              <tempLabel.icon className="w-3 h-3" />
+              {tempLabel.text}
             </span>
           </div>
 

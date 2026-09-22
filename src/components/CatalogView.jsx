@@ -13,8 +13,6 @@ import {
   Sun, 
   Moon, 
   Umbrella, 
-  Flower2, 
-  Leaf, 
   ChevronRight,
   ShoppingBag,
   Clock,
@@ -158,8 +156,6 @@ export default function CatalogView({
     { id: 'all', label: 'Todos los Climas', icon: null },
     { id: 'invierno', label: 'Invierno / Frío', icon: CloudSnow },
     { id: 'verano', label: 'Verano / Calor', icon: Umbrella },
-    { id: 'primavera', label: 'Primavera', icon: Flower2 },
-    { id: 'otoño', label: 'Otoño', icon: Leaf },
   ];
 
   // Moments
@@ -181,9 +177,9 @@ export default function CatalogView({
   // Price Ranges (PDF p. 4, Punto 5)
   const priceRanges = [
     { id: 'all', label: 'Todos los Precios' },
-    { id: 'under-50', label: 'Menos de $50' },
-    { id: '50-54', label: '$50.00 a $54.99' },
-    { id: '55-plus', label: '$55.00 o más' },
+    { id: '55-64', label: '$55 a $64.99' },
+    { id: '65-74', label: '$65 a $74.99' },
+    { id: '75-plus', label: '$75 o más' },
   ];
 
   // Sensations / Personalities (PDF p. 4, Punto 5)
@@ -216,9 +212,9 @@ export default function CatalogView({
       // Price range filter (PDF p. 4, Punto 5)
       if (selectedPriceRange !== 'all') {
         const price = Number(p.price) || 50;
-        if (selectedPriceRange === 'under-50' && price >= 50) return false;
-        if (selectedPriceRange === '50-54' && (price < 50 || price >= 55)) return false;
-        if (selectedPriceRange === '55-plus' && price < 55) return false;
+        if (selectedPriceRange === '55-64' && (price < 55 || price >= 65)) return false;
+        if (selectedPriceRange === '65-74' && (price < 65 || price >= 75)) return false;
+        if (selectedPriceRange === '75-plus' && price < 75) return false;
       }
 
       // Gender filter
