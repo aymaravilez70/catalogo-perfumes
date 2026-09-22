@@ -52,12 +52,9 @@ export default function FeaturedIcons({
         
         {/* Minimalist Section Header */}
         <div className="flex items-end justify-between mb-8">
-          <div className="space-y-1">
-            <span className="text-[10px] uppercase tracking-[0.35em] text-gold-400 font-semibold block">
-              Colección 2026
-            </span>
-            <h2 className="font-cinzel text-2xl sm:text-4xl font-bold text-white tracking-tight">
-              ÍCONOS DE LA CASA
+          <div>
+            <h2 className="font-cinzel text-2xl sm:text-3xl text-white font-normal tracking-[0.2em] uppercase">
+              Íconos de la Casa
             </h2>
           </div>
 

@@ -176,16 +176,10 @@ export default function PerfumeAcademySection({ onNavigateToCatalog, onOpenQuiz 
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
-          <div className="space-y-1">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-gold-400 font-sans block">
-              Academia Joufab
-            </span>
-            <h2 className="font-cinzel text-2xl sm:text-4xl text-white font-normal tracking-wide">
+          <div>
+            <h2 className="font-cinzel text-2xl sm:text-3xl text-white font-normal tracking-[0.15em] uppercase">
               Guía del Buen Perfumista
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 font-light">
-              Respuestas expertas sobre concentraciones, estela, duración y el arte de elegir la fragancia correcta.
-            </p>
           </div>
 
           {/* Categories Selector */}

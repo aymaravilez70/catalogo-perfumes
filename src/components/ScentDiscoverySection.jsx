@@ -231,16 +231,10 @@ export default function ScentDiscoverySection({
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
-          <div className="space-y-1">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-gold-400 font-sans block">
+          <div>
+            <h2 className="font-cinzel text-2xl sm:text-3xl text-white font-normal tracking-[0.15em] uppercase">
               Descubrimiento Olfativo
-            </span>
-            <h2 className="font-cinzel text-2xl sm:text-4xl text-white font-normal tracking-wide">
-              Encuentra tu Fragancia por Notas, Sensación u Ocasión
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 font-light">
-              Explora las creaciones de nuestra casa según el ingrediente que te enamora o la ocasión que deseas conquistar.
-            </p>
           </div>
 
           {/* Mode Switcher Tabs */}

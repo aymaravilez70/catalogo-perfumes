@@ -589,21 +589,15 @@ export default function PerfumeDetailView({
         {/* Customer Reviews & Feedback Section (PDF p. 11 Punto 19) */}
         <div className="mt-20 pt-12 border-t border-white/10">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-bold block">
-                Comunidad & Valoraciones
-              </span>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-                <span>Experiencias de Clientes</span>
+            <div>
+              <h2 className="font-cinzel text-2xl sm:text-3xl text-white font-normal tracking-[0.15em] uppercase flex items-center gap-3">
+                <span>Reseñas de Clientes</span>
                 {reviews.length > 0 && (
                   <span className="text-xs font-sans font-normal px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/20">
-                    {reviews.length} {reviews.length === 1 ? 'opinión' : 'opiniones'}
+                    {reviews.length}
                   </span>
                 )}
               </h2>
-              <p className="text-xs text-slate-400 font-light">
-                Comentarios auténticos de compradores sobre fijación en piel, estela y ocasiones ideales.
-              </p>
             </div>
 
             <button
@@ -745,11 +739,8 @@ export default function PerfumeDetailView({
           <div className="mt-20 pt-12 border-t border-white/10">
             <div className="flex items-end justify-between mb-8">
               <div>
-                <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-bold block">
-                  Recomendaciones del Asesor
-                </span>
-                <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white">
-                  Si te gusta {perfume.name}, también te encantará:
+                <h2 className="font-cinzel text-2xl sm:text-3xl text-white font-normal tracking-[0.15em] uppercase">
+                  Fragancias Similares
                 </h2>
               </div>
               <button

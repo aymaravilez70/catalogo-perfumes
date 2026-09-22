@@ -71,17 +71,10 @@ export default function PurchaseGuaranteeSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5 text-gold-400" />
-            <span>Transparencia & Confianza Joufab</span>
-          </div>
-          <h2 className="font-cinzel text-2xl sm:text-4xl font-bold text-white tracking-tight">
-            INFORMACIÓN DE COMPRA & GARANTÍAS
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <h2 className="font-cinzel text-2xl sm:text-3xl text-white font-normal tracking-[0.2em] uppercase">
+            Garantías de Compra
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-            Comprar alta perfumería de nicho debe ser una experiencia segura, clara y respaldada en cada etapa de tu pedido.
-          </p>
         </div>
 
         {/* 6 Guarantee Cards Grid */}
