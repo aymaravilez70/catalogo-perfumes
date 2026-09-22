@@ -25,8 +25,10 @@ import {
   RotateCcw,
   ThumbsUp,
   MapPin,
-  X
+  X,
+  Loader2
 } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 
 export default function PerfumeDetailView({ 
   perfume, 
@@ -37,7 +39,8 @@ export default function PerfumeDetailView({
   isCompared, 
   onToggleCompare, 
   onNavigate,
-  onSelectPerfume 
+  onSelectPerfume,
+  onReviewAdded
 }) {
   const [added, setAdded] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -46,22 +49,69 @@ export default function PerfumeDetailView({
   // Customer Reviews State (PDF p. 11 Punto 19)
   const [reviews, setReviews] = useState([]);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
   const [reviewToast, setReviewToast] = useState(null);
 
-  // Load reviews for this perfume from localStorage
+  // Load reviews for this perfume from Supabase with localStorage cache
   useEffect(() => {
     if (!perfume?.id) return;
+    let isMounted = true;
+
+    // 1. Initial load from perfume object + localStorage cache
+    let initialList = [];
     try {
       const saved = localStorage.getItem(`joufab_reviews_${perfume.id}`);
       if (saved) {
         const parsed = JSON.parse(saved);
-        setReviews(Array.isArray(parsed) ? parsed : []);
-      } else {
-        setReviews([]);
+        if (Array.isArray(parsed)) initialList = parsed;
       }
-    } catch {
-      setReviews([]);
-    }
+    } catch {}
+
+    const propReviews = Array.isArray(perfume.votes?.reviews) 
+      ? perfume.votes.reviews 
+      : (Array.isArray(perfume.reviews) ? perfume.reviews : []);
+
+    const reviewMap = new Map();
+    propReviews.forEach(r => { if (r && (r.id || r.comment)) reviewMap.set(r.id || r.comment, r); });
+    initialList.forEach(r => { if (r && (r.id || r.comment)) reviewMap.set(r.id || r.comment, r); });
+
+    setReviews(Array.from(reviewMap.values()));
+
+    // 2. Fetch fresh live reviews from Supabase in background
+    const fetchRemoteReviews = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('perfumes')
+          .select('votes')
+          .eq('id', perfume.id)
+          .single();
+
+        if (!error && data?.votes && Array.isArray(data.votes.reviews) && isMounted) {
+          const freshMap = new Map();
+          data.votes.reviews.forEach(r => { if (r && (r.id || r.comment)) freshMap.set(r.id || r.comment, r); });
+          initialList.forEach(r => { if (r && (r.id || r.comment)) freshMap.set(r.id || r.comment, r); });
+          
+          const sortedList = Array.from(freshMap.values()).sort((a, b) => {
+            const timeA = a.timestamp || (a.date ? new Date(a.date).getTime() : 0);
+            const timeB = b.timestamp || (b.date ? new Date(b.date).getTime() : 0);
+            return timeB - timeA;
+          });
+
+          setReviews(sortedList);
+          try {
+            localStorage.setItem(`joufab_reviews_${perfume.id}`, JSON.stringify(sortedList));
+          } catch {}
+        }
+      } catch (err) {
+        console.warn('Sincronización de reseñas offline:', err);
+      }
+    };
+
+    fetchRemoteReviews();
+
+    return () => {
+      isMounted = false;
+    };
   }, [perfume?.id]);
 
   // Dynamic OpenGraph & Document Title Meta Tags (PDF p. 11, Punto 21)
@@ -112,24 +162,26 @@ export default function PerfumeDetailView({
   });
   const [reviewHoverRating, setReviewHoverRating] = useState(0);
 
-  const handleSubmitReview = (e) => {
+  const handleSubmitReview = async (e) => {
     e.preventDefault();
-    if (!reviewForm.name.trim() || !reviewForm.comment.trim()) return;
+    if (!reviewForm.name.trim() || !reviewForm.comment.trim() || isSubmittingReview) return;
+    setIsSubmittingReview(true);
 
     const newReview = {
-      id: `rev_${Date.now()}`,
+      id: `rev_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
       name: reviewForm.name.trim(),
       city: reviewForm.city.trim() || 'Ecuador',
-      rating: reviewForm.rating,
+      rating: Number(reviewForm.rating) || 5,
       longevity: reviewForm.longevity,
       occasion: reviewForm.occasion,
       recommend: reviewForm.recommend,
       comment: reviewForm.comment.trim(),
       date: new Date().toLocaleDateString('es-EC', { day: 'numeric', month: 'short', year: 'numeric' }),
+      timestamp: Date.now(),
       verified: true
     };
 
-    const updated = [newReview, ...reviews];
+    const updated = [newReview, ...reviews.filter(r => r.id !== newReview.id)];
     setReviews(updated);
     try {
       localStorage.setItem(`joufab_reviews_${perfume.id}`, JSON.stringify(updated));
@@ -137,18 +189,53 @@ export default function PerfumeDetailView({
       console.error(err);
     }
 
-    setReviewForm({
-      name: '',
-      city: '',
-      rating: 5,
-      longevity: '10 - 14 horas',
-      occasion: 'Citas & Noches',
-      recommend: true,
-      comment: ''
-    });
-    setIsReviewModalOpen(false);
-    setReviewToast('¡Gracias por tu opinión! Reseña publicada con éxito.');
-    setTimeout(() => setReviewToast(null), 3500);
+    try {
+      const { data: currentP } = await supabase
+        .from('perfumes')
+        .select('votes')
+        .eq('id', perfume.id)
+        .single();
+
+      const currentVotes = currentP?.votes || perfume.votes || {};
+      const existingReviews = Array.isArray(currentVotes.reviews) ? currentVotes.reviews : [];
+      const mergedRemote = [newReview, ...existingReviews.filter(r => r.id !== newReview.id && r.comment !== newReview.comment)];
+
+      const { error: updateError } = await supabase
+        .from('perfumes')
+        .update({
+          votes: {
+            ...currentVotes,
+            reviews: mergedRemote
+          }
+        })
+        .eq('id', perfume.id);
+
+      if (updateError) {
+        console.warn('Error guardando reseña en Supabase:', updateError.message);
+        setReviewToast('¡Gracias! Reseña guardada en tu dispositivo (pendiente de conexión).');
+      } else {
+        setReviewToast('¡Gracias por tu opinión! Reseña publicada para todos con éxito.');
+        if (onReviewAdded) {
+          onReviewAdded(perfume.id, mergedRemote);
+        }
+      }
+    } catch (err) {
+      console.error('Error enviando reseña a Supabase:', err);
+      setReviewToast('¡Gracias! Reseña guardada localmente.');
+    } finally {
+      setIsSubmittingReview(false);
+      setReviewForm({
+        name: '',
+        city: '',
+        rating: 5,
+        longevity: '10 - 14 horas',
+        occasion: 'Citas & Noches',
+        recommend: true,
+        comment: ''
+      });
+      setIsReviewModalOpen(false);
+      setTimeout(() => setReviewToast(null), 3500);
+    }
   };
 
   // Scroll to top when perfume changes
@@ -1094,9 +1181,11 @@ export default function PerfumeDetailView({
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black font-bold text-xs tracking-wider uppercase shadow-gold-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  disabled={isSubmittingReview}
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black font-bold text-xs tracking-wider uppercase shadow-gold-sm hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Publicar Opinión
+                  {isSubmittingReview && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  <span>{isSubmittingReview ? 'Publicando...' : 'Publicar Opinión'}</span>
                 </button>
               </div>
             </form>

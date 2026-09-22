@@ -162,6 +162,7 @@ export default function App() {
             longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
             sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
             similar_ids: p.similar_ids || pVotes.similar_ids || [],
+            reviews: Array.isArray(pVotes.reviews) ? pVotes.reviews : (Array.isArray(p.reviews) ? p.reviews : []),
             votes: {
               invierno: Number(pVotes.invierno) || 5000,
               primavera: Number(pVotes.primavera) || 2000,
@@ -444,6 +445,32 @@ export default function App() {
             onToggleCompare={handleToggleCompare}
             onNavigate={navigateTo}
             onSelectPerfume={handleSelectPerfume}
+            onReviewAdded={(perfumeId, updatedReviews) => {
+              setPerfumes(prev => prev.map(p => {
+                if (p.id === perfumeId) {
+                  return {
+                    ...p,
+                    votes: {
+                      ...(p.votes || {}),
+                      reviews: updatedReviews
+                    }
+                  };
+                }
+                return p;
+              }));
+              setSelectedPerfume(prev => {
+                if (prev && prev.id === perfumeId) {
+                  return {
+                    ...prev,
+                    votes: {
+                      ...(prev.votes || {}),
+                      reviews: updatedReviews
+                    }
+                  };
+                }
+                return prev;
+              });
+            }}
           />
         </main>
       ) : currentView === 'home' ? (

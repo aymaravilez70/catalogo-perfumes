@@ -69,6 +69,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     longevity: '8 - 10 horas',
     sillage: 'Alta / Pesada',
     similar_ids: [],
+    reviews: [],
     votes_invierno: '8500',
     votes_primavera: '2500',
     votes_verano: '1200',
@@ -115,6 +116,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
             longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
             sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
             similar_ids: Array.isArray(p.similar_ids) ? p.similar_ids : (Array.isArray(pVotes.similar_ids) ? pVotes.similar_ids : []),
+            reviews: Array.isArray(pVotes.reviews) ? pVotes.reviews : (Array.isArray(p.reviews) ? p.reviews : []),
             votes: {
               invierno: Number(pVotes.invierno) || 5000,
               primavera: Number(pVotes.primavera) || 2000,
@@ -284,6 +286,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       longevity: product.longevity || pVotes.longevity || '8 - 10 horas',
       sillage: product.sillage || pVotes.sillage || 'Alta / Pesada',
       similar_ids: Array.isArray(product.similar_ids) ? product.similar_ids : (Array.isArray(pVotes.similar_ids) ? pVotes.similar_ids : []),
+      reviews: Array.isArray(pVotes.reviews) ? pVotes.reviews : (Array.isArray(product.reviews) ? product.reviews : []),
       votes_invierno: String(pVotes.invierno ?? 8500),
       votes_primavera: String(pVotes.primavera ?? 2500),
       votes_verano: String(pVotes.verano ?? 1200),
@@ -372,7 +375,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
           niche_house: formData.niche_house?.trim() || '',
           longevity: formData.longevity?.trim() || '8 - 10 horas',
           sillage: formData.sillage?.trim() || 'Alta / Pesada',
-          similar_ids: Array.isArray(formData.similar_ids) ? formData.similar_ids : []
+          similar_ids: Array.isArray(formData.similar_ids) ? formData.similar_ids : [],
+          reviews: Array.isArray(formData.reviews) ? formData.reviews : []
         },
         notes: {
           salida: formData.notes_salida.split(',').map(s => s.trim()).filter(Boolean),
@@ -1799,6 +1803,60 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                     <strong>Habilitar perfume en el catálogo público inmediatamente</strong> (desmarca si está agotado o en borrador)
                   </label>
                 </div>
+
+                {/* MODERACIÓN DE RESEÑAS DE CLIENTES (SUPABASE) */}
+                {isEditing && (
+                  <div className="bg-stone-950/80 p-5 rounded-2xl border border-stone-800 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-800 pb-3">
+                      <div>
+                        <div className="flex items-center gap-2 text-stone-200 font-serif font-bold text-sm">
+                          <Star size={16} className="text-amber-400 fill-amber-400" />
+                          <span>Reseñas de Clientes en Vivo (Supabase)</span>
+                        </div>
+                        <p className="text-[11px] text-stone-400 mt-0.5">
+                          Opiniones reales y calificaciones públicas enviadas por compradores para esta fragancia
+                        </p>
+                      </div>
+                      <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-stone-900 border border-stone-800 text-amber-400 font-semibold self-start sm:self-center">
+                        {(formData.reviews || []).length} opiniones
+                      </span>
+                    </div>
+
+                    {(formData.reviews || []).length === 0 ? (
+                      <div className="text-center py-6 border border-dashed border-stone-800 rounded-xl">
+                        <p className="text-xs text-stone-400">Aún no se han publicado reseñas para este perfume.</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5 max-h-72 overflow-y-auto pr-1">
+                        {(formData.reviews || []).map((rev, idx) => (
+                          <div key={rev.id || idx} className="p-3.5 rounded-xl bg-stone-900 border border-stone-800 flex items-start justify-between gap-3">
+                            <div className="space-y-1 text-xs">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="font-bold text-stone-100">{rev.name}</span>
+                                <span className="text-[10px] text-stone-400">({rev.city || 'Ecuador'})</span>
+                                <span className="text-[10px] text-amber-400 font-mono">★ {rev.rating}/5</span>
+                                <span className="text-[10px] text-stone-500">• {rev.date}</span>
+                              </div>
+                              <p className="text-stone-300 italic font-light">"{rev.comment}"</p>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updatedReviews = (formData.reviews || []).filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, reviews: updatedReviews }));
+                                showToast('Reseña retirada de la lista. Haz clic en "Guardar Cambios" para aplicar.', 'info');
+                              }}
+                              className="p-1.5 rounded-lg text-stone-500 hover:text-rose-400 hover:bg-rose-500/10 transition shrink-0"
+                              title="Eliminar esta reseña"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 <div className="flex items-center justify-end gap-3 pt-6 border-t border-stone-800">
                   <button
