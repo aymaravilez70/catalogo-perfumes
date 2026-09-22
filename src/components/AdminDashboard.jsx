@@ -73,7 +73,13 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     votes_verano: '1200',
     votes_otono: '7000',
     votes_dia: '3500',
-    votes_noche: '9200'
+    votes_noche: '9200',
+    olfactory_dulzor: '3',
+    olfactory_frescura: '3',
+    olfactory_intensidad: '4',
+    olfactory_proyeccion: '4',
+    olfactory_duracion: '4',
+    olfactory_versatilidad: '4'
   };
   const [formData, setFormData] = useState(initialForm);
 
@@ -280,7 +286,13 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       votes_verano: String(pVotes.verano ?? 1200),
       votes_otono: String(pVotes.otoño ?? 7000),
       votes_dia: String(pVotes.dia ?? 3500),
-      votes_noche: String(pVotes.noche ?? 9200)
+      votes_noche: String(pVotes.noche ?? 9200),
+      olfactory_dulzor: String(product.olfactory_profile?.dulzor ?? 3),
+      olfactory_frescura: String(product.olfactory_profile?.frescura ?? 3),
+      olfactory_intensidad: String(product.olfactory_profile?.intensidad ?? 4),
+      olfactory_proyeccion: String(product.olfactory_profile?.proyeccion ?? 4),
+      olfactory_duracion: String(product.olfactory_profile?.duracion ?? 4),
+      olfactory_versatilidad: String(product.olfactory_profile?.versatilidad ?? 4)
     });
     setActiveTab('create');
   };
@@ -365,6 +377,14 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         },
         tags: formData.tags.split(',').map(s => s.trim()).filter(Boolean),
         accords: formData.accords.split(',').map(s => s.trim()).filter(Boolean),
+        olfactory_profile: {
+          dulzor: parseInt(formData.olfactory_dulzor, 10) || 3,
+          frescura: parseInt(formData.olfactory_frescura, 10) || 3,
+          intensidad: parseInt(formData.olfactory_intensidad, 10) || 4,
+          proyeccion: parseInt(formData.olfactory_proyeccion, 10) || 4,
+          duracion: parseInt(formData.olfactory_duracion, 10) || 4,
+          versatilidad: parseInt(formData.olfactory_versatilidad, 10) || 4
+        },
         is_active: formData.is_active,
         created_at: isEditing 
           ? (products.find(p => p.id === currentEditId)?.created_at || new Date().toISOString())
@@ -1463,6 +1483,117 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                     </div>
                   </div>
 
+                </div>
+
+                {/* BLOQUE 4: PERFIL SENSORIAL OLFATIVO (1 A 5 CÁPSULAS) */}
+                <div className="bg-stone-950/90 p-5 rounded-2xl border border-stone-800 space-y-4">
+                  <div className="border-b border-stone-800 pb-3">
+                    <div className="flex items-center gap-2 text-stone-200 font-serif font-bold text-sm">
+                      <Sparkles size={16} className="text-amber-400" />
+                      <span>Perfil Sensorial Olfativo (1 a 5 Cápsulas)</span>
+                    </div>
+                    <p className="text-[11px] text-stone-400 mt-0.5">
+                      Define los niveles mostrados en la ficha del producto y en el comparador de fragancias
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    {/* Dulzor */}
+                    <div className="bg-stone-900/80 p-3 rounded-xl border border-stone-800 space-y-1.5">
+                      <label className="text-xs font-semibold text-amber-300 block">Dulzor</label>
+                      <select
+                        value={formData.olfactory_dulzor}
+                        onChange={(e) => setFormData({ ...formData, olfactory_dulzor: e.target.value })}
+                        className="w-full bg-stone-950 border border-stone-800 text-stone-100 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-amber-400 font-mono"
+                      >
+                        <option value="1">1 - Sutil / Seco</option>
+                        <option value="2">2 - Ligero</option>
+                        <option value="3">3 - Equilibrado</option>
+                        <option value="4">4 - Marcado</option>
+                        <option value="5">5 - Muy Gourmand</option>
+                      </select>
+                    </div>
+
+                    {/* Frescura */}
+                    <div className="bg-stone-900/80 p-3 rounded-xl border border-stone-800 space-y-1.5">
+                      <label className="text-xs font-semibold text-cyan-300 block">Frescura</label>
+                      <select
+                        value={formData.olfactory_frescura}
+                        onChange={(e) => setFormData({ ...formData, olfactory_frescura: e.target.value })}
+                        className="w-full bg-stone-950 border border-stone-800 text-stone-100 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-cyan-400 font-mono"
+                      >
+                        <option value="1">1 - Cálido / Denso</option>
+                        <option value="2">2 - Moderada baja</option>
+                        <option value="3">3 - Equilibrada</option>
+                        <option value="4">4 - Fresco</option>
+                        <option value="5">5 - Muy Vigorizante</option>
+                      </select>
+                    </div>
+
+                    {/* Intensidad */}
+                    <div className="bg-stone-900/80 p-3 rounded-xl border border-stone-800 space-y-1.5">
+                      <label className="text-xs font-semibold text-rose-300 block">Intensidad</label>
+                      <select
+                        value={formData.olfactory_intensidad}
+                        onChange={(e) => setFormData({ ...formData, olfactory_intensidad: e.target.value })}
+                        className="w-full bg-stone-950 border border-stone-800 text-stone-100 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-rose-400 font-mono"
+                      >
+                        <option value="1">1 - Íntimo / Suave</option>
+                        <option value="2">2 - Moderado suave</option>
+                        <option value="3">3 - Presente</option>
+                        <option value="4">4 - Potente</option>
+                        <option value="5">5 - Imponente / Bestia</option>
+                      </select>
+                    </div>
+
+                    {/* Proyección */}
+                    <div className="bg-stone-900/80 p-3 rounded-xl border border-stone-800 space-y-1.5">
+                      <label className="text-xs font-semibold text-purple-300 block">Proyección</label>
+                      <select
+                        value={formData.olfactory_proyeccion}
+                        onChange={(e) => setFormData({ ...formData, olfactory_proyeccion: e.target.value })}
+                        className="w-full bg-stone-950 border border-stone-800 text-stone-100 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-purple-400 font-mono"
+                      >
+                        <option value="1">1 - A ras de piel</option>
+                        <option value="2">2 - Burbuja íntima</option>
+                        <option value="3">3 - Moderada (1m)</option>
+                        <option value="4">4 - Alta (1.5m - 2m)</option>
+                        <option value="5">5 - Llena habitaciones</option>
+                      </select>
+                    </div>
+
+                    {/* Duración */}
+                    <div className="bg-stone-900/80 p-3 rounded-xl border border-stone-800 space-y-1.5">
+                      <label className="text-xs font-semibold text-emerald-300 block">Duración</label>
+                      <select
+                        value={formData.olfactory_duracion}
+                        onChange={(e) => setFormData({ ...formData, olfactory_duracion: e.target.value })}
+                        className="w-full bg-stone-950 border border-stone-800 text-stone-100 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-emerald-400 font-mono"
+                      >
+                        <option value="1">1 - 3 a 5 horas</option>
+                        <option value="2">2 - 5 a 6 horas</option>
+                        <option value="3">3 - 6 a 8 horas</option>
+                        <option value="4">4 - 8 a 12 horas</option>
+                        <option value="5">5 - 14+ horas (Eterno)</option>
+                      </select>
+                    </div>
+
+                    {/* Versatilidad */}
+                    <div className="bg-stone-900/80 p-3 rounded-xl border border-stone-800 space-y-1.5">
+                      <label className="text-xs font-semibold text-blue-300 block">Versatilidad</label>
+                      <select
+                        value={formData.olfactory_versatilidad}
+                        onChange={(e) => setFormData({ ...formData, olfactory_versatilidad: e.target.value })}
+                        className="w-full bg-stone-950 border border-stone-800 text-stone-100 text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-blue-400 font-mono"
+                      >
+                        <option value="1">1 - Solo ocasiones puntuales</option>
+                        <option value="2">2 - Específico (Fiesta/Frío)</option>
+                        <option value="3">3 - Moderada</option>
+                        <option value="4">4 - Alta (Múltiples planes)</option>
+                        <option value="5">5 - Firma total (Todo el año)</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="bg-stone-950/80 p-5 rounded-2xl border border-stone-800 space-y-3">

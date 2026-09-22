@@ -78,6 +78,18 @@ export default function Footer({ onNavigate, onOpenQuiz, onOpenLookbook, onOpenS
             >
               Boutique Catálogo
             </button>
+            <button 
+              onClick={() => {
+                if (onNavigate) onNavigate('home');
+                setTimeout(() => {
+                  const el = document.getElementById('academia');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 150);
+              }} 
+              className="hover:text-gold-400 transition-colors"
+            >
+              Academia & Guía
+            </button>
             <button onClick={onOpenQuiz} className="hover:text-gold-400 transition-colors">
               Test Olfativo
             </button>

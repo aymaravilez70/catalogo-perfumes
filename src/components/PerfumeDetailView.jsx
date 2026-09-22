@@ -22,7 +22,10 @@ import {
   Eye,
   Star,
   Layers,
-  RotateCcw
+  RotateCcw,
+  ThumbsUp,
+  MapPin,
+  X
 } from 'lucide-react';
 
 export default function PerfumeDetailView({ 
@@ -40,12 +43,89 @@ export default function PerfumeDetailView({
   const [copiedLink, setCopiedLink] = useState(false);
   const [viewMode, setViewMode] = useState('bottle'); // 'bottle' | 'page'
 
+  // Customer Reviews State (PDF p. 11 Punto 19)
+  const [reviews, setReviews] = useState([]);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [reviewToast, setReviewToast] = useState(null);
+
+  // Load reviews for this perfume from localStorage
+  useEffect(() => {
+    if (!perfume?.id) return;
+    try {
+      const saved = localStorage.getItem(`joufab_reviews_${perfume.id}`);
+      if (saved) {
+        setReviews(JSON.parse(saved));
+      } else {
+        setReviews([]);
+      }
+    } catch {
+      setReviews([]);
+    }
+  }, [perfume?.id]);
+
+  const [reviewForm, setReviewForm] = useState({
+    name: '',
+    city: '',
+    rating: 5,
+    longevity: '10 - 14 horas',
+    occasion: 'Citas & Noches',
+    recommend: true,
+    comment: ''
+  });
+  const [reviewHoverRating, setReviewHoverRating] = useState(0);
+
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    if (!reviewForm.name.trim() || !reviewForm.comment.trim()) return;
+
+    const newReview = {
+      id: `rev_${Date.now()}`,
+      name: reviewForm.name.trim(),
+      city: reviewForm.city.trim() || 'Ecuador',
+      rating: reviewForm.rating,
+      longevity: reviewForm.longevity,
+      occasion: reviewForm.occasion,
+      recommend: reviewForm.recommend,
+      comment: reviewForm.comment.trim(),
+      date: new Date().toLocaleDateString('es-EC', { day: 'numeric', month: 'short', year: 'numeric' }),
+      verified: true
+    };
+
+    const updated = [newReview, ...reviews];
+    setReviews(updated);
+    try {
+      localStorage.setItem(`joufab_reviews_${perfume.id}`, JSON.stringify(updated));
+    } catch (err) {
+      console.error(err);
+    }
+
+    setReviewForm({
+      name: '',
+      city: '',
+      rating: 5,
+      longevity: '10 - 14 horas',
+      occasion: 'Citas & Noches',
+      recommend: true,
+      comment: ''
+    });
+    setIsReviewModalOpen(false);
+    setReviewToast('¡Gracias por tu opinión! Reseña publicada con éxito.');
+    setTimeout(() => setReviewToast(null), 3500);
+  };
+
   // Scroll to top when perfume changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [perfume?.id]);
 
   if (!perfume) return null;
+
+  const averageRating = reviews.length > 0 
+    ? (reviews.reduce((acc, r) => acc + Number(r.rating || 5), 0) / reviews.length).toFixed(1)
+    : null;
+  const recommendPercent = reviews.length > 0
+    ? Math.round((reviews.filter(r => r.recommend !== false).length / reviews.length) * 100)
+    : null;
 
   const handleAdd = () => {
     onAddToCart(perfume);
@@ -506,6 +586,160 @@ export default function PerfumeDetailView({
 
         </div>
 
+        {/* Customer Reviews & Feedback Section (PDF p. 11 Punto 19) */}
+        <div className="mt-20 pt-12 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div className="space-y-1">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-bold block">
+                Comunidad & Valoraciones
+              </span>
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                <span>Experiencias de Clientes</span>
+                {reviews.length > 0 && (
+                  <span className="text-xs font-sans font-normal px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/20">
+                    {reviews.length} {reviews.length === 1 ? 'opinión' : 'opiniones'}
+                  </span>
+                )}
+              </h2>
+              <p className="text-xs text-slate-400 font-light">
+                Comentarios auténticos de compradores sobre fijación en piel, estela y ocasiones ideales.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setIsReviewModalOpen(true)}
+              className="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-black text-xs font-bold tracking-wider uppercase transition-all shadow-gold-sm hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2 self-start sm:self-auto"
+            >
+              <Star className="w-4 h-4 fill-black" />
+              <span>Escribir Reseña</span>
+            </button>
+          </div>
+
+          {/* Toast Notification for Review Submission */}
+          {reviewToast && (
+            <div className="mb-6 p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-2.5 animate-fadeIn">
+              <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>{reviewToast}</span>
+            </div>
+          )}
+
+          {reviews.length === 0 ? (
+            /* Clean Luxury Empty State - Strictly NO fake reviews (PDF p. 9 y 11) */
+            <div className="rounded-3xl bg-gradient-to-b from-obsidian-900/60 to-obsidian-950/60 border border-white/10 p-8 sm:p-12 text-center max-w-2xl mx-auto space-y-4">
+              <div className="w-14 h-14 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 flex items-center justify-center mx-auto">
+                <Star className="w-7 h-7" />
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="font-cinzel text-lg sm:text-xl font-bold text-white">
+                  Sé el primero en calificar #{perfume.num} {perfume.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400 font-light leading-relaxed">
+                  Esta fragancia aún no tiene opiniones registradas. Tu experiencia sobre su fijación en piel, proyección y notas ayudará a otros apasionados del perfume a elegir su próximo aroma.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsReviewModalOpen(true)}
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black text-xs font-bold tracking-wider uppercase transition-all shadow-gold-sm hover:scale-105 active:scale-95 cursor-pointer inline-flex items-center gap-2"
+              >
+                <span>✦ Compartir mi Experiencia</span>
+              </button>
+            </div>
+          ) : (
+            /* Real Reviews Grid & Summary */
+            <div className="space-y-6">
+              {/* Summary Stats Card */}
+              <div className="p-6 rounded-2xl bg-obsidian-900/80 border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
+                <div className="text-center sm:text-left sm:border-r border-white/10 sm:pr-6 space-y-1">
+                  <div className="flex items-center justify-center sm:justify-start gap-2">
+                    <span className="text-4xl font-bold font-cinzel text-white">{averageRating}</span>
+                    <div className="flex items-center text-gold-400">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star 
+                          key={s} 
+                          className={`w-4 h-4 ${s <= Math.round(Number(averageRating)) ? 'fill-gold-400 text-gold-400' : 'text-slate-600'}`} 
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <span className="text-xs text-slate-400">Basado en {reviews.length} valoraciones verificadas</span>
+                </div>
+
+                <div className="text-center sm:border-r border-white/10 sm:px-6 space-y-1">
+                  <span className="text-2xl font-bold text-emerald-400 font-cinzel">{recommendPercent}%</span>
+                  <span className="text-xs text-slate-400 block">De compradores recomiendan esta fragancia</span>
+                </div>
+
+                <div className="text-center sm:text-right sm:pl-6 space-y-1">
+                  <span className="text-xs text-gold-400 font-semibold block">100% Opiniones Reales</span>
+                  <span className="text-xs text-slate-400 block">Comentarios auténticos de compradores</span>
+                </div>
+              </div>
+
+              {/* Reviews List */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {reviews.map((rev) => (
+                  <div
+                    key={rev.id}
+                    className="p-5 rounded-2xl bg-obsidian-900/60 border border-white/10 space-y-3 hover:border-gold-500/30 transition-all"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 font-bold text-xs flex items-center justify-center font-cinzel">
+                          {rev.name.slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-white">{rev.name}</span>
+                            {rev.verified && (
+                              <span className="text-[10px] text-emerald-400 flex items-center gap-1 font-medium bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                                <Check className="w-3 h-3" /> Verificado
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                            <MapPin className="w-3 h-3 text-slate-500" /> {rev.city} • {rev.date}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center text-gold-400">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star 
+                            key={s} 
+                            className={`w-3.5 h-3.5 ${s <= rev.rating ? 'fill-gold-400 text-gold-400' : 'text-slate-700'}`} 
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 text-[10px]">
+                      {rev.longevity && (
+                        <span className="px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/10 flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-gold-400" /> {rev.longevity}
+                        </span>
+                      )}
+                      {rev.occasion && (
+                        <span className="px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/10">
+                          {rev.occasion}
+                        </span>
+                      )}
+                      {rev.recommend && (
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-1">
+                          <ThumbsUp className="w-3 h-3" /> Recomienda este perfume
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-xs text-slate-300 leading-relaxed font-light">
+                      "{rev.comment}"
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Similar Perfumes Section (Page 6 of PDF) */}
         {similarPerfumes.length > 0 && (
           <div className="mt-20 pt-12 border-t border-white/10">
@@ -563,6 +797,180 @@ export default function PerfumeDetailView({
         )}
 
       </div>
+
+      {/* Review Submission Modal (PDF p. 11 Punto 19) */}
+      {isReviewModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="w-full max-w-lg rounded-3xl bg-obsidian-950 border border-gold-500/30 p-6 sm:p-8 shadow-2xl space-y-5 relative">
+            <button
+              onClick={() => setIsReviewModalOpen(false)}
+              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-1 text-left">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-bold block">
+                Tu Experiencia Olfativa
+              </span>
+              <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white">
+                Calificar #{perfume.num} {perfume.name}
+              </h3>
+              <p className="text-xs text-slate-400 font-light">
+                Comparte cómo se comporta en tu piel, duración y tus impresiones reales.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmitReview} className="space-y-4 text-left">
+              {/* Interactive Star Rating */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-300 block">
+                  Calificación General *
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        type="button"
+                        key={star}
+                        onMouseEnter={() => setReviewHoverRating(star)}
+                        onMouseLeave={() => setReviewHoverRating(0)}
+                        onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                        className="p-1 text-gold-400 transition-transform hover:scale-125 focus:outline-none cursor-pointer"
+                      >
+                        <Star
+                          className={`w-6 h-6 ${
+                            star <= (reviewHoverRating || reviewForm.rating)
+                              ? 'fill-gold-400 text-gold-400'
+                              : 'text-slate-600'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  <span className="text-xs font-semibold text-gold-400 ml-2">
+                    {(reviewHoverRating || reviewForm.rating) === 5 && 'Extraordinario (5/5)'}
+                    {(reviewHoverRating || reviewForm.rating) === 4 && 'Muy Bueno (4/5)'}
+                    {(reviewHoverRating || reviewForm.rating) === 3 && 'Aceptable (3/5)'}
+                    {(reviewHoverRating || reviewForm.rating) === 2 && 'Regular (2/5)'}
+                    {(reviewHoverRating || reviewForm.rating) === 1 && 'Pobre (1/5)'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Name and City */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300 block">
+                    Tu Nombre o Iniciales *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Ej. Mateo V."
+                    value={reviewForm.name}
+                    onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
+                    className="w-full bg-obsidian-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300 block">
+                    Ciudad / Provincia
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ej. Guayaquil"
+                    value={reviewForm.city}
+                    onChange={(e) => setReviewForm({ ...reviewForm, city: e.target.value })}
+                    className="w-full bg-obsidian-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500"
+                  />
+                </div>
+              </div>
+
+              {/* Longevity & Occasion */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300 block">
+                    Duración en tu piel
+                  </label>
+                  <select
+                    value={reviewForm.longevity}
+                    onChange={(e) => setReviewForm({ ...reviewForm, longevity: e.target.value })}
+                    className="w-full bg-obsidian-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-500"
+                  >
+                    <option value="Más de 12 horas">Más de 12 horas (Bomba)</option>
+                    <option value="8 - 12 horas">8 - 12 horas (Excelente)</option>
+                    <option value="6 - 8 horas">6 - 8 horas (Moderada)</option>
+                    <option value="4 - 6 horas">4 - 6 horas (Ligera)</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-300 block">
+                    Ocasión preferida
+                  </label>
+                  <select
+                    value={reviewForm.occasion}
+                    onChange={(e) => setReviewForm({ ...reviewForm, occasion: e.target.value })}
+                    className="w-full bg-obsidian-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-500"
+                  >
+                    <option value="Citas & Noches">Citas & Noches</option>
+                    <option value="Oficina & Trabajo">Oficina & Trabajo</option>
+                    <option value="Eventos & Fiestas">Eventos & Fiestas</option>
+                    <option value="Uso Diario Casual">Uso Diario Casual</option>
+                    <option value="Todo momento">Todo momento</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Recommend Checkbox */}
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="recommendCheck"
+                  checked={reviewForm.recommend}
+                  onChange={(e) => setReviewForm({ ...reviewForm, recommend: e.target.checked })}
+                  className="rounded border-white/20 bg-obsidian-900 text-gold-500 focus:ring-gold-500 w-4 h-4 cursor-pointer"
+                />
+                <label htmlFor="recommendCheck" className="text-xs text-slate-300 cursor-pointer">
+                  ¿Recomendarías este perfume a un amigo o conocido?
+                </label>
+              </div>
+
+              {/* Comment */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-300 block">
+                  Tu opinión sincera *
+                </label>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Describe las notas que más percibes, la estela y si has recibido cumplidos usándolo..."
+                  value={reviewForm.comment}
+                  onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                  className="w-full bg-obsidian-900 border border-white/10 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 leading-relaxed resize-none"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsReviewModalOpen(false)}
+                  className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black font-bold text-xs tracking-wider uppercase shadow-gold-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                >
+                  Publicar Opinión
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
     </div>
   );

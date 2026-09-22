@@ -108,6 +108,20 @@ export default function Navbar({
             <span>Asesor Olfativo</span>
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
           </button>
+
+          <button 
+            onClick={() => {
+              if (onNavigate) onNavigate('home');
+              setTimeout(() => {
+                const el = document.getElementById('academia');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 150);
+            }}
+            className="hover:text-gold-400 transition-colors py-2 whitespace-nowrap relative group flex items-center gap-1.5 cursor-pointer text-slate-300"
+          >
+            <span>Academia</span>
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 group-hover:w-full transition-all duration-300" />
+          </button>
         </nav>
 
         {/* Right Zone: Interactive Utility Bar */}
@@ -247,6 +261,23 @@ export default function Navbar({
               </span>
               <span className="px-2 py-0.5 text-[10px] bg-gold-500/20 text-gold-300 border border-gold-500/30 font-bold rounded-full">
                 Test & Guía
+              </span>
+            </button>
+
+            <button 
+              onClick={() => {
+                if (onNavigate) onNavigate('home');
+                setMobileMenuOpen(false);
+                setTimeout(() => {
+                  const el = document.getElementById('academia');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 150);
+              }}
+              className="flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-left border-b border-white/5"
+            >
+              <span className="flex items-center gap-2.5">
+                <BookOpen className="w-4 h-4 text-gold-400" />
+                Academia & Guía del Perfumista
               </span>
             </button>
 

@@ -17,6 +17,7 @@ import StoryModal from './components/StoryModal';
 import AdminDashboard from './components/AdminDashboard';
 import GlobalSearchModal from './components/GlobalSearchModal';
 import ScentDiscoverySection from './components/ScentDiscoverySection';
+import PerfumeAcademySection from './components/PerfumeAcademySection';
 import PurchaseGuaranteeSection from './components/PurchaseGuaranteeSection';
 import Footer from './components/Footer';
 import { 
@@ -204,6 +205,16 @@ export default function App() {
       // Deep link to Scent Advisor / Quiz
       if (hash.includes('asesor') || hash.includes('quiz') || hash.includes('test') || hash.includes('regalo')) {
         setIsQuizOpen(true);
+      }
+
+      // Deep link to Academy / Perfume Guide
+      if (hash.includes('academia') || hash.includes('guia')) {
+        setCurrentView('home');
+        setTimeout(() => {
+          const el = document.getElementById('academia');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+        return;
       }
 
       if (hash.includes('catalog') || hash.includes('catalogo') || hash.includes('coleccion')) {
@@ -434,6 +445,12 @@ export default function App() {
           <HomeStoryBanner
             onOpenStory={() => setIsStoryOpen(true)}
             onOpenLookbook={() => setIsLookbookOpen(true)}
+          />
+
+          {/* Perfume Academy & Buyer Educational Guide (PDF p. 10 Punto 18) */}
+          <PerfumeAcademySection
+            onNavigateToCatalog={() => navigateTo('catalog')}
+            onOpenQuiz={() => setIsQuizOpen(true)}
           />
 
           {/* Mid-Page Interactive Scent Quiz Callout */}
