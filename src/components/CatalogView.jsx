@@ -629,33 +629,6 @@ export default function CatalogView({
 
           {/* Right Perfume Grid / List Area */}
           <div className="lg:col-span-9 space-y-6 min-h-[750px]">
-            
-            {/* Quick Horizontal Brand Filter Bar */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-medium whitespace-nowrap mr-1 flex items-center gap-1.5">
-                Marcas:
-              </span>
-              {brands.map((b) => (
-                <button
-                  key={b.id}
-                  type="button"
-                  onClick={() => setSelectedBrand(b.id)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide whitespace-nowrap transition-all ${
-                    selectedBrand === b.id
-                      ? 'bg-gold-500 text-black shadow-gold-sm font-semibold'
-                      : 'bg-obsidian-900 hover:bg-obsidian-850 text-slate-300 border border-white/10'
-                  }`}
-                >
-                  <span>{b.id === 'Todas' ? 'Todas' : b.name}</span>
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                    selectedBrand === b.id ? 'bg-black text-gold-400 font-bold' : 'bg-white/10 text-slate-400'
-                  }`}>
-                    {b.count}
-                  </span>
-                </button>
-              ))}
-            </div>
-            
             {filteredPerfumes.length === 0 ? (
               <div className="py-24 text-center space-y-4 rounded-3xl bg-obsidian-900/60 border border-white/10 p-8">
                 <Search className="w-12 h-12 text-slate-600 mx-auto" />
