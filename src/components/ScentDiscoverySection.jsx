@@ -332,10 +332,21 @@ export default function ScentDiscoverySection({
             </div>
 
             <button
-              onClick={() => onNavigateToCatalog && onNavigateToCatalog()}
+              onClick={() => {
+                if (!onNavigateToCatalog) return;
+                if (activeTab === 'notes') {
+                  onNavigateToCatalog({ note: selectedItem });
+                } else if (activeTab === 'vibe') {
+                  onNavigateToCatalog({ sensation: selectedItem });
+                } else if (activeTab === 'moment') {
+                  onNavigateToCatalog({ moment: selectedItem });
+                } else {
+                  onNavigateToCatalog();
+                }
+              }}
               className="text-xs text-gold-400 hover:text-gold-300 font-semibold flex items-center gap-1 group cursor-pointer"
             >
-              <span>Ver Catálogo Completo</span>
+              <span>Ver en Catálogo</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>

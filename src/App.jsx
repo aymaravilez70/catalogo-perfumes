@@ -124,6 +124,9 @@ export default function App() {
 
   const [comparedList, setComparedList] = useState([]);
   const [showCatalogFavorites, setShowCatalogFavorites] = useState(false);
+  const [catalogInitialSensation, setCatalogInitialSensation] = useState('all');
+  const [catalogInitialNote, setCatalogInitialNote] = useState('all');
+  const [catalogInitialMoment, setCatalogInitialMoment] = useState('all');
 
   const handleOpenFavorites = () => {
     setShowCatalogFavorites(true);
@@ -158,6 +161,7 @@ export default function App() {
             niche_house: p.niche_house || pVotes.niche_house || '',
             longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
             sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
+            similar_ids: p.similar_ids || pVotes.similar_ids || [],
             votes: {
               invierno: Number(pVotes.invierno) || 5000,
               primavera: Number(pVotes.primavera) || 2000,
@@ -291,6 +295,15 @@ export default function App() {
     }
     if (options.search !== undefined) {
       setSearchQuery(options.search);
+    }
+    if (options.sensation !== undefined) {
+      setCatalogInitialSensation(options.sensation);
+    }
+    if (options.note !== undefined) {
+      setCatalogInitialNote(options.note);
+    }
+    if (options.moment !== undefined) {
+      setCatalogInitialMoment(options.moment);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -463,7 +476,7 @@ export default function App() {
             perfumes={perfumes}
             onSelectPerfume={handleSelectPerfume}
             onAddToCart={handleAddToCart}
-            onNavigateToCatalog={() => navigateTo('catalog')}
+            onNavigateToCatalog={(opts) => navigateTo('catalog', opts)}
           />
 
           {/* Perfume Academy & Buyer Educational Guide (PDF p. 10 Punto 18) */}
@@ -488,6 +501,9 @@ export default function App() {
             onNavigateHome={() => navigateTo('home')}
             initialSearchQuery={searchQuery}
             initialShowFavorites={showCatalogFavorites}
+            initialSensation={catalogInitialSensation}
+            initialNote={catalogInitialNote}
+            initialMoment={catalogInitialMoment}
           />
         </main>
       )}

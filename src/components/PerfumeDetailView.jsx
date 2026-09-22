@@ -288,24 +288,39 @@ export default function PerfumeDetailView({
     };
   };
 
-  // Find 3-4 Similar Perfumes based on brand, category or tags with Comparative Relation (PDF p. 6, Punto 9)
-  const similarPerfumes = allPerfumes
-    .filter((p) => p.id !== perfume.id)
-    .map((p) => {
-      let score = 0;
-      if (p.brand === perfume.brand) score += 3;
-      if (p.category === perfume.category) score += 4;
-      if (p.gender === perfume.gender) score += 1;
-      const commonTags = (p.tags || []).filter(t => (perfume.tags || []).includes(t)).length;
-      score += commonTags * 2;
-      return { 
-        ...p, 
-        similarityScore: score,
-        relationBadge: getComparativeRelation(p)
-      };
-    })
-    .sort((a, b) => b.similarityScore - a.similarityScore)
-    .slice(0, 4);
+  // Find 3-4 Similar Perfumes based on manual selection (PDF p. 6, Punto 9) or auto-calculation
+  const manualSimilarIds = perfume.similar_ids || perfume.votes?.similar_ids;
+  const manualSimilarList = (Array.isArray(manualSimilarIds) && manualSimilarIds.length > 0)
+    ? manualSimilarIds
+        .map(idOrNum => allPerfumes.find(p => p.id === idOrNum || String(p.num) === String(idOrNum) || p.name?.toLowerCase() === String(idOrNum).toLowerCase()))
+        .filter(Boolean)
+        .filter(p => p.id !== perfume.id)
+        .slice(0, 4)
+        .map(p => ({
+          ...p,
+          relationBadge: getComparativeRelation(p)
+        }))
+    : [];
+
+  const similarPerfumes = manualSimilarList.length > 0
+    ? manualSimilarList
+    : allPerfumes
+        .filter((p) => p.id !== perfume.id)
+        .map((p) => {
+          let score = 0;
+          if (p.brand === perfume.brand) score += 3;
+          if (p.category === perfume.category) score += 4;
+          if (p.gender === perfume.gender) score += 1;
+          const commonTags = (p.tags || []).filter(t => (perfume.tags || []).includes(t)).length;
+          score += commonTags * 2;
+          return { 
+            ...p, 
+            similarityScore: score,
+            relationBadge: getComparativeRelation(p)
+          };
+        })
+        .sort((a, b) => b.similarityScore - a.similarityScore)
+        .slice(0, 4);
 
   const pVotes = perfume.votes || {};
   const votes = {

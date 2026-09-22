@@ -34,7 +34,10 @@ export default function CatalogView({
   onOpenQuiz,
   onNavigateHome,
   initialSearchQuery = '',
-  initialShowFavorites = false
+  initialShowFavorites = false,
+  initialSensation = 'all',
+  initialNote = 'all',
+  initialMoment = 'all'
 }) {
   // Filters
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
@@ -42,8 +45,9 @@ export default function CatalogView({
   const [selectedGender, setSelectedGender] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSeason, setSelectedSeason] = useState('all');
-  const [selectedMoment, setSelectedMoment] = useState('all');
-  const [selectedNote, setSelectedNote] = useState('all');
+  const [selectedMoment, setSelectedMoment] = useState(initialMoment);
+  const [selectedNote, setSelectedNote] = useState(initialNote);
+  const [selectedSensation, setSelectedSensation] = useState(initialSensation);
   const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'rating' | 'price_asc' | 'price_desc' | 'name_asc'
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
@@ -55,6 +59,24 @@ export default function CatalogView({
       setShowFavoritesOnly(true);
     }
   }, [initialShowFavorites]);
+
+  useEffect(() => {
+    if (initialSensation && initialSensation !== 'all') {
+      setSelectedSensation(initialSensation);
+    }
+  }, [initialSensation]);
+
+  useEffect(() => {
+    if (initialNote && initialNote !== 'all') {
+      setSelectedNote(initialNote);
+    }
+  }, [initialNote]);
+
+  useEffect(() => {
+    if (initialMoment && initialMoment !== 'all') {
+      setSelectedMoment(initialMoment);
+    }
+  }, [initialMoment]);
 
   // Quick Collections (PDF p. 9, Punto 14)
   const [activeCollection, setActiveCollection] = useState('all');
@@ -164,6 +186,20 @@ export default function CatalogView({
     { id: '55-plus', label: '$55.00 o más' },
   ];
 
+  // Sensations / Personalities (PDF p. 4, Punto 5)
+  const sensations = [
+    { id: 'all', label: 'Todas las Sensaciones' },
+    { id: 'elegante', label: 'Elegante' },
+    { id: 'seductor', label: 'Seductor' },
+    { id: 'fresco', label: 'Fresco' },
+    { id: 'limpio', label: 'Limpio' },
+    { id: 'misterioso', label: 'Misterioso' },
+    { id: 'poderoso', label: 'Poderoso' },
+    { id: 'juvenil', label: 'Juvenil' },
+    { id: 'dulce', label: 'Dulce' },
+    { id: 'sofisticado', label: 'Sofisticado' }
+  ];
+
   // Filter and Sort Logic
   const filteredPerfumes = useMemo(() => {
     let result = perfumes.filter(p => {
@@ -242,6 +278,45 @@ export default function CatalogView({
         }
       }
 
+      // Sensation / Personality Filter (PDF p. 4, Punto 5)
+      if (selectedSensation !== 'all') {
+        const sensTarget = selectedSensation.toLowerCase();
+        const textToMatch = [
+          p.category || '',
+          p.description || '',
+          p.badge || '',
+          p.gender || '',
+          p.occasions || '',
+          ...(p.tags || []),
+          ...(p.accords || []),
+          ...(p.notes?.salida || []),
+          ...(p.notes?.corazon || []),
+          ...(p.notes?.base || [])
+        ].join(' ').toLowerCase();
+
+        if (sensTarget === 'elegante') {
+          if (!textToMatch.includes('elegante') && !textToMatch.includes('sofisticad') && !textToMatch.includes('madera') && !textToMatch.includes('iris') && !textToMatch.includes('formal')) return false;
+        } else if (sensTarget === 'seductor') {
+          if (!textToMatch.includes('seductor') && !textToMatch.includes('citas') && !textToMatch.includes('noche') && !textToMatch.includes('vainilla') && !textToMatch.includes('ámbar')) return false;
+        } else if (sensTarget === 'fresco') {
+          if (!textToMatch.includes('fresco') && !textToMatch.includes('acuátic') && !textToMatch.includes('cítric') && !textToMatch.includes('marino') && !textToMatch.includes('menta')) return false;
+        } else if (sensTarget === 'limpio') {
+          if (!textToMatch.includes('limpio') && !textToMatch.includes('pulcro') && !textToMatch.includes('lavanda') && !textToMatch.includes('oficina') && !textToMatch.includes('fougère')) return false;
+        } else if (sensTarget === 'misterioso') {
+          if (!textToMatch.includes('misterioso') && !textToMatch.includes('oscuro') && !textToMatch.includes('oud') && !textToMatch.includes('especiad') && !textToMatch.includes('incienso')) return false;
+        } else if (sensTarget === 'poderoso') {
+          if (!textToMatch.includes('poderoso') && !textToMatch.includes('imponente') && !textToMatch.includes('pesada') && !textToMatch.includes('alta') && !textToMatch.includes('fijación')) return false;
+        } else if (sensTarget === 'juvenil') {
+          if (!textToMatch.includes('juvenil') && !textToMatch.includes('alegre') && !textToMatch.includes('frutal') && !textToMatch.includes('manzana') && !textToMatch.includes('fiesta')) return false;
+        } else if (sensTarget === 'dulce') {
+          if (!textToMatch.includes('dulce') && !textToMatch.includes('gourmand') && !textToMatch.includes('caramelo') && !textToMatch.includes('vainilla') && !textToMatch.includes('miel')) return false;
+        } else if (sensTarget === 'sofisticado') {
+          if (!textToMatch.includes('sofisticad') && !textToMatch.includes('exclusiv') && !textToMatch.includes('nicho') && !textToMatch.includes('autor')) return false;
+        } else {
+          if (!textToMatch.includes(sensTarget)) return false;
+        }
+      }
+
       // Search Query
       if (searchQuery.trim() !== '') {
         const q = searchQuery.toLowerCase().trim();
@@ -307,6 +382,7 @@ export default function CatalogView({
     selectedMoment,
     selectedCategory,
     selectedNote,
+    selectedSensation,
     activeCollection,
     searchQuery,
     sortBy
@@ -320,6 +396,7 @@ export default function CatalogView({
     selectedMoment !== 'all' || 
     selectedCategory !== 'all' || 
     selectedNote !== 'all' ||
+    selectedSensation !== 'all' ||
     activeCollection !== 'all' ||
     searchQuery.trim() !== '' ||
     showFavoritesOnly;
@@ -332,6 +409,7 @@ export default function CatalogView({
     setSelectedMoment('all');
     setSelectedCategory('all');
     setSelectedNote('all');
+    setSelectedSensation('all');
     setActiveCollection('all');
     setSearchQuery('');
     setShowFavoritesOnly(false);
@@ -467,6 +545,13 @@ export default function CatalogView({
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
                 <span>Nota: {popularNotes.find(n => n.id === selectedNote)?.label}</span>
                 <button onClick={() => setSelectedNote('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
+              </span>
+            )}
+
+            {selectedSensation !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs">
+                <span>Sensación: {sensations.find(s => s.id === selectedSensation)?.label}</span>
+                <button onClick={() => setSelectedSensation('all')}><X className="w-3.5 h-3.5 hover:text-white" /></button>
               </span>
             )}
 
@@ -732,6 +817,28 @@ export default function CatalogView({
                     }`}
                   >
                     {n.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Sensation / Personality Filter (PDF p. 4, Punto 5) */}
+            <div className="space-y-2 pt-2 border-t border-white/5">
+              <h4 className="text-[11px] uppercase tracking-widest text-gold-400 font-bold">
+                Sensación / Personalidad
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {sensations.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => setSelectedSensation(s.id)}
+                    className={`px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer ${
+                      selectedSensation === s.id 
+                        ? 'bg-gold-500 text-black font-bold shadow-sm' 
+                        : 'text-slate-300 bg-obsidian-850 hover:bg-obsidian-800 border border-white/5'
+                    }`}
+                  >
+                    {s.label}
                   </button>
                 ))}
               </div>
@@ -1051,6 +1158,26 @@ export default function CatalogView({
                     }`}
                   >
                     {n.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Sensation / Personality Filter (Mobile) */}
+            <div className="space-y-2 pt-3 border-t border-white/10">
+              <h4 className="text-xs uppercase tracking-widest text-gold-400 font-bold">Sensación / Personalidad</h4>
+              <div className="flex flex-wrap gap-1.5">
+                {sensations.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => { setSelectedSensation(s.id); setMobileFiltersOpen(false); }}
+                    className={`px-2.5 py-1 rounded-lg text-xs ${
+                      selectedSensation === s.id 
+                        ? 'bg-gold-500 text-black font-bold' 
+                        : 'bg-obsidian-900 text-slate-300 border border-white/5'
+                    }`}
+                  >
+                    {s.label}
                   </button>
                 ))}
               </div>

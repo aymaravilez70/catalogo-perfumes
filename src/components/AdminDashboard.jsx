@@ -68,6 +68,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     niche_house: '',
     longevity: '8 - 10 horas',
     sillage: 'Alta / Pesada',
+    similar_ids: [],
     votes_invierno: '8500',
     votes_primavera: '2500',
     votes_verano: '1200',
@@ -113,6 +114,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
             niche_house: p.niche_house || pVotes.niche_house || '',
             longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
             sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
+            similar_ids: Array.isArray(p.similar_ids) ? p.similar_ids : (Array.isArray(pVotes.similar_ids) ? pVotes.similar_ids : []),
             votes: {
               invierno: Number(pVotes.invierno) || 5000,
               primavera: Number(pVotes.primavera) || 2000,
@@ -281,6 +283,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       niche_house: product.niche_house || pVotes.niche_house || '',
       longevity: product.longevity || pVotes.longevity || '8 - 10 horas',
       sillage: product.sillage || pVotes.sillage || 'Alta / Pesada',
+      similar_ids: Array.isArray(product.similar_ids) ? product.similar_ids : (Array.isArray(pVotes.similar_ids) ? pVotes.similar_ids : []),
       votes_invierno: String(pVotes.invierno ?? 8500),
       votes_primavera: String(pVotes.primavera ?? 2500),
       votes_verano: String(pVotes.verano ?? 1200),
@@ -368,7 +371,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
           inspired_by: formData.inspired_by?.trim() || '',
           niche_house: formData.niche_house?.trim() || '',
           longevity: formData.longevity?.trim() || '8 - 10 horas',
-          sillage: formData.sillage?.trim() || 'Alta / Pesada'
+          sillage: formData.sillage?.trim() || 'Alta / Pesada',
+          similar_ids: Array.isArray(formData.similar_ids) ? formData.similar_ids : []
         },
         notes: {
           salida: formData.notes_salida.split(',').map(s => s.trim()).filter(Boolean),
@@ -1267,6 +1271,80 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                         className="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 text-stone-100 px-3.5 py-2.5 rounded-xl text-xs focus:outline-none"
                       />
                     </div>
+                  </div>
+
+                  {/* Fragancias Similares Relacionadas (Manual) (PDF p. 6, Punto 9) */}
+                  <div className="pt-4 border-t border-stone-800/80 space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                      <div>
+                        <label className="text-xs font-semibold text-stone-200 flex items-center gap-1.5">
+                          <Sparkles size={13} className="text-amber-400" />
+                          <span>Fragancias Similares / Relacionadas (Fijar Manualmente)</span>
+                        </label>
+                        <p className="text-[11px] text-stone-400 mt-0.5">
+                          Fija hasta 4 fragancias prioritarias para la sección "¿Te gusta? Te podría encantar". Si lo dejas vacío, el sistema las calculará automáticamente.
+                        </p>
+                      </div>
+                      <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-amber-400/90 self-start sm:self-center">
+                        {(formData.similar_ids || []).length} / 4 fijadas
+                      </span>
+                    </div>
+
+                    {/* Active Selected Chips */}
+                    {(formData.similar_ids || []).length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {(formData.similar_ids || []).map((simId) => {
+                          const simProd = products.find(p => p.id === simId || String(p.num) === String(simId));
+                          return (
+                            <span 
+                              key={simId} 
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs font-medium"
+                            >
+                              <span>{simProd ? `#${simProd.num} ${simProd.name} (${simProd.brand})` : simId}</span>
+                              <button
+                                type="button"
+                                onClick={() => setFormData(prev => ({
+                                  ...prev,
+                                  similar_ids: (prev.similar_ids || []).filter(id => id !== simId)
+                                }))}
+                                className="hover:text-white p-0.5 text-amber-400 hover:bg-amber-500/20 rounded-md transition"
+                                title="Quitar de sugerencias manuales"
+                              >
+                                <X size={12} />
+                              </button>
+                            </span>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Selector Dropdown */}
+                    {(formData.similar_ids || []).length < 4 && (
+                      <div className="flex items-center gap-2">
+                        <select
+                          value=""
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (val && !(formData.similar_ids || []).includes(val) && (formData.similar_ids || []).length < 4) {
+                              setFormData(prev => ({
+                                ...prev,
+                                similar_ids: [...(prev.similar_ids || []), val]
+                              }));
+                            }
+                          }}
+                          className="w-full bg-stone-900 border border-stone-800 text-stone-300 text-xs px-3.5 py-2.5 rounded-xl focus:border-amber-500 focus:outline-none cursor-pointer"
+                        >
+                          <option value="">+ Seleccionar fragancia para relacionar...</option>
+                          {products
+                            .filter(p => p.id !== (currentEditId || formData.id) && !(formData.similar_ids || []).includes(p.id))
+                            .map(p => (
+                              <option key={p.id} value={p.id}>
+                                #{p.num} {p.name} — {p.brand} ({p.category})
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
                 </div>
 
