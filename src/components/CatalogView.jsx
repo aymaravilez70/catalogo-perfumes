@@ -269,9 +269,6 @@ export default function CatalogView({
         {/* Clean Luxury Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
           <div>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-gold-400 font-sans block mb-1">
-              Colección Oficial
-            </span>
             <h1 className="font-cinzel text-2xl sm:text-4xl text-white font-normal tracking-wide">
               Boutique de Fragancias
             </h1>
