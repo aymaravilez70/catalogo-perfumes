@@ -66,23 +66,14 @@ export default class ErrorBoundary extends React.Component {
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 pt-2">
+            <div className="pt-2">
               <button
                 type="button"
-                onClick={this.handleReload}
+                onClick={() => { window.location.href = '/'; }}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-black font-semibold text-xs tracking-wider uppercase rounded-full shadow-luxury hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <RefreshCw className="w-4 h-4" />
-                <span>Recargar Boutique</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={this.handleResetAndReload}
-                className="w-full flex items-center justify-center gap-2 px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-medium text-[11px] tracking-wider uppercase rounded-full transition-all cursor-pointer"
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-gold-400" />
-                <span>Limpiar Caché y Reiniciar</span>
+                <span>Volver a la Boutique</span>
               </button>
             </div>
           </div>
