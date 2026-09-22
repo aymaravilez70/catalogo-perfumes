@@ -22,6 +22,7 @@ export default function Navbar({
   comparatorCount,
   onOpenLookbook,
   onOpenStory,
+  onOpenSearch,
   onSearchChange,
   searchQuery
 }) {
@@ -103,21 +104,27 @@ export default function Navbar({
         {/* Right Zone: Interactive Utility Bar */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           
-          {/* Elegant Search Input */}
-          <div className="relative hidden md:block">
-            <input 
-              type="text"
-              placeholder="Buscar fragancia..."
-              value={searchQuery}
-              onChange={(e) => {
-                onSearchChange(e.target.value);
-                if (currentView !== 'catalog' && onNavigate && e.target.value.trim() !== '') {
-                  onNavigate('catalog');
-                }
-              }}
-              className="w-32 lg:w-40 xl:w-48 focus:w-56 bg-obsidian-900/80 border border-white/15 focus:border-gold-500/70 rounded-full py-1.5 pl-8 pr-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-gold-500/30 transition-all duration-300"
-            />
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
+          {/* Mobile Search Button */}
+          <button
+            onClick={onOpenSearch}
+            title="Buscar por notas, marcas u ocasiones..."
+            className="md:hidden p-2 text-slate-300 hover:text-gold-400 transition-colors rounded-full hover:bg-white/5 border border-transparent hover:border-white/10"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+
+          {/* Desktop Search Trigger */}
+          <div 
+            onClick={onOpenSearch}
+            className="relative hidden md:flex items-center cursor-pointer group"
+          >
+            <div className="w-36 lg:w-44 xl:w-52 bg-obsidian-900/80 hover:bg-obsidian-850 border border-white/15 group-hover:border-gold-500/60 rounded-full py-1.5 pl-8 pr-3 text-xs text-slate-400 group-hover:text-slate-200 transition-all duration-300 flex items-center justify-between">
+              <span className="truncate">Buscar notas, ocasión...</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-400 group-hover:text-gold-300">
+                ⌘K
+              </span>
+            </div>
+            <Search className="w-3.5 h-3.5 text-slate-400 group-hover:text-gold-400 absolute left-2.5 top-2.5 transition-colors pointer-events-none" />
           </div>
 
           {/* Comparador Quick Action */}

@@ -16,7 +16,9 @@ import {
   Layers,
   Check,
   Clock,
-  Flame
+  Flame,
+  Share2,
+  Copy
 } from 'lucide-react';
 
 export default function PerfumeModal({ 
@@ -32,11 +34,21 @@ export default function PerfumeModal({
 
   const [viewMode, setViewMode] = useState('bottle'); // 'bottle' | 'slide'
   const [added, setAdded] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const handleAdd = () => {
     onAddToCart(perfume);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
+  };
+
+  const handleCopyShareLink = () => {
+    const shareUrl = `${window.location.origin}${window.location.pathname}#/perfume/${perfume.id}`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2400);
+    }
   };
 
   const handleWhatsAppInquiry = () => {
@@ -64,6 +76,31 @@ export default function PerfumeModal({
   const nicheHouse = perfume.niche_house || pVotes.niche_house;
   const longevity = perfume.longevity || pVotes.longevity || '8 - 10 horas';
   const sillage = perfume.sillage || pVotes.sillage || 'Alta / Pesada';
+
+  // 6 Visual Olfactory Profile Indicators (1 to 5)
+  const profile = perfume.olfactory_profile || {};
+  const cat = (perfume.category || '').toLowerCase();
+  const notesAll = [
+    ...(perfume.notes?.salida || []),
+    ...(perfume.notes?.corazon || []),
+    ...(perfume.notes?.base || [])
+  ].join(' ').toLowerCase();
+
+  const dulzor = profile.dulzor || (cat.includes('gourmand') || cat.includes('dulce') || notesAll.includes('vainilla') || notesAll.includes('praliné') ? 5 : cat.includes('frutal') ? 4 : cat.includes('ámbar') ? 3 : 2);
+  const frescura = profile.frescura || (cat.includes('fresco') || cat.includes('acuático') || cat.includes('cítrico') || notesAll.includes('bergamota') ? 5 : cat.includes('floral') ? 4 : cat.includes('frutal') ? 3 : 1);
+  const intensidad = profile.intensidad || (cat.includes('especiado') || cat.includes('gourmand') || cat.includes('amaderado') || cat.includes('oriental') ? 5 : 4);
+  const proyeccion = profile.proyeccion || (perfume.sillage?.toLowerCase().includes('alta') || perfume.sillage?.toLowerCase().includes('pesada') ? 5 : 4);
+  const duracion = profile.duracion || (perfume.longevity?.includes('12') || perfume.longevity?.includes('14') ? 5 : 4);
+  const versatilidad = profile.versatilidad || (cat.includes('fresco') || cat.includes('cítrico') || perfume.season_badge?.toLowerCase().includes('versátil') ? 5 : cat.includes('gourmand') ? 3 : 4);
+
+  const sensoryIndicators = [
+    { label: 'Dulzor', value: Math.min(5, Math.max(1, dulzor)), desc: dulzor >= 4 ? 'Muy Marcado' : dulzor === 3 ? 'Equilibrado' : 'Sutil' },
+    { label: 'Frescura', value: Math.min(5, Math.max(1, frescura)), desc: frescura >= 4 ? 'Vigorizante' : frescura === 3 ? 'Moderada' : 'Cálida' },
+    { label: 'Intensidad', value: Math.min(5, Math.max(1, intensidad)), desc: intensidad >= 4 ? 'Potente' : 'Suave' },
+    { label: 'Proyección', value: Math.min(5, Math.max(1, proyeccion)), desc: proyeccion >= 4 ? 'Amplia Estela' : 'Moderada' },
+    { label: 'Duración', value: Math.min(5, Math.max(1, duracion)), desc: duracion >= 4 ? '8 - 14 Horas' : '6 - 8 Horas' },
+    { label: 'Versatilidad', value: Math.min(5, Math.max(1, versatilidad)), desc: versatilidad >= 4 ? 'Todo Ocasión' : 'Ocasión Especial' },
+  ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/85 backdrop-blur-md animate-fadeIn">
@@ -97,6 +134,24 @@ export default function PerfumeModal({
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopyShareLink}
+              className="px-2.5 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-gold-500/20 text-slate-300 hover:text-gold-300 transition-all flex items-center gap-1.5 text-xs"
+              title="Copiar enlace individual para compartir"
+            >
+              {copiedLink ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="text-[11px] text-emerald-400 font-semibold">¡Copiado!</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5 text-gold-400" />
+                  <span className="text-[11px] hidden sm:inline font-medium">Compartir</span>
+                </>
+              )}
+            </button>
+
             <button
               onClick={() => onToggleCompare(perfume)}
               className={`p-2 rounded-full border transition-all ${
@@ -452,6 +507,65 @@ export default function PerfumeModal({
                       style={{ width: `${Math.min(100, Math.max(6, (votes.noche / maxMomentVotes) * 100))}%` }}
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* Perfil Olfativo Visual con Barras Doradas (Pág. 2 del PDF) */}
+              <div className="bg-obsidian-950/70 border border-white/10 rounded-2xl p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-gold-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+                    <span>Perfil Olfativo Sensorial</span>
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">Escala de 1 a 5</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {sensoryIndicators.map((item, idx) => (
+                    <div key={idx} className="bg-obsidian-900/90 border border-white/5 p-2.5 rounded-xl space-y-1.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-200 font-medium">{item.label}</span>
+                        <span className="text-[10px] text-gold-300/90 font-mono font-bold">{item.desc}</span>
+                      </div>
+
+                      {/* 5 Indicator Dots / Bars */}
+                      <div className="grid grid-cols-5 gap-1.5 pt-0.5">
+                        {[1, 2, 3, 4, 5].map((dot) => (
+                          <div
+                            key={dot}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              dot <= item.value
+                                ? 'bg-gradient-to-r from-gold-500 to-amber-400 shadow-[0_0_8px_rgba(212,175,55,0.4)]'
+                                : 'bg-white/10'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ocasiones y Clima Ideal (Pág. 3 del PDF) */}
+              <div className="bg-obsidian-950/70 border border-white/10 rounded-2xl p-4 space-y-2.5">
+                <span className="text-[11px] font-bold text-gold-400 uppercase tracking-widest block">
+                  Ocasión & Clima Recomendado
+                </span>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-medium">
+                    <CloudSnow className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>{cat.includes('fresco') || cat.includes('cítrico') ? 'Clima Cálido / Todo Clima' : 'Clima Frío / Noches Frescas'}</span>
+                  </span>
+
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 font-medium">
+                    <Moon className="w-3.5 h-3.5 text-amber-400" />
+                    <span>{votes.noche > votes.dia ? 'Noches / Citas / Celebraciones' : 'Día / Oficina / Diario'}</span>
+                  </span>
+
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-300 font-medium">
+                    <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                    <span>{perfume.season_badge || 'Versátil Todo el Año'}</span>
+                  </span>
                 </div>
               </div>
 

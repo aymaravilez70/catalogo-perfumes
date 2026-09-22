@@ -14,6 +14,8 @@ import CartDrawer from './components/CartDrawer';
 import CatalogViewerModal from './components/CatalogViewerModal';
 import StoryModal from './components/StoryModal';
 import AdminDashboard from './components/AdminDashboard';
+import GlobalSearchModal from './components/GlobalSearchModal';
+import PurchaseGuaranteeSection from './components/PurchaseGuaranteeSection';
 import Footer from './components/Footer';
 import { 
   Sparkles, 
@@ -45,9 +47,22 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLookbookOpen, setIsLookbookOpen] = useState(false);
   const [isStoryOpen, setIsStoryOpen] = useState(false);
+  const [isGlobalSearchOpen, setIsGlobalSearchOpen] = useState(false);
 
   // Global search input state shared between navbar and views
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Shortcut Ctrl+K / Cmd+K for Global Search
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsGlobalSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
 
   // Floating Toast notification
   const [toastMessage, setToastMessage] = useState(null);
@@ -134,6 +149,21 @@ export default function App() {
     }
   };
 
+  // Open and close perfume modal with hash sync for shareable URLs
+  const handleSelectPerfume = (perfume) => {
+    setSelectedPerfume(perfume);
+    if (perfume && perfume.id) {
+      window.location.hash = `/perfume/${perfume.id}`;
+    }
+  };
+
+  const handleClosePerfumeModal = () => {
+    setSelectedPerfume(null);
+    if (window.location.hash.toLowerCase().includes('perfume')) {
+      window.location.hash = currentView === 'catalog' ? 'catalogo' : 'home';
+    }
+  };
+
   // Sync Hash on mount and hashchange
   useEffect(() => {
     loadPerfumes();
@@ -142,19 +172,54 @@ export default function App() {
       const hash = window.location.hash.toLowerCase();
       if (hash === '#admin' || window.location.search.includes('admin')) {
         setIsAdminView(true);
-      } else {
-        setIsAdminView(false);
-        if (hash.includes('catalog') || hash.includes('catalogo') || hash.includes('coleccion')) {
-          setCurrentView('catalog');
-        } else if (hash === '#home' || hash === '' || hash === '#') {
-          setCurrentView('home');
+        return;
+      }
+      setIsAdminView(false);
+
+      // Direct perfume URL support: #/perfume/:id or #perfume/:id
+      const perfumeMatch = hash.match(/#\/?perfume\/([^/?#]+)/i);
+      if (perfumeMatch) {
+        const perfumeSlug = decodeURIComponent(perfumeMatch[1]).trim().toLowerCase();
+        const found = perfumes.find(
+          (p) =>
+            p.id.toLowerCase() === perfumeSlug ||
+            p.num.toLowerCase() === perfumeSlug ||
+            p.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') === perfumeSlug
+        );
+        if (found) {
+          setSelectedPerfume(found);
+          return;
         }
+      }
+
+      if (hash.includes('catalog') || hash.includes('catalogo') || hash.includes('coleccion')) {
+        setCurrentView('catalog');
+      } else if (hash === '#home' || hash === '' || hash === '#') {
+        setCurrentView('home');
       }
     };
 
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
+  }, [perfumes]);
+
+  // Initial deep link check once perfumes load
+  useEffect(() => {
+    const hash = window.location.hash.toLowerCase();
+    const perfumeMatch = hash.match(/#\/?perfume\/([^/?#]+)/i);
+    if (perfumeMatch && perfumes.length > 0) {
+      const perfumeSlug = decodeURIComponent(perfumeMatch[1]).trim().toLowerCase();
+      const found = perfumes.find(
+        (p) =>
+          p.id.toLowerCase() === perfumeSlug ||
+          p.num.toLowerCase() === perfumeSlug ||
+          p.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') === perfumeSlug
+      );
+      if (found) {
+        setSelectedPerfume(found);
+      }
+    }
+  }, [perfumes]);
 
   // Navigation dispatcher
   const navigateTo = (view, options = {}) => {
@@ -291,6 +356,7 @@ export default function App() {
         comparatorCount={comparedList.length}
         onOpenLookbook={() => setIsLookbookOpen(true)}
         onOpenStory={() => setIsStoryOpen(true)}
+        onOpenSearch={() => setIsGlobalSearchOpen(true)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
@@ -305,14 +371,14 @@ export default function App() {
             onOpenQuiz={() => setIsQuizOpen(true)}
             onOpenLookbook={() => setIsLookbookOpen(true)}
             onOpenStory={() => setIsStoryOpen(true)}
-            onSelectPerfume={setSelectedPerfume}
+            onSelectPerfume={handleSelectPerfume}
             featuredPerfumes={[perfumes[0], perfumes[2], perfumes[5]]}
           />
 
           {/* Curated 4 Flagship Icons Showcase */}
           <FeaturedIcons
             perfumes={perfumes}
-            onSelectPerfume={setSelectedPerfume}
+            onSelectPerfume={handleSelectPerfume}
             onAddToCart={handleAddToCart}
             onNavigateToCatalog={() => navigateTo('catalog')}
             favorites={favorites}
@@ -367,7 +433,7 @@ export default function App() {
           {/* Dedicated Full Boutique Catalog View */}
           <CatalogView
             perfumes={perfumes}
-            onSelectPerfume={setSelectedPerfume}
+            onSelectPerfume={handleSelectPerfume}
             onAddToCart={handleAddToCart}
             favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
@@ -407,6 +473,9 @@ export default function App() {
         </span>
       </a>
 
+      {/* Official Purchasing Guarantee & Confidence Section */}
+      <PurchaseGuaranteeSection />
+
       {/* Footer */}
       <Footer 
         onNavigate={navigateTo}
@@ -419,7 +488,7 @@ export default function App() {
       {/* Modals & Drawers */}
       <PerfumeModal
         perfume={selectedPerfume}
-        onClose={() => setSelectedPerfume(null)}
+        onClose={handleClosePerfumeModal}
         onAddToCart={handleAddToCart}
         isFavorite={selectedPerfume ? favorites.includes(selectedPerfume.id) : false}
         onToggleFavorite={handleToggleFavorite}
@@ -427,11 +496,20 @@ export default function App() {
         onToggleCompare={handleToggleCompare}
       />
 
+      {/* Global Predictive Search Modal */}
+      <GlobalSearchModal
+        isOpen={isGlobalSearchOpen}
+        onClose={() => setIsGlobalSearchOpen(false)}
+        perfumes={perfumes}
+        onSelectPerfume={handleSelectPerfume}
+        onAddToCart={handleAddToCart}
+      />
+
       {isQuizOpen && (
         <ScentQuizModal
           perfumes={perfumes}
           onClose={() => setIsQuizOpen(false)}
-          onSelectPerfume={setSelectedPerfume}
+          onSelectPerfume={handleSelectPerfume}
           onAddToCart={handleAddToCart}
         />
       )}
@@ -442,7 +520,7 @@ export default function App() {
           onClose={() => setIsComparatorOpen(false)}
           onRemoveFromCompare={handleRemoveFromCompare}
           onAddToCart={handleAddToCart}
-          onSelectPerfume={setSelectedPerfume}
+          onSelectPerfume={handleSelectPerfume}
         />
       )}
 
