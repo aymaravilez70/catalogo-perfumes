@@ -43,7 +43,7 @@ export default function Navbar({
         ? 'bg-obsidian-950/95 backdrop-blur-2xl border-b border-gold-500/20 shadow-2xl py-3' 
         : 'bg-gradient-to-b from-obsidian-950/90 via-obsidian-950/40 to-transparent py-5'
     }`}>
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
+      <div className="max-w-[1780px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between gap-4">
         
         {/* Left Zone: Brand & Monogram Logo */}
         <button 

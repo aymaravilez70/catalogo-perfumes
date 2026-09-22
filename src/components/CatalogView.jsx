@@ -264,7 +264,7 @@ export default function CatalogView({
 
   return (
     <div className="pt-28 pb-20 min-h-screen">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="max-w-[1780px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         
         {/* Clean Luxury Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
@@ -445,7 +445,7 @@ export default function CatalogView({
         <div className="pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Desktop Left Sidebar Filters */}
-          <aside className="hidden lg:block lg:col-span-3 space-y-5 sticky top-24 max-h-[calc(100vh-6.5rem)] overflow-y-auto pr-2 bg-obsidian-900/80 p-5 rounded-3xl border border-white/10 backdrop-blur-xl">
+          <aside className="hidden lg:block lg:col-span-3 2xl:col-span-2 space-y-5 sticky top-24 max-h-[calc(100vh-6.5rem)] overflow-y-auto pr-2 bg-obsidian-900/80 p-5 rounded-3xl border border-white/10 backdrop-blur-xl">
             
             <div className="flex items-center justify-between pb-3.5 border-b border-white/10 gap-2">
               <div className="flex items-center gap-2 shrink-0">
@@ -628,7 +628,7 @@ export default function CatalogView({
           </aside>
 
           {/* Right Perfume Grid / List Area */}
-          <div className="lg:col-span-9 space-y-6 min-h-[750px]">
+          <div className="lg:col-span-9 2xl:col-span-10 space-y-6 min-h-[750px]">
             {filteredPerfumes.length === 0 ? (
               <div className="py-24 text-center space-y-4 rounded-3xl bg-obsidian-900/60 border border-white/10 p-8">
                 <Search className="w-12 h-12 text-slate-600 mx-auto" />
@@ -645,8 +645,8 @@ export default function CatalogView({
               </div>
             ) : viewMode === 'grid' ? (
               
-              /* Grid View (3 Columns in large) */
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              /* Grid View (Responsive 3 to 4 Columns) */
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredPerfumes.map((perfume) => (
                   <PerfumeCard
                     key={perfume.id}
