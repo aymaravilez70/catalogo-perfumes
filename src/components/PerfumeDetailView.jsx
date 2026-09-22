@@ -54,7 +54,8 @@ export default function PerfumeDetailView({
     try {
       const saved = localStorage.getItem(`joufab_reviews_${perfume.id}`);
       if (saved) {
-        setReviews(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        setReviews(Array.isArray(parsed) ? parsed : []);
       } else {
         setReviews([]);
       }
@@ -157,11 +158,12 @@ export default function PerfumeDetailView({
 
   if (!perfume) return null;
 
-  const averageRating = reviews.length > 0 
-    ? (reviews.reduce((acc, r) => acc + Number(r.rating || 5), 0) / reviews.length).toFixed(1)
+  const safeReviews = Array.isArray(reviews) ? reviews : [];
+  const averageRating = safeReviews.length > 0 
+    ? (safeReviews.reduce((acc, r) => acc + Number(r?.rating || 5), 0) / safeReviews.length).toFixed(1)
     : null;
-  const recommendPercent = reviews.length > 0
-    ? Math.round((reviews.filter(r => r.recommend !== false).length / reviews.length) * 100)
+  const recommendPercent = safeReviews.length > 0
+    ? Math.round((safeReviews.filter(r => r?.recommend !== false).length / safeReviews.length) * 100)
     : null;
 
   const handleAdd = () => {

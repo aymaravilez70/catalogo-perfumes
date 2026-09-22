@@ -47,7 +47,26 @@ export default function App() {
   });
 
   // Modal and drawer states
-  const [selectedPerfume, setSelectedPerfume] = useState(null);
+  const [selectedPerfume, setSelectedPerfume] = useState(() => {
+    try {
+      const hash = window.location.hash.toLowerCase();
+      const perfumeMatch = hash.match(/#\/?perfume\/([^/?#]+)/i);
+      if (perfumeMatch) {
+        const slug = decodeURIComponent(perfumeMatch[1]).trim().toLowerCase();
+        return (
+          perfumesData.find(
+            (p) =>
+              p.id?.toLowerCase() === slug ||
+              p.num?.toLowerCase() === slug ||
+              p.name?.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') === slug
+          ) || null
+        );
+      }
+    } catch {
+      return null;
+    }
+    return null;
+  });
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isComparatorOpen, setIsComparatorOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -84,7 +103,9 @@ export default function App() {
   const [cartItems, setCartItems] = useState(() => {
     try {
       const saved = localStorage.getItem('joufab_cart');
-      return saved ? JSON.parse(saved) : [];
+      if (!saved) return [];
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];
     }
@@ -93,7 +114,9 @@ export default function App() {
   const [favorites, setFavorites] = useState(() => {
     try {
       const saved = localStorage.getItem('joufab_favs');
-      return saved ? JSON.parse(saved) : [];
+      if (!saved) return [];
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];
     }
@@ -107,7 +130,7 @@ export default function App() {
     if (currentView !== 'catalog') {
       navigateTo('catalog');
     }
-    if (favorites.length === 0) {
+    if ((Array.isArray(favorites) ? favorites : []).length === 0) {
       showToast('Aún no tienes favoritos guardados');
     }
   };
@@ -380,13 +403,13 @@ export default function App() {
       <Navbar
         currentView={currentView}
         onNavigate={navigateTo}
-        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+        cartCount={(Array.isArray(cartItems) ? cartItems : []).reduce((sum, item) => sum + (Number(item?.quantity) || 1), 0)}
         onOpenCart={() => setIsCartOpen(true)}
-        favoriteCount={favorites.length}
+        favoriteCount={(Array.isArray(favorites) ? favorites : []).length}
         onOpenFavorites={handleOpenFavorites}
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenComparator={() => setIsComparatorOpen(true)}
-        comparatorCount={comparedList.length}
+        comparatorCount={(Array.isArray(comparedList) ? comparedList : []).length}
         onOpenLookbook={() => setIsLookbookOpen(true)}
         onOpenStory={() => setIsStoryOpen(true)}
         onOpenSearch={() => setIsGlobalSearchOpen(true)}
@@ -402,9 +425,9 @@ export default function App() {
             perfume={selectedPerfume}
             allPerfumes={perfumes}
             onAddToCart={handleAddToCart}
-            isFavorite={favorites.includes(selectedPerfume.id)}
+            isFavorite={(Array.isArray(favorites) ? favorites : []).includes(selectedPerfume.id)}
             onToggleFavorite={handleToggleFavorite}
-            isCompared={comparedList.some((p) => p.id === selectedPerfume.id)}
+            isCompared={(Array.isArray(comparedList) ? comparedList : []).some((p) => p.id === selectedPerfume.id)}
             onToggleCompare={handleToggleCompare}
             onNavigate={navigateTo}
             onSelectPerfume={handleSelectPerfume}
@@ -522,7 +545,7 @@ export default function App() {
           >
             <div className="relative">
               <Scale className="w-5 h-5 text-slate-300 group-hover:text-gold-400 group-hover:scale-110 transition-transform" />
-              {comparedList.length > 0 && (
+              {(Array.isArray(comparedList) ? comparedList : []).length > 0 && (
                 <span className="absolute -top-1.5 -right-2.5 bg-gold-500 text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-gold-sm">
                   {comparedList.length}
                 </span>
@@ -539,8 +562,8 @@ export default function App() {
             className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-slate-300 hover:text-rose-400 transition-all group relative cursor-pointer"
           >
             <div className="relative">
-              <Heart className={`w-5 h-5 group-hover:scale-110 transition-transform ${favorites.length > 0 ? 'text-rose-400 fill-rose-500/20' : 'text-slate-300 group-hover:text-rose-400'}`} />
-              {favorites.length > 0 && (
+              <Heart className={`w-5 h-5 group-hover:scale-110 transition-transform ${(Array.isArray(favorites) ? favorites : []).length > 0 ? 'text-rose-400 fill-rose-500/20' : 'text-slate-300 group-hover:text-rose-400'}`} />
+              {(Array.isArray(favorites) ? favorites : []).length > 0 && (
                 <span className="absolute -top-1.5 -right-2.5 bg-rose-500 text-white font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
                   {favorites.length}
                 </span>
@@ -558,9 +581,9 @@ export default function App() {
           >
             <div className="relative">
               <ShoppingBag className="w-5 h-5 text-slate-300 group-hover:text-gold-400 group-hover:scale-110 transition-transform" />
-              {cartItems.length > 0 && (
+              {(Array.isArray(cartItems) ? cartItems : []).length > 0 && (
                 <span className="absolute -top-1.5 -right-2.5 bg-gold-500 text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-gold-sm">
-                  {cartItems.reduce((acc, i) => acc + i.quantity, 0)}
+                  {cartItems.reduce((acc, i) => acc + (Number(i?.quantity) || 1), 0)}
                 </span>
               )}
             </div>

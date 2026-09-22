@@ -24,12 +24,12 @@ import {
 } from 'lucide-react';
 
 export default function CatalogView({
-  perfumes,
+  perfumes = [],
   onSelectPerfume,
   onAddToCart,
-  favorites,
+  favorites = [],
   onToggleFavorite,
-  comparedList,
+  comparedList = [],
   onToggleCompare,
   onOpenQuiz,
   onNavigateHome,
@@ -168,7 +168,7 @@ export default function CatalogView({
   const filteredPerfumes = useMemo(() => {
     let result = perfumes.filter(p => {
       // Favorites filter
-      if (showFavoritesOnly && !favorites.includes(p.id)) {
+      if (showFavoritesOnly && !(Array.isArray(favorites) && favorites.includes(p.id))) {
         return false;
       }
 

@@ -13,7 +13,7 @@ import {
 export default function CartDrawer({ 
   isOpen, 
   onClose, 
-  cartItems, 
+  cartItems = [], 
   onUpdateQuantity, 
   onRemoveItem, 
   onClearCart 
@@ -23,10 +23,12 @@ export default function CartDrawer({
   const [customerName, setCustomerName] = useState('');
   const [customerNotes, setCustomerNotes] = useState('');
 
-  const totalItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrice = cartItems.reduce((acc, item) => {
-    const price = Number(item.price) || 50;
-    return acc + price * item.quantity;
+  const safeItems = Array.isArray(cartItems) ? cartItems : [];
+  const totalItemsCount = safeItems.reduce((acc, item) => acc + (Number(item?.quantity) || 1), 0);
+  const totalPrice = safeItems.reduce((acc, item) => {
+    const price = Number(item?.price) || 50;
+    const qty = Number(item?.quantity) || 1;
+    return acc + price * qty;
   }, 0);
 
   const handleSendWhatsApp = () => {
