@@ -91,10 +91,17 @@ export default function PerfumeDetailView({
           data.votes.reviews.forEach(r => { if (r && (r.id || r.comment)) freshMap.set(r.id || r.comment, r); });
           initialList.forEach(r => { if (r && (r.id || r.comment)) freshMap.set(r.id || r.comment, r); });
           
+          const parseTime = (item) => {
+            if (item?.timestamp && !isNaN(item.timestamp)) return Number(item.timestamp);
+            if (item?.date) {
+              const parsed = Date.parse(item.date);
+              if (!isNaN(parsed)) return parsed;
+            }
+            return 0;
+          };
+
           const sortedList = Array.from(freshMap.values()).sort((a, b) => {
-            const timeA = a.timestamp || (a.date ? new Date(a.date).getTime() : 0);
-            const timeB = b.timestamp || (b.date ? new Date(b.date).getTime() : 0);
-            return timeB - timeA;
+            return parseTime(b) - parseTime(a);
           });
 
           setReviews(sortedList);

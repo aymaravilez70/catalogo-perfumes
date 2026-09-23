@@ -320,13 +320,21 @@ export default function App() {
     window.history.pushState(null, '', window.location.pathname);
   };
 
-  // Sync to local storage
+  // Sync to local storage with try...catch protection for Safari Private Browsing
   useEffect(() => {
-    localStorage.setItem('joufab_cart', JSON.stringify(cartItems));
+    try {
+      localStorage.setItem('joufab_cart', JSON.stringify(cartItems));
+    } catch (e) {
+      console.warn('localStorage no disponible:', e);
+    }
   }, [cartItems]);
 
   useEffect(() => {
-    localStorage.setItem('joufab_favs', JSON.stringify(favorites));
+    try {
+      localStorage.setItem('joufab_favs', JSON.stringify(favorites));
+    } catch (e) {
+      console.warn('localStorage no disponible:', e);
+    }
   }, [favorites]);
 
   // Cart Handlers

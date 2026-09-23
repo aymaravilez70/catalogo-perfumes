@@ -13,9 +13,13 @@ import {
 const DEFAULT_PIN = 'admin123';
 
 export default function AdminDashboard({ onBackToStore, onDataChanged }) {
-  // Auth state
+  // Auth state (safeguarded for Safari Private Mode)
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem('joufab_admin_auth') === 'true' || localStorage.getItem('joufab_admin_auth') === 'true';
+    try {
+      return sessionStorage.getItem('joufab_admin_auth') === 'true' || localStorage.getItem('joufab_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
   });
   const [pinInput, setPinInput] = useState('');
   const [authError, setAuthError] = useState('');
@@ -86,7 +90,13 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   const [formData, setFormData] = useState(initialForm);
 
   // Custom Settings (Saved in LocalStorage for client convenience)
-  const [customPin, setCustomPin] = useState(() => localStorage.getItem('joufab_custom_pin') || DEFAULT_PIN);
+  const [customPin, setCustomPin] = useState(() => {
+    try {
+      return localStorage.getItem('joufab_custom_pin') || DEFAULT_PIN;
+    } catch {
+      return DEFAULT_PIN;
+    }
+  });
   const [newPinInput, setNewPinInput] = useState('');
 
   const showToast = (msg, type = 'success') => {
@@ -160,13 +170,18 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   // Login handler
   const handleLogin = (e) => {
     e.preventDefault();
-    const validPin = localStorage.getItem('joufab_custom_pin') || DEFAULT_PIN;
+    let validPin = DEFAULT_PIN;
+    try {
+      validPin = localStorage.getItem('joufab_custom_pin') || DEFAULT_PIN;
+    } catch {}
     if (pinInput.trim() === validPin || pinInput.trim() === 'admin123') {
       setIsAuthenticated(true);
-      if (rememberMe) {
-        localStorage.setItem('joufab_admin_auth', 'true');
-      }
-      sessionStorage.setItem('joufab_admin_auth', 'true');
+      try {
+        if (rememberMe) {
+          localStorage.setItem('joufab_admin_auth', 'true');
+        }
+        sessionStorage.setItem('joufab_admin_auth', 'true');
+      } catch {}
       setAuthError('');
       loadData();
     } else {
@@ -176,8 +191,10 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('joufab_admin_auth');
-    localStorage.removeItem('joufab_admin_auth');
+    try {
+      sessionStorage.removeItem('joufab_admin_auth');
+      localStorage.removeItem('joufab_admin_auth');
+    } catch {}
     setPinInput('');
   };
 
