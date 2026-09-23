@@ -163,6 +163,7 @@ export default function App() {
             sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
             similar_ids: p.similar_ids || pVotes.similar_ids || [],
             reviews: Array.isArray(pVotes.reviews) ? pVotes.reviews : (Array.isArray(p.reviews) ? p.reviews : []),
+            olfactory_profile: pVotes.olfactory_profile || p.olfactory_profile || null,
             votes: {
               invierno: Number(pVotes.invierno) || 5000,
               primavera: Number(pVotes.primavera) || 2000,

@@ -293,12 +293,12 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       votes_otono: String(pVotes.otoño ?? 7000),
       votes_dia: String(pVotes.dia ?? 3500),
       votes_noche: String(pVotes.noche ?? 9200),
-      olfactory_dulzor: String(product.olfactory_profile?.dulzor ?? 3),
-      olfactory_frescura: String(product.olfactory_profile?.frescura ?? 3),
-      olfactory_intensidad: String(product.olfactory_profile?.intensidad ?? 4),
-      olfactory_proyeccion: String(product.olfactory_profile?.proyeccion ?? 4),
-      olfactory_duracion: String(product.olfactory_profile?.duracion ?? 4),
-      olfactory_versatilidad: String(product.olfactory_profile?.versatilidad ?? 4)
+      olfactory_dulzor: String(pVotes.olfactory_profile?.dulzor ?? product.olfactory_profile?.dulzor ?? 3),
+      olfactory_frescura: String(pVotes.olfactory_profile?.frescura ?? product.olfactory_profile?.frescura ?? 3),
+      olfactory_intensidad: String(pVotes.olfactory_profile?.intensidad ?? product.olfactory_profile?.intensidad ?? 4),
+      olfactory_proyeccion: String(pVotes.olfactory_profile?.proyeccion ?? product.olfactory_profile?.proyeccion ?? 4),
+      olfactory_duracion: String(pVotes.olfactory_profile?.duracion ?? product.olfactory_profile?.duracion ?? 4),
+      olfactory_versatilidad: String(pVotes.olfactory_profile?.versatilidad ?? product.olfactory_profile?.versatilidad ?? 4)
     });
     setActiveTab('create');
   };
@@ -376,7 +376,15 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
           longevity: formData.longevity?.trim() || '8 - 10 horas',
           sillage: formData.sillage?.trim() || 'Alta / Pesada',
           similar_ids: Array.isArray(formData.similar_ids) ? formData.similar_ids : [],
-          reviews: Array.isArray(formData.reviews) ? formData.reviews : []
+          reviews: Array.isArray(formData.reviews) ? formData.reviews : [],
+          olfactory_profile: {
+            dulzor: parseInt(formData.olfactory_dulzor, 10) || 3,
+            frescura: parseInt(formData.olfactory_frescura, 10) || 3,
+            intensidad: parseInt(formData.olfactory_intensidad, 10) || 4,
+            proyeccion: parseInt(formData.olfactory_proyeccion, 10) || 4,
+            duracion: parseInt(formData.olfactory_duracion, 10) || 4,
+            versatilidad: parseInt(formData.olfactory_versatilidad, 10) || 4
+          }
         },
         notes: {
           salida: formData.notes_salida.split(',').map(s => s.trim()).filter(Boolean),
@@ -385,14 +393,6 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         },
         tags: formData.tags.split(',').map(s => s.trim()).filter(Boolean),
         accords: formData.accords.split(',').map(s => s.trim()).filter(Boolean),
-        olfactory_profile: {
-          dulzor: parseInt(formData.olfactory_dulzor, 10) || 3,
-          frescura: parseInt(formData.olfactory_frescura, 10) || 3,
-          intensidad: parseInt(formData.olfactory_intensidad, 10) || 4,
-          proyeccion: parseInt(formData.olfactory_proyeccion, 10) || 4,
-          duracion: parseInt(formData.olfactory_duracion, 10) || 4,
-          versatilidad: parseInt(formData.olfactory_versatilidad, 10) || 4
-        },
         is_active: formData.is_active,
         created_at: isEditing 
           ? (products.find(p => p.id === currentEditId)?.created_at || new Date().toISOString())
