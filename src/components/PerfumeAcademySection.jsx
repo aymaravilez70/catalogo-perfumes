@@ -96,25 +96,94 @@ export default function PerfumeAcademySection({ onNavigateToCatalog, onOpenQuiz 
     {
       id: 'familias',
       category: 'familias',
-      title: 'Guía de Familias Olfativas: ¿Cuál combina mejor contigo?',
-      summary: 'Comprender los grandes grupos aromáticos te permite acertar siempre en tus compras a ciegas.',
+      title: 'Guía Completa de Familias Olfativas',
+      summary: 'Las 12 grandes familias aromáticas: comprenderlas te permite acertar siempre en tus compras.',
       icon: Flame,
       content: [
         {
-          heading: 'Gourmand Cálido (Vainilla, Café, Caramelo, Praliné)',
-          text: 'Aromas apetitosos, dulces y envolventes que recuerdan a postres de alta cocina. Provocan cercanía y son la elección indiscutible para climas fríos y citas románticas.'
+          heading: '🍋 Cítrica & Fresca (Bergamota, Limón, Naranja, Mandarina)',
+          text: 'Aromas brillantes, frescos y energéticos que recuerdan a frutas recién exprimidas. Transmiten limpieza y vitalidad. ☀️ Ideales para días cálidos, verano, uso diario, oficina y actividades al aire libre.'
         },
         {
-          heading: 'Acuático & Marino (Brisa de mar, Menta, Frutas frías)',
-          text: 'Aromas cristalinos que evocan el océano y la frescura estival. Ideales para el sol de la costa ecuatoriana, el gimnasio o el trabajo diario en calor.'
+          heading: '🌊 Acuática & Marina (Brisa marina, Notas saladas, Agua)',
+          text: 'Aromas frescos y ligeros que evocan el mar, el aire limpio y la sensación de estar junto al agua. 🏖️ Ideales para playa, calor, gimnasio, actividades al aire libre y días relajados.'
         },
         {
-          heading: 'Fougère & Aromático (Lavanda, Salvia, Manzana, Maderas)',
-          text: 'El arquetipo de la limpieza pulcra y el porte ejecutivo. Aromas que transmiten pulcritud, disciplina y elegancia sobria para oficina y reuniones.'
+          heading: '🌿 Aromática (Lavanda, Salvia, Romero, Menta, Hierbas)',
+          text: 'Aromas frescos y naturales con un carácter limpio y herbal. Pueden sentirse relajantes, elegantes o muy refrescantes. 🌤️ Ideales para uso diario, oficina, días cálidos y ocasiones casuales.'
         },
         {
-          heading: 'Oriental Especiado (Canela, Cardamomo, Tabaco, Cuero, Oud)',
-          text: 'Composiciones con carácter imponente, misterio y profundidad milenaria árabe. Para quienes buscan dejar una presencia inolvidable que se impone con clase.'
+          heading: '🌱 Verde (Hojas, Hierba, Té, Higo, Acordes verdes)',
+          text: 'Aromas que recuerdan a la naturaleza, hojas recién cortadas y vegetación. Frescos, naturales y tranquilos. 🌳 Ideales para día, primavera, espacios abiertos y quienes buscan algo natural y diferente.'
+        },
+        {
+          heading: '🍎 Frutal (Manzana, Pera, Frutos rojos, Sandía, Durazno)',
+          text: 'Aromas jugosos, alegres y fáciles de reconocer. Pueden ir desde frescos y ligeros hasta dulces e intensos. ☀️ Ideales para día, citas, salidas casuales y quienes disfrutan aromas alegres y llamativos.'
+        },
+        {
+          heading: '🌸 Floral (Rosa, Jazmín, Iris, Peonía, Violeta, Azahar)',
+          text: 'La familia de las flores. Desde aromas delicados y románticos hasta composiciones intensas, elegantes y sofisticadas. 💐 Ideales para citas, eventos, ocasiones especiales y una sensación femenina o elegante.'
+        },
+        {
+          heading: '🌲 Amaderada (Cedro, Sándalo, Vetiver, Pachulí)',
+          text: 'Aromas profundos, secos, cálidos o elegantes que recuerdan a diferentes tipos de madera. Aportan estructura y carácter. 🌙 Ideales para noches, oficina, eventos formales y quienes buscan elegancia y presencia.'
+        },
+        {
+          heading: '🌶️ Especiada & Aromática (Canela, Cardamomo, Pimienta, Azafrán)',
+          text: 'Aromas cálidos y con personalidad. Las especias aportan sensación de calor, intensidad y misterio. 🌙 Ideales para noches, citas, clima fresco y ocasiones especiales.'
+        },
+        {
+          heading: '🧡 Oriental / Ámbar (Ámbar, Vainilla, Resinas, Incienso)',
+          text: 'Aromas cálidos, envolventes y profundos. Combinan dulzor, especias y resinas para crear una sensación intensa y sensual. 🌙 Ideales para noche, clima frío, citas y ocasiones especiales.'
+        },
+        {
+          heading: '🍮 Gourmand (Vainilla, Caramelo, Café, Chocolate, Praliné)',
+          text: 'Aromas que recuerdan a postres, bebidas y alimentos dulces. Son cálidos, apetitosos y envolventes. ❄️ Ideales para clima fresco, noches, citas y quienes disfrutan perfumes dulces y llamativos.'
+        },
+        {
+          heading: '🥂 Chipre (Bergamota, Rosa, Musgo, Pachulí, Maderas)',
+          text: 'Una familia elegante y sofisticada que combina frescura en la salida con un fondo más profundo, terroso y amaderado. 👔 Ideales para oficina, eventos, ocasiones formales y un aroma refinado.'
+        },
+        {
+          heading: '🖤 Cuero (Cuero, Gamuza, Tabaco, Maderas, Especias)',
+          text: 'Aromas intensos, secos, cálidos y con mucha personalidad. Transmiten elegancia, carácter y una sensación más oscura. 🌙 Ideales para noche, clima frío, eventos y quienes buscan máxima presencia.'
+        }
+      ]
+    },
+    {
+      id: 'guia-rapida',
+      category: 'familias',
+      title: '¿Qué Familia Elegir Según lo que Buscas?',
+      summary: 'Guía rápida para encontrar tu familia olfativa ideal según la sensación, el clima o la ocasión.',
+      icon: Compass,
+      content: [
+        {
+          heading: '☀️ Quiero algo fresco',
+          text: 'Cítrica · Acuática · Aromática · Verde — Aromas ligeros, limpios y revitalizantes perfectos para el calor, el día a día y actividades al aire libre.'
+        },
+        {
+          heading: '🍎 Quiero algo frutal y alegre',
+          text: 'Frutal · Floral · Cítrica — Aromas jugosos, vibrantes y llamativos que transmiten juventud y buen ánimo.'
+        },
+        {
+          heading: '🍬 Quiero algo dulce',
+          text: 'Gourmand · Ámbar · Frutal — Aromas apetitosos, cálidos y envolventes que recuerdan a postres y golosinas.'
+        },
+        {
+          heading: '🌙 Quiero algo intenso para la noche',
+          text: 'Ámbar · Especiada · Amaderada · Cuero — Aromas profundos, sensuales y con presencia para dejar huella.'
+        },
+        {
+          heading: '👔 Quiero algo elegante',
+          text: 'Amaderada · Chipre · Floral · Aromática — Aromas sofisticados, refinados y con porte ejecutivo.'
+        },
+        {
+          heading: '🏖️ Quiero algo para calor',
+          text: 'Cítrica · Acuática · Aromática · Verde — Aromas que resisten la humedad y refrescan sin saturar.'
+        },
+        {
+          heading: '❄️ Quiero algo para frío',
+          text: 'Gourmand · Ámbar · Amaderada · Especiada · Cuero — Aromas densos y cálidos que florecen en el frío.'
         }
       ]
     },
