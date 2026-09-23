@@ -6,10 +6,10 @@ export default function Hero({ onExplore, onOpenQuiz, onOpenLookbook, onOpenStor
     <section className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-obsidian-950">
       
       {/* Cinematic Ambient Glow Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-amber-600/10 rounded-full blur-[140px] ambient-glow" />
-        <div className="absolute -top-10 left-10 w-96 h-96 bg-gold-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[150px]" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] bg-[radial-gradient(circle,rgba(217,119,6,0.16)_0%,transparent_70%)] rounded-full" />
+        <div className="hidden sm:block absolute -top-10 left-10 w-96 h-96 bg-gold-600/10 rounded-full blur-[80px]" />
+        <div className="hidden sm:block absolute bottom-10 right-10 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[90px]" />
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
       </div>
 

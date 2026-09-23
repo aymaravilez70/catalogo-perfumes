@@ -463,11 +463,17 @@ export default function PerfumeDetailView({
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => onNavigate && onNavigate('catalog')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition-all"
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else if (onNavigate) {
+                  onNavigate('catalog');
+                }
+              }}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gold-500/10 hover:bg-gold-500/20 border border-gold-500/30 text-xs font-semibold text-gold-300 hover:text-white transition-all active:scale-95 cursor-pointer shadow-sm"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Volver a la Boutique</span>
+              <ArrowLeft className="w-3.5 h-3.5 text-gold-400" />
+              <span>Volver</span>
             </button>
 
             <button

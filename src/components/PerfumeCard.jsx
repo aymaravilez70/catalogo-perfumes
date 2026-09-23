@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { 
   Heart, 
   ShoppingBag, 
@@ -28,7 +28,7 @@ export default function PerfumeCard({
   const [isHovered, setIsHovered] = useState(false);
 
   // Temperature label based on best_season (PDF Punto 4)
-  const getTemperatureLabel = () => {
+  const tempLabel = useMemo(() => {
     const season = (perfume.best_season || '').toLowerCase();
     const badge = (perfume.season_badge || '').toLowerCase();
     if (season === 'invierno' || badge.includes('invierno') || badge.includes('frío') || badge.includes('otoño')) {
@@ -38,10 +38,11 @@ export default function PerfumeCard({
       return { text: 'Calor', icon: Sun, color: 'text-amber-300', bg: 'bg-amber-500/15 border-amber-500/30' };
     }
     return { text: 'Templado', icon: Flower2, color: 'text-emerald-300', bg: 'bg-emerald-500/15 border-emerald-500/30' };
-  };
-  const tempLabel = getTemperatureLabel();
+  }, [perfume.best_season, perfume.season_badge]);
 
   const handleMouseMove = (e) => {
+    // Only calculate 3D tilt on desktop with mouse, skip completely on touch/mobile to ensure 60fps scroll
+    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -57,6 +58,7 @@ export default function PerfumeCard({
   };
 
   const handleMouseEnter = () => {
+    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
     setIsHovered(true);
   };
 
@@ -144,18 +146,18 @@ export default function PerfumeCard({
         />
 
         {/* Badge & Price in image */}
-        <div className="absolute top-2.5 right-2.5 z-10 px-2.5 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-gold-500/40 font-mono text-[11px] font-bold text-gold-400 shadow-md">
+        <div className="absolute top-2.5 right-2.5 z-10 px-2.5 py-0.5 rounded-full bg-obsidian-950/95 border border-gold-500/40 font-mono text-[11px] font-bold text-gold-400 shadow-md">
           ${perfume.price ? Number(perfume.price).toFixed(2) : '50.00'}
         </div>
 
         {perfume.badge && (
-          <div className="absolute bottom-3 left-3 z-10 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-gold-500/30 text-[10px] text-gold-300 font-medium">
+          <div className="absolute bottom-3 left-3 z-10 px-2.5 py-1 rounded-full bg-obsidian-950/95 border border-gold-500/30 text-[10px] text-gold-300 font-medium">
             {perfume.badge}
           </div>
         )}
 
         {/* Quick View Button on Hover */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
           <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gold-500 text-black font-semibold text-xs tracking-wider uppercase shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-transform">
             <Eye className="w-3.5 h-3.5" />
             <span>Ficha Sensorial</span>

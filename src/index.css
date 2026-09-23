@@ -65,4 +65,12 @@
 
 .ambient-glow {
   animation: ambientGlow 8s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce), (max-width: 768px) {
+  .ambient-glow {
+    animation: none !important;
+    opacity: 0.35;
+  }
 }

@@ -23,7 +23,8 @@ import {
   MessageCircle, 
   Scale,
   Heart,
-  ShoppingBag
+  ShoppingBag,
+  ArrowLeft
 } from 'lucide-react';
 
 export default function App() {
@@ -213,7 +214,7 @@ export default function App() {
     }
   };
 
-  // Sync Hash on mount and hashchange
+  // Sync Hash and Popstate (iPhone Safari swipe-back & browser back button support)
   useEffect(() => {
     loadPerfumes();
 
@@ -231,9 +232,9 @@ export default function App() {
         const perfumeSlug = decodeURIComponent(perfumeMatch[1]).trim().toLowerCase();
         const found = perfumes.find(
           (p) =>
-            p.id.toLowerCase() === perfumeSlug ||
-            p.num.toLowerCase() === perfumeSlug ||
-            p.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') === perfumeSlug
+            p.id?.toLowerCase() === perfumeSlug ||
+            p.num?.toLowerCase() === perfumeSlug ||
+            p.name?.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') === perfumeSlug
         );
         if (found) {
           setSelectedPerfume(found);
@@ -242,10 +243,22 @@ export default function App() {
         }
       }
 
+      // If hash is not perfume, reset selectedPerfume so back button cleanly returns to Catalog or Home
+      setSelectedPerfume(null);
+
       // Deep link to Scent Advisor / Quiz
       if (hash.includes('asesor') || hash.includes('quiz') || hash.includes('test') || hash.includes('regalo')) {
         setIsQuizOpen(true);
+      } else {
+        setIsQuizOpen(false);
       }
+
+      // Close other overlay drawers/modals on browser back gesture
+      setIsComparatorOpen(false);
+      setIsCartOpen(false);
+      setIsLookbookOpen(false);
+      setIsStoryOpen(false);
+      setIsGlobalSearchOpen(false);
 
       // Deep link to Academy / Perfume Guide
       if (hash.includes('academia') || hash.includes('guia')) {
@@ -265,7 +278,11 @@ export default function App() {
     };
 
     window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    window.addEventListener('popstate', handleHash);
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('popstate', handleHash);
+    };
   }, [perfumes]);
 
   // Initial deep link check once perfumes load
@@ -290,6 +307,7 @@ export default function App() {
   // Navigation dispatcher
   const navigateTo = (view, options = {}) => {
     setCurrentView(view);
+    setSelectedPerfume(null);
     if (view === 'home') {
       window.location.hash = 'home';
     } else if (view === 'catalog') {
@@ -572,23 +590,43 @@ export default function App() {
       </a>
 
       {/* Mobile Sticky Bottom Action Bar (Ultra-clean Luxury Dock) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 backdrop-blur-2xl border-t border-gold-500/25 px-2 py-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-10px_35px_rgba(0,0,0,0.9)]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/98 border-t border-gold-500/25 px-2 py-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-10px_35px_rgba(0,0,0,0.9)]">
         <div className="grid grid-cols-4 items-center gap-1 max-w-md mx-auto">
           
-          {/* WhatsApp Direct Action */}
-          <a
-            href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
-            target="_blank"
-            rel="noreferrer"
-            className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-emerald-400 hover:text-emerald-300 transition-all group"
-          >
-            <div className="relative">
-              <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
-            </div>
-            <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-slate-300 group-hover:text-emerald-300">
-              WhatsApp
-            </span>
-          </a>
+          {/* Action 1: Volver (in product view) or WhatsApp (in other views) */}
+          {currentView === 'product' ? (
+            <button
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  navigateTo('catalog');
+                }
+              }}
+              className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-gold-400 hover:text-gold-300 transition-all group cursor-pointer"
+            >
+              <div className="relative">
+                <ArrowLeft className="w-5 h-5 text-gold-400 group-hover:-translate-x-0.5 transition-transform" />
+              </div>
+              <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-gold-300">
+                Volver
+              </span>
+            </button>
+          ) : (
+            <a
+              href="https://wa.me/593984526114?text=Hola%20Joufab%2C%20quisiera%20consultar%20sobre%20el%20cat%C3%A1logo%20de%20perfumes"
+              target="_blank"
+              rel="noreferrer"
+              className="flex flex-col items-center justify-center py-1.5 rounded-2xl hover:bg-white/5 text-emerald-400 hover:text-emerald-300 transition-all group"
+            >
+              <div className="relative">
+                <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+              </div>
+              <span className="text-[10px] font-semibold tracking-wider uppercase mt-1 text-slate-300 group-hover:text-emerald-300">
+                WhatsApp
+              </span>
+            </a>
+          )}
 
           {/* Comparator Action */}
           <button
