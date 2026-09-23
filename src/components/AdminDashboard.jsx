@@ -337,7 +337,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   // Save product
   const handleSaveProduct = async (e) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.brand.trim()) {
+    if (!formData.name?.trim() || !formData.brand?.trim()) {
       showToast('Nombre y Marca son obligatorios', 'error');
       return;
     }
@@ -350,20 +350,20 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
 
       const payload = {
         id: slugId,
-        num: formData.num?.trim() || String(products.length + 1).padStart(2, '0'),
-        name: formData.name.trim(),
-        brand: formData.brand.trim(),
+        num: (formData.num || '').trim() || String(products.length + 1).padStart(2, '0'),
+        name: (formData.name || '').trim(),
+        brand: (formData.brand || '').trim(),
         price: parseFloat(formData.price) || 0,
         rating: parseFloat(formData.rating) || 4.9,
-        gender: formData.gender,
-        category: formData.category.trim(),
-        description: formData.description.trim(),
-        occasions: formData.occasions.trim(),
-        badge: formData.badge.trim() || null,
-        season_badge: formData.season_badge.trim() || 'Versátil',
-        best_season: formData.best_season,
-        best_moment: formData.best_moment,
-        image: formData.image.trim() || '/assets/perfumes/default.jpg',
+        gender: formData.gender || 'Unisex',
+        category: (formData.category || '').trim(),
+        description: (formData.description || '').trim(),
+        occasions: (formData.occasions || '').trim(),
+        badge: (formData.badge || '').trim() || null,
+        season_badge: (formData.season_badge || '').trim() || 'Versátil',
+        best_season: formData.best_season || 'invierno',
+        best_moment: formData.best_moment || 'noche',
+        image: (formData.image || '').trim() || '/assets/perfumes/default.jpg',
         votes: {
           invierno: parseInt(formData.votes_invierno, 10) || 5000,
           primavera: parseInt(formData.votes_primavera, 10) || 2000,
@@ -387,12 +387,12 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
           }
         },
         notes: {
-          salida: formData.notes_salida.split(',').map(s => s.trim()).filter(Boolean),
-          corazon: formData.notes_corazon.split(',').map(s => s.trim()).filter(Boolean),
-          base: formData.notes_base.split(',').map(s => s.trim()).filter(Boolean)
+          salida: (formData.notes_salida || '').split(',').map(s => s.trim()).filter(Boolean),
+          corazon: (formData.notes_corazon || '').split(',').map(s => s.trim()).filter(Boolean),
+          base: (formData.notes_base || '').split(',').map(s => s.trim()).filter(Boolean)
         },
-        tags: formData.tags.split(',').map(s => s.trim()).filter(Boolean),
-        accords: formData.accords.split(',').map(s => s.trim()).filter(Boolean),
+        tags: (formData.tags || '').split(',').map(s => s.trim()).filter(Boolean),
+        accords: (formData.accords || '').split(',').map(s => s.trim()).filter(Boolean),
         is_active: formData.is_active,
         created_at: isEditing 
           ? (products.find(p => p.id === currentEditId)?.created_at || new Date().toISOString())
