@@ -57,19 +57,22 @@ export default function PerfumeDetailView({
     if (!perfume?.id) return;
     let isMounted = true;
 
-    // 1. Initial load from perfume object + localStorage cache
+    // 1. Initial load from perfume object + localStorage cache (only visible reviews)
     let initialList = [];
     try {
       const saved = localStorage.getItem(`joufab_reviews_${perfume.id}`);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) initialList = parsed;
+        if (Array.isArray(parsed)) {
+          initialList = parsed.filter(r => r && !r.hidden && !r.is_hidden);
+        }
       }
     } catch {}
 
-    const propReviews = Array.isArray(perfume.votes?.reviews) 
+    const propReviews = (Array.isArray(perfume.votes?.reviews) 
       ? perfume.votes.reviews 
-      : (Array.isArray(perfume.reviews) ? perfume.reviews : []);
+      : (Array.isArray(perfume.reviews) ? perfume.reviews : [])
+    ).filter(r => r && !r.hidden && !r.is_hidden);
 
     const reviewMap = new Map();
     propReviews.forEach(r => { if (r && (r.id || r.comment)) reviewMap.set(r.id || r.comment, r); });
@@ -77,7 +80,7 @@ export default function PerfumeDetailView({
 
     setReviews(Array.from(reviewMap.values()));
 
-    // 2. Fetch fresh live reviews from Supabase in background
+    // 2. Fetch fresh live reviews from Supabase (authoritative source of truth)
     const fetchRemoteReviews = async () => {
       try {
         const { data, error } = await supabase
@@ -87,9 +90,8 @@ export default function PerfumeDetailView({
           .single();
 
         if (!error && data?.votes && Array.isArray(data.votes.reviews) && isMounted) {
-          const freshMap = new Map();
-          data.votes.reviews.forEach(r => { if (r && (r.id || r.comment)) freshMap.set(r.id || r.comment, r); });
-          initialList.forEach(r => { if (r && (r.id || r.comment)) freshMap.set(r.id || r.comment, r); });
+          // CRITICAL: Filter only visible reviews (not hidden or deleted)
+          const visibleRemote = data.votes.reviews.filter(r => r && !r.hidden && !r.is_hidden);
           
           const parseTime = (item) => {
             if (item?.timestamp && !isNaN(item.timestamp)) return Number(item.timestamp);
@@ -100,12 +102,14 @@ export default function PerfumeDetailView({
             return 0;
           };
 
-          const sortedList = Array.from(freshMap.values()).sort((a, b) => {
+          const sortedList = [...visibleRemote].sort((a, b) => {
             return parseTime(b) - parseTime(a);
           });
 
+          // Supabase replaces the list (purging any reviews deleted/hidden in Admin)
           setReviews(sortedList);
           try {
+            // Overwrite localStorage cache with the cleansed list
             localStorage.setItem(`joufab_reviews_${perfume.id}`, JSON.stringify(sortedList));
           } catch {}
         }

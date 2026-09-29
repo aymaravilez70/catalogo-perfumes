@@ -474,6 +474,114 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     }
   };
 
+  // Handle toggling review visibility (Ocultar / Mostrar) with instant Supabase sync
+  const handleToggleHideReview = async (idx) => {
+    const target = (formData.reviews || [])[idx];
+    if (!target) return;
+
+    const newHiddenState = !(target.hidden || target.is_hidden);
+    const updatedReviews = (formData.reviews || []).map((rev, i) => {
+      if (i === idx) {
+        return {
+          ...rev,
+          hidden: newHiddenState,
+          is_hidden: newHiddenState
+        };
+      }
+      return rev;
+    });
+
+    // 1. Update local form state immediately
+    setFormData(prev => ({ ...prev, reviews: updatedReviews }));
+
+    // 2. Persist directly to Supabase immediately if editing
+    const targetId = isEditing ? currentEditId : formData.id;
+    if (targetId) {
+      try {
+        const { data: currentP } = await supabase
+          .from('perfumes')
+          .select('votes')
+          .eq('id', targetId)
+          .single();
+
+        const currentVotes = currentP?.votes || {};
+        const { error } = await supabase
+          .from('perfumes')
+          .update({
+            votes: {
+              ...currentVotes,
+              reviews: updatedReviews
+            }
+          })
+          .eq('id', targetId);
+
+        if (error) throw error;
+
+        // Purge local storage cache for this perfume
+        try {
+          localStorage.removeItem(`joufab_reviews_${targetId}`);
+        } catch {}
+
+        showToast(newHiddenState ? '👁️‍🗨️ Reseña ocultada de la tienda' : '👁️ Reseña visible nuevamente');
+        loadData();
+        if (onDataChanged) onDataChanged();
+      } catch (err) {
+        console.error('Error al actualizar visibilidad de reseña:', err);
+        showToast('Reseña actualizada localmente. Guarda cambios para confirmar.', 'info');
+      }
+    } else {
+      showToast(newHiddenState ? 'Reseña marcada como oculta' : 'Reseña marcada como visible');
+    }
+  };
+
+  // Handle deleting review with instant Supabase sync
+  const handleDeleteReview = async (idx) => {
+    if (!window.confirm('¿Deseas eliminar permanentemente esta opinión?')) return;
+    const updatedReviews = (formData.reviews || []).filter((_, i) => i !== idx);
+
+    // 1. Update local form state immediately
+    setFormData(prev => ({ ...prev, reviews: updatedReviews }));
+
+    // 2. Persist directly to Supabase immediately if editing
+    const targetId = isEditing ? currentEditId : formData.id;
+    if (targetId) {
+      try {
+        const { data: currentP } = await supabase
+          .from('perfumes')
+          .select('votes')
+          .eq('id', targetId)
+          .single();
+
+        const currentVotes = currentP?.votes || {};
+        const { error } = await supabase
+          .from('perfumes')
+          .update({
+            votes: {
+              ...currentVotes,
+              reviews: updatedReviews
+            }
+          })
+          .eq('id', targetId);
+
+        if (error) throw error;
+
+        // Purge local storage cache for this perfume
+        try {
+          localStorage.removeItem(`joufab_reviews_${targetId}`);
+        } catch {}
+
+        showToast('🗑️ Reseña eliminada permanentemente');
+        loadData();
+        if (onDataChanged) onDataChanged();
+      } catch (err) {
+        console.error('Error al eliminar reseña en Supabase:', err);
+        showToast('Reseña eliminada de la lista. Guarda cambios para confirmar.', 'info');
+      }
+    } else {
+      showToast('Reseña eliminada de la lista.');
+    }
+  };
+
   // Update PIN in settings
   const handleUpdatePin = (e) => {
     e.preventDefault();
@@ -1844,32 +1952,64 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                         <p className="text-xs text-stone-400">Aún no se han publicado reseñas para este perfume.</p>
                       </div>
                     ) : (
-                      <div className="space-y-2.5 max-h-72 overflow-y-auto pr-1">
-                        {(formData.reviews || []).map((rev, idx) => (
-                          <div key={rev.id || idx} className="p-3.5 rounded-xl bg-stone-900 border border-stone-800 flex items-start justify-between gap-3">
-                            <div className="space-y-1 text-xs">
-                              <div className="flex flex-wrap items-center gap-2">
-                                <span className="font-bold text-stone-100">{rev.name}</span>
-                                <span className="text-[10px] text-stone-400">({rev.city || 'Ecuador'})</span>
-                                <span className="text-[10px] text-amber-400 font-mono">★ {rev.rating}/5</span>
-                                <span className="text-[10px] text-stone-500">• {rev.date}</span>
-                              </div>
-                              <p className="text-stone-300 italic font-light">"{rev.comment}"</p>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updatedReviews = (formData.reviews || []).filter((_, i) => i !== idx);
-                                setFormData(prev => ({ ...prev, reviews: updatedReviews }));
-                                showToast('Reseña retirada de la lista. Haz clic en "Guardar Cambios" para aplicar.', 'info');
-                              }}
-                              className="p-1.5 rounded-lg text-stone-500 hover:text-rose-400 hover:bg-rose-500/10 transition shrink-0"
-                              title="Eliminar esta reseña"
+                      <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+                        {(formData.reviews || []).map((rev, idx) => {
+                          const isHidden = rev.hidden || rev.is_hidden;
+                          return (
+                            <div 
+                              key={rev.id || idx} 
+                              className={`p-3.5 rounded-xl border flex items-start justify-between gap-3 transition-all ${
+                                isHidden 
+                                  ? 'bg-stone-900/40 border-rose-900/30 opacity-75' 
+                                  : 'bg-stone-900 border-stone-800'
+                              }`}
                             >
-                              <Trash2 size={14} />
-                            </button>
-                          </div>
-                        ))}
+                              <div className="space-y-1 text-xs flex-1">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="font-bold text-stone-100">{rev.name}</span>
+                                  <span className="text-[10px] text-stone-400">({rev.city || 'Ecuador'})</span>
+                                  <span className="text-[10px] text-amber-400 font-mono">★ {rev.rating}/5</span>
+                                  <span className="text-[10px] text-stone-500">• {rev.date}</span>
+                                  {isHidden ? (
+                                    <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-semibold flex items-center gap-1">
+                                      <EyeOff size={10} /> Oculto en la tienda
+                                    </span>
+                                  ) : (
+                                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[10px] font-semibold flex items-center gap-1">
+                                      <Eye size={10} /> Visible
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-stone-300 italic font-light">"{rev.comment}"</p>
+                              </div>
+
+                              <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleHideReview(idx)}
+                                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer ${
+                                    isHidden
+                                      ? 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30'
+                                      : 'bg-stone-800 hover:bg-amber-500/15 text-stone-300 hover:text-amber-300 border border-stone-700'
+                                  }`}
+                                  title={isHidden ? 'Hacer visible en la tienda' : 'Ocultar de la tienda (no se mostrará a los clientes)'}
+                                >
+                                  {isHidden ? <Eye size={13} /> : <EyeOff size={13} />}
+                                  <span>{isHidden ? 'Mostrar' : 'Ocultar'}</span>
+                                </button>
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteReview(idx)}
+                                  className="p-1.5 rounded-lg text-stone-500 hover:text-rose-400 hover:bg-rose-500/10 transition cursor-pointer"
+                                  title="Eliminar permanentemente"
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
