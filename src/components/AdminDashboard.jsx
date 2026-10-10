@@ -1069,8 +1069,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                                       src={p.image} 
                                       alt={p.name} 
                                       onError={(e) => {
-                                        if (!e.currentTarget.src.includes('aymar.png')) {
-                                          e.currentTarget.src = '/assets/perfumes/aymar.png';
+                                        if (!e.currentTarget.src.includes('placeholder.png')) {
+                                          e.currentTarget.src = '/assets/perfumes/placeholder.png';
                                         }
                                       }}
                                       className="w-full h-full object-cover" 
@@ -1924,8 +1924,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                           src={formData.image} 
                           alt="Preview" 
                           onError={(e) => {
-                            if (!e.currentTarget.src.includes('aymar.png')) {
-                              e.currentTarget.src = '/assets/perfumes/aymar.png';
+                            if (!e.currentTarget.src.includes('placeholder.png')) {
+                              e.currentTarget.src = '/assets/perfumes/placeholder.png';
                             }
                           }}
                           className="w-full h-full object-cover" 

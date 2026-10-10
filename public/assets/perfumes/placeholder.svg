@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#1e1810" stop-opacity="0.85"/>
+      <stop offset="40%" stop-color="#121114" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#070709" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Gold Gradients -->
+    <linearGradient id="goldMetallic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EED596"/>
+      <stop offset="25%" stop-color="#D4AF37"/>
+      <stop offset="50%" stop-color="#FFF2CE"/>
+      <stop offset="75%" stop-color="#AA7E22"/>
+      <stop offset="100%" stop-color="#E5C158"/>
+    </linearGradient>
+
+    <linearGradient id="goldSoft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5E4B5" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#A8812C" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <linearGradient id="liquidAmber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#B8860B" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#8B6508" stop-opacity="0.55"/>
+    </linearGradient>
+
+    <radialGradient id="innerBottleGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE8A3" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="goldGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <style>
+    .gold-text { font-family: 'Cinzel', 'Playfair Display', 'Georgia', serif; font-weight: 700; fill: url(#goldMetallic); letter-spacing: 0.35em; }
+    .gold-sub { font-family: 'Cinzel', 'Trajan Pro', 'Georgia', serif; font-size: 13px; font-weight: 600; fill: #C8AA6E; letter-spacing: 0.3em; }
+    .status-text { font-family: 'Montserrat', 'Segoe UI', -apple-system, sans-serif; font-size: 11px; font-weight: 600; fill: #E5C158; letter-spacing: 0.18em; text-transform: uppercase; }
+  </style>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="1000" fill="#070709"/>
+  <rect width="800" height="1000" fill="url(#bgGlow)"/>
+
+  <!-- Luxury Borders & Corner Ornaments -->
+  <rect x="36" y="36" width="728" height="928" fill="none" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="44" y="44" width="712" height="912" fill="none" stroke="#D4AF37" stroke-width="0.5" stroke-opacity="0.12"/>
+  
+  <!-- Corners -->
+  <g stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.6" fill="none">
+    <path d="M 30,56 L 30,30 L 56,30" />
+    <path d="M 770,56 L 770,30 L 744,30" />
+    <path d="M 30,944 L 30,970 L 56,970" />
+    <path d="M 770,944 L 770,970 L 744,970" />
+  </g>
+
+  <!-- Top Brand Seal -->
+  <g transform="translate(400, 105)" text-anchor="middle">
+    <!-- Star/Diamond Emblem -->
+    <path d="M 0,-14 L 4,-3 L 15,0 L 4,3 L 0,14 L -4,3 L -15,0 L -4,-3 Z" fill="url(#goldMetallic)"/>
+    <circle cx="0" cy="0" r="2" fill="#FFFFFF"/>
+    <text y="32" class="gold-sub" font-size="11">COLECCIÓN EXCLUSIVA</text>
+  </g>
+
+  <!-- Main Illustration: The Luxury Perfume Bottle -->
+  <g transform="translate(400, 430)" filter="url(#softShadow)">
+    
+    <!-- Ambient Behind Bottle Glow -->
+    <circle cx="0" cy="0" r="170" fill="url(#innerBottleGlow)"/>
+
+    <!-- CAP (Tapón Facetado de Cristal y Oro) -->
+    <g transform="translate(0, -180)">
+      <!-- Cap Top Crown Jewel -->
+      <polygon points="-40,-50 40,-50 50,-25 -50,-25" fill="url(#goldMetallic)" stroke="#FFE29F" stroke-width="1"/>
+      <polygon points="-50,-25 50,-25 45,15 -45,15" fill="#1A181C" stroke="url(#goldMetallic)" stroke-width="1.5"/>
+      <line x1="-30" y1="-25" x2="-25" y2="15" stroke="url(#goldMetallic)" stroke-width="1" stroke-opacity="0.5"/>
+      <line x1="0" y1="-25" x2="0" y2="15" stroke="url(#goldMetallic)" stroke-width="1.5" stroke-opacity="0.8"/>
+      <line x1="30" y1="-25" x2="25" y2="15" stroke="url(#goldMetallic)" stroke-width="1" stroke-opacity="0.5"/>
+      <!-- Cap Base Golden Collar Ring -->
+      <rect x="-35" y="15" width="70" height="16" rx="2" fill="url(#goldMetallic)" stroke="#FFE8A3" stroke-width="0.8"/>
+    </g>
+
+    <!-- NECK / Cuello Dorado -->
+    <rect x="-24" y="-149" width="48" height="24" fill="url(#goldMetallic)"/>
+    <rect x="-30" y="-128" width="60" height="8" rx="2" fill="url(#goldMetallic)" stroke="#FFF2CE" stroke-width="0.5"/>
+
+    <!-- FLACON / Cuerpo de la Botella (Cristal Grueso) -->
+    <!-- Heavy Glass Outline -->
+    <path d="M -110,-115 C -85,-120 85,-120 110,-115 C 135,-110 145,-90 145,-50 L 145,130 C 145,155 130,165 95,165 L -95,165 C -130,165 -145,155 -145,130 L -145,-50 C -145,-90 -135,-110 -110,-115 Z" 
+          fill="#111115" stroke="url(#goldMetallic)" stroke-width="2.5"/>
+
+    <!-- Inner Essence / Liquid (Ámbar Dorado Niche) -->
+    <path d="M -95,-85 C -75,-90 75,-90 95,-85 C 115,-80 125,-65 125,-30 L 125,120 C 125,138 110,145 80,145 L -80,145 C -110,145 -125,138 -125,120 L -125,-30 C -125,-65 -115,-80 -95,-85 Z" 
+          fill="url(#liquidAmber)" stroke="#D4AF37" stroke-width="0.8" stroke-opacity="0.5"/>
+
+    <!-- Glass Highlights / Reflejos de Luz Verticales -->
+    <path d="M -130,-45 L -130,120" stroke="#FFFFFF" stroke-width="3" stroke-opacity="0.35" stroke-linecap="round"/>
+    <path d="M -120,-35 L -120,110" stroke="url(#goldMetallic)" stroke-width="1.2" stroke-opacity="0.45" stroke-linecap="round"/>
+    <path d="M 130,-45 L 130,120" stroke="url(#goldMetallic)" stroke-width="2" stroke-opacity="0.25" stroke-linecap="round"/>
+
+    <!-- Heavy Crystal Base Highlight (Fondo Grueso de Botella Nicho) -->
+    <rect x="-85" y="148" width="170" height="12" rx="4" fill="#FFFFFF" fill-opacity="0.12" stroke="url(#goldMetallic)" stroke-width="0.5" stroke-opacity="0.4"/>
+
+    <!-- Monogram Emblem on Bottle Face -->
+    <g transform="translate(0, 15)">
+      <!-- Octagonal Gold Plaque -->
+      <polygon points="-46,-46 46,-46 54,-38 54,38 46,46 -46,46 -54,38 -54,-38" fill="#0C0C0E" stroke="url(#goldMetallic)" stroke-width="1.5"/>
+      <polygon points="-41,-41 41,-41 48,-34 48,34 41,41 -41,41 -48,34 -48,-34" fill="none" stroke="#D4AF37" stroke-width="0.5" stroke-opacity="0.5"/>
+      
+      <!-- Crown Icon -->
+      <path d="M -12,-20 L -6,-14 L 0,-24 L 6,-14 L 12,-20 L 9,-9 L -9,-9 Z" fill="url(#goldMetallic)"/>
+      <circle cx="-12" cy="-21" r="1.5" fill="#FFEAA7"/>
+      <circle cx="0" cy="-25" r="1.8" fill="#FFFFFF"/>
+      <circle cx="12" cy="-21" r="1.5" fill="#FFEAA7"/>
+
+      <!-- Letter J Stylized -->
+      <text y="18" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', serif" font-size="28" font-weight="700" fill="url(#goldMetallic)">J</text>
+      <text y="32" text-anchor="middle" font-family="'Montserrat', sans-serif" font-size="6" font-weight="600" fill="#E5C158" letter-spacing="0.25em">PARFUM</text>
+    </g>
+
+    <!-- Base Shadow Grounding -->
+    <ellipse cx="0" cy="180" rx="140" ry="12" fill="#000000" fill-opacity="0.8"/>
+  </g>
+
+  <!-- Typography & Information Section -->
+  <g transform="translate(400, 750)" text-anchor="middle">
+    <!-- Brand Title -->
+    <text y="0" class="gold-text" font-size="28">J O U F A B</text>
+    <text y="28" class="gold-sub" font-size="12">HAUTE PARFUMERIE · PARIS &amp; DUBAI</text>
+
+    <!-- Luxury Divider Line with Diamond -->
+    <g transform="translate(0, 52)">
+      <line x1="-140" y1="0" x2="-25" y2="0" stroke="url(#goldMetallic)" stroke-width="1" stroke-opacity="0.4"/>
+      <polygon points="0,-6 6,0 0,6 -6,0" fill="url(#goldMetallic)"/>
+      <circle cx="0" cy="0" r="1.5" fill="#FFFFFF"/>
+      <line x1="25" y1="0" x2="140" y2="0" stroke="url(#goldMetallic)" stroke-width="1" stroke-opacity="0.4"/>
+    </g>
+
+    <!-- Refined Placeholder Badge -->
+    <g transform="translate(0, 105)">
+      <!-- Pill Container -->
+      <rect x="-185" y="-22" width="370" height="44" rx="22" 
+            fill="#141318" stroke="url(#goldMetallic)" stroke-width="1" stroke-opacity="0.75" />
+      
+      <!-- Subtle Camera / Star Icon -->
+      <g transform="translate(-145, 0)">
+        <path d="M -8,4 L -8,-4 L -4,-4 L -2,-7 L 2,-7 L 4,-4 L 8,-4 L 8,4 Z" fill="none" stroke="url(#goldMetallic)" stroke-width="1.2"/>
+        <circle cx="0" cy="0" r="2.5" fill="none" stroke="url(#goldMetallic)" stroke-width="1"/>
+      </g>
+      
+      <!-- Status Notice -->
+      <text x="12" y="4" text-anchor="middle" class="status-text">FOTOGRAFÍA OFICIAL EN PROCESO</text>
+    </g>
+
+    <!-- Micro Subtitle -->
+    <text y="165" font-family="'Montserrat', sans-serif" font-size="11" font-weight="400" fill="#8E8B95" letter-spacing="0.1em">
+      DISPONIBLE EN BOUTIQUE · FRAGANCIA 100% ORIGINAL
+    </text>
+  </g>
+
+  <!-- Bottom Accent -->
+  <g transform="translate(400, 955)" text-anchor="middle">
+    <circle cx="0" cy="0" r="2" fill="url(#goldMetallic)"/>
+    <line x1="-60" y1="0" x2="-10" y2="0" stroke="#D4AF37" stroke-width="0.8" stroke-opacity="0.3"/>
+    <line x1="10" y1="0" x2="60" y2="0" stroke="#D4AF37" stroke-width="0.8" stroke-opacity="0.3"/>
+  </g>
+</svg>
