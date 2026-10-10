@@ -29,7 +29,14 @@ import {
 
 export default function App() {
   const [perfumes, setPerfumes] = useState(() => {
-    const list = [...perfumesData];
+    let custom = [];
+    try {
+      const stored = localStorage.getItem('joufab_custom_perfumes');
+      if (stored) custom = JSON.parse(stored);
+    } catch {}
+    const map = new Map();
+    [...perfumesData, ...custom].forEach(p => map.set(p.id, p));
+    const list = Array.from(map.values());
     list.sort((a, b) => {
       const timeA = new Date(a.created_at || 0).getTime();
       const timeB = new Date(b.created_at || 0).getTime();

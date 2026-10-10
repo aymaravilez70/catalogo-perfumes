@@ -536,6 +536,11 @@ export default function PerfumeDetailView({
               <img
                 src={currentDisplayImage}
                 alt={perfume.name}
+                onError={(e) => {
+                  if (!e.currentTarget.src.includes('aymar.png')) {
+                    e.currentTarget.src = '/assets/perfumes/aymar.png';
+                  }
+                }}
                 className="w-full h-full object-contain rounded-2xl group-hover:scale-105 transition-transform duration-700 select-none"
               />
 

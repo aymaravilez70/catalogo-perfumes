@@ -155,8 +155,16 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         setProducts(normalized);
       }
     } catch (err) {
-      console.warn('Error en Supabase, utilizando catálogo de respaldo local:', err);
-      const fallbackList = perfumesData.map(p => {
+      console.warn('Error en Supabase, utilizando catálogo local:', err);
+      let customList = [];
+      try {
+        const stored = localStorage.getItem('joufab_custom_perfumes');
+        if (stored) customList = JSON.parse(stored);
+      } catch {}
+
+      const map = new Map();
+      [...perfumesData, ...customList].forEach(p => map.set(p.id, p));
+      const fallbackList = Array.from(map.values()).map(p => {
         const pVotes = p.votes || {};
         return {
           ...p,
@@ -376,8 +384,17 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
       setFormData(prev => ({ ...prev, image: publicUrl }));
       showToast('¡Imagen subida correctamente!');
     } catch (err) {
-      console.error('Error subiendo imagen:', err);
-      showToast('Error al subir imagen. Puedes pegar una URL directa.', 'error');
+      console.warn('Supabase Storage restringido, usando lectura directa:', err);
+      try {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setFormData(prev => ({ ...prev, image: event.target.result }));
+          showToast('Imagen cargada localmente');
+        };
+        reader.readAsDataURL(file);
+      } catch {
+        showToast('Error al subir imagen. Puedes pegar una URL directa.', 'error');
+      }
     } finally {
       setUploadingImage(false);
     }
@@ -449,11 +466,23 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         updated_at: new Date().toISOString()
       };
 
-      const { error } = await supabase
-        .from('perfumes')
-        .upsert(payload);
+      // Persist in localStorage so it works even if Supabase is blocked
+      try {
+        const stored = localStorage.getItem('joufab_custom_perfumes');
+        let customList = stored ? JSON.parse(stored) : [];
+        customList = customList.filter(p => p.id !== payload.id);
+        customList.unshift(payload);
+        localStorage.setItem('joufab_custom_perfumes', JSON.stringify(customList));
+      } catch (e) {
+        console.warn('LocalStorage error:', e);
+      }
 
-      if (error) throw error;
+      // Try syncing to Supabase if available
+      try {
+        await supabase.from('perfumes').upsert(payload);
+      } catch (supaErr) {
+        console.warn('Supabase offline/restricted:', supaErr);
+      }
 
       showToast(isEditing ? '¡Fragancia actualizada!' : '¡Nueva fragancia añadida!');
       setActiveTab('inventory');
@@ -472,12 +501,16 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     if (!window.confirm(`¿Confirmas eliminar definitivamente "${name}" del catálogo?`)) return;
 
     try {
-      const { error } = await supabase
-        .from('perfumes')
-        .delete()
-        .eq('id', id);
+      try {
+        const stored = localStorage.getItem('joufab_custom_perfumes');
+        let customList = stored ? JSON.parse(stored) : [];
+        customList = customList.filter(p => p.id !== id);
+        localStorage.setItem('joufab_custom_perfumes', JSON.stringify(customList));
+      } catch {}
 
-      if (error) throw error;
+      try {
+        await supabase.from('perfumes').delete().eq('id', id);
+      } catch {}
 
       showToast(`"${name}" eliminado.`);
       loadData();

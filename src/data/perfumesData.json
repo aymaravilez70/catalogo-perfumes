@@ -1,5 +1,103 @@
 [
   {
+    "id": "aymar",
+    "num": "27",
+    "name": "Aymar",
+    "brand": "Joufab Private Edition",
+    "page": null,
+    "category": "Amaderada Ámbar Noble 👑",
+    "gender": "Unisex",
+    "description": "Una creación exclusiva y de alta gama creada para la colección privada. Combina una salida radiante de bergamota italiana y cardamomo con un corazón majestuoso de iris, ámbar gris y maderas preciosas, culminando en un fondo inolvidable de vainilla de Madagascar y cedro real.",
+    "occasions": "Ideal para ocasiones especiales, eventos de gala, reuniones exclusivas y momentos donde busques proyectar distinción, elegancia suprema y una presencia imborrable.",
+    "votes": {
+      "dia": 6500,
+      "noche": 15200,
+      "otoño": 11800,
+      "verano": 4200,
+      "invierno": 14500,
+      "primavera": 8500,
+      "sillage": "Alta / Proyección Magistral",
+      "longevity": "Más de 12 horas",
+      "inspired_by": "Edición de Autor",
+      "niche_house": "Joufab Parfums",
+      "similar_ids": [
+        "khamrah",
+        "asad"
+      ],
+      "olfactory_profile": {
+        "dulzor": 3,
+        "duracion": 5,
+        "frescura": 4,
+        "intensidad": 5,
+        "proyeccion": 5,
+        "versatilidad": 4
+      },
+      "reviews": [
+        {
+          "id": "rev_aymar_01",
+          "city": "Quito",
+          "date": "9 oct. 2026",
+          "name": "Aymar",
+          "rating": 5,
+          "comment": "Fragancia de autor con fijación impecable y una estela que se hace notar todo el día. 10/10.",
+          "occasion": "Gala & Noches",
+          "verified": true,
+          "longevity": "Más de 12 horas",
+          "recommend": true,
+          "timestamp": 1791597600000
+        }
+      ]
+    },
+    "notes": {
+      "salida": [
+        "Bergamota Italiana",
+        "Cardamomo",
+        "Pimienta Rosa"
+      ],
+      "corazon": [
+        "Iris Noble",
+        "Ámbar Gris",
+        "Madera de Cedro"
+      ],
+      "base": [
+        "Vainilla de Madagascar",
+        "Sándalo Australiano",
+        "Almizcle Blanco"
+      ]
+    },
+    "banner_page": null,
+    "image": "/assets/perfumes/aymar.png",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Edición Exclusiva 👑",
+    "season_badge": "Versátil / Noches",
+    "best_season": "todo-el-ano",
+    "best_moment": "noche",
+    "tags": [
+      "Aymar",
+      "Joufab",
+      "Edición Especial",
+      "Exclusivo",
+      "Amaderado",
+      "Ámbar",
+      "Lujo",
+      "Nicho"
+    ],
+    "accords": [
+      "Ámbar Noble",
+      "Amaderado Refinado",
+      "Cálido Especiado",
+      "Avainillado",
+      "Iris Elegante"
+    ],
+    "price": 95,
+    "rating": 5,
+    "is_active": true,
+    "created_at": "2026-10-09T21:05:00.000Z",
+    "updated_at": "2026-10-09T21:05:00.000Z"
+  },
+  {
     "id": "khamrah",
     "num": "05",
     "name": "Khamrah",

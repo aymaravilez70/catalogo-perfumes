@@ -137,6 +137,11 @@ export default function PerfumeCard({
           src={perfume.image}
           alt={perfume.name}
           loading="lazy"
+          onError={(e) => {
+            if (!e.currentTarget.src.includes('aymar.png')) {
+              e.currentTarget.src = '/assets/perfumes/aymar.png';
+            }
+          }}
           className="w-full h-full object-cover rounded-xl transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
