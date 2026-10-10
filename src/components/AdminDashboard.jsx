@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import perfumesData from '../data/perfumesData.json';
 import { supabase } from '../supabaseClient';
 import { 
   Sparkles, Plus, Edit3, Trash2, Check, X, Upload, Image as ImageIcon, 
@@ -29,7 +30,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   const [activeTab, setActiveTab] = useState('inventory'); // 'dashboard', 'inventory', 'create', 'settings'
   
   // Data
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(perfumesData);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [brandFilter, setBrandFilter] = useState('all');
@@ -154,8 +155,39 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         setProducts(normalized);
       }
     } catch (err) {
-      console.error('Error cargando catálogo:', err);
-      showToast('Error al conectar con la base de datos', 'error');
+      console.warn('Error en Supabase, utilizando catálogo de respaldo local:', err);
+      const fallbackList = perfumesData.map(p => {
+        const pVotes = p.votes || {};
+        return {
+          ...p,
+          num: p.num || '',
+          inspired_by: p.inspired_by || pVotes.inspired_by || '',
+          niche_house: p.niche_house || pVotes.niche_house || '',
+          longevity: p.longevity || pVotes.longevity || '8 - 10 horas',
+          sillage: p.sillage || pVotes.sillage || 'Alta / Pesada',
+          similar_ids: Array.isArray(p.similar_ids) ? p.similar_ids : (Array.isArray(pVotes.similar_ids) ? pVotes.similar_ids : []),
+          reviews: Array.isArray(pVotes.reviews) ? pVotes.reviews : (Array.isArray(p.reviews) ? p.reviews : []),
+          votes: {
+            invierno: Number(pVotes.invierno) || 5000,
+            primavera: Number(pVotes.primavera) || 2000,
+            verano: Number(pVotes.verano) || 1000,
+            otoño: Number(pVotes.otoño) || 4000,
+            dia: Number(pVotes.dia) || 3000,
+            noche: Number(pVotes.noche) || 7000,
+            ...pVotes
+          }
+        };
+      });
+      fallbackList.sort((a, b) => {
+        const timeA = new Date(a.created_at || 0).getTime();
+        const timeB = new Date(b.created_at || 0).getTime();
+        if (timeB !== timeA) return timeB - timeA;
+        const numA = parseInt(a.num, 10) || 999;
+        const numB = parseInt(b.num, 10) || 999;
+        return numA - numB;
+      });
+      setProducts(fallbackList);
+      showToast('Mostrando catálogo de respaldo (' + fallbackList.length + ' perfumes)', 'warning');
     } finally {
       setLoading(false);
     }

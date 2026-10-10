@@ -28,7 +28,20 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [perfumes, setPerfumes] = useState(perfumesData);
+  const [perfumes, setPerfumes] = useState(() => {
+    const list = [...perfumesData];
+    list.sort((a, b) => {
+      const timeA = new Date(a.created_at || 0).getTime();
+      const timeB = new Date(b.created_at || 0).getTime();
+      if (timeB !== timeA) {
+        return timeB - timeA;
+      }
+      const numA = parseInt(a.num, 10) || 999;
+      const numB = parseInt(b.num, 10) || 999;
+      return numA - numB;
+    });
+    return list.filter(p => p.is_active !== false);
+  });
 
   // View state: 'home' | 'catalog' | 'product'
   const [currentView, setCurrentView] = useState(() => {
