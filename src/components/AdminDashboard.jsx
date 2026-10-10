@@ -162,8 +162,25 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         if (stored) customList = JSON.parse(stored);
       } catch {}
 
+      let deletedList = [];
+      try {
+        const deletedStored = localStorage.getItem('joufab_deleted_perfumes');
+        if (deletedStored) deletedList = JSON.parse(deletedStored);
+      } catch {}
+
+      let statusOverrides = {};
+      try {
+        const statusStored = localStorage.getItem('joufab_status_overrides');
+        if (statusStored) statusOverrides = JSON.parse(statusStored);
+      } catch {}
+
       const map = new Map();
-      [...perfumesData, ...customList].forEach(p => map.set(p.id, p));
+      [...perfumesData, ...customList].forEach(p => {
+        if (!deletedList.includes(p.id)) {
+          const finalStatus = statusOverrides[p.id] !== undefined ? statusOverrides[p.id] : p.is_active;
+          map.set(p.id, { ...p, is_active: finalStatus });
+        }
+      });
       const fallbackList = Array.from(map.values()).map(p => {
         const pVotes = p.votes || {};
         return {
@@ -501,6 +518,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     if (!window.confirm(`¿Confirmas eliminar definitivamente "${name}" del catálogo?`)) return;
 
     try {
+      // 1. Remove from custom perfumes
       try {
         const stored = localStorage.getItem('joufab_custom_perfumes');
         let customList = stored ? JSON.parse(stored) : [];
@@ -508,12 +526,25 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         localStorage.setItem('joufab_custom_perfumes', JSON.stringify(customList));
       } catch {}
 
+      // 2. Add to deleted blacklist in localStorage
+      try {
+        const deletedStored = localStorage.getItem('joufab_deleted_perfumes');
+        let deletedList = deletedStored ? JSON.parse(deletedStored) : [];
+        if (!deletedList.includes(id)) {
+          deletedList.push(id);
+          localStorage.setItem('joufab_deleted_perfumes', JSON.stringify(deletedList));
+        }
+      } catch {}
+
+      // 3. Immediately update UI state
+      setProducts(prev => prev.filter(p => p.id !== id));
+
+      // 4. Also try Supabase if connected
       try {
         await supabase.from('perfumes').delete().eq('id', id);
       } catch {}
 
-      showToast(`"${name}" eliminado.`);
-      loadData();
+      showToast(`"${name}" eliminado definitivamente.`);
       if (onDataChanged) onDataChanged();
     } catch (err) {
       showToast('Error eliminando: ' + err.message, 'error');
@@ -524,12 +555,19 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   const handleToggleStatus = async (product) => {
     const newStatus = !product.is_active;
     try {
-      const { error } = await supabase
-        .from('perfumes')
-        .update({ is_active: newStatus })
-        .eq('id', product.id);
+      try {
+        const statusStored = localStorage.getItem('joufab_status_overrides');
+        let statusMap = statusStored ? JSON.parse(statusStored) : {};
+        statusMap[product.id] = newStatus;
+        localStorage.setItem('joufab_status_overrides', JSON.stringify(statusMap));
+      } catch {}
 
-      if (error) throw error;
+      try {
+        await supabase
+          .from('perfumes')
+          .update({ is_active: newStatus })
+          .eq('id', product.id);
+      } catch {}
 
       setProducts(prev => prev.map(p => p.id === product.id ? { ...p, is_active: newStatus } : p));
       showToast(`Producto ${newStatus ? 'puesto a la venta' : 'ocultado'}`);

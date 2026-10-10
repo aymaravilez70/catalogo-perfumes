@@ -34,8 +34,26 @@ export default function App() {
       const stored = localStorage.getItem('joufab_custom_perfumes');
       if (stored) custom = JSON.parse(stored);
     } catch {}
+
+    let deletedList = [];
+    try {
+      const deletedStored = localStorage.getItem('joufab_deleted_perfumes');
+      if (deletedStored) deletedList = JSON.parse(deletedStored);
+    } catch {}
+
+    let statusOverrides = {};
+    try {
+      const statusStored = localStorage.getItem('joufab_status_overrides');
+      if (statusStored) statusOverrides = JSON.parse(statusStored);
+    } catch {}
+
     const map = new Map();
-    [...perfumesData, ...custom].forEach(p => map.set(p.id, p));
+    [...perfumesData, ...custom].forEach(p => {
+      if (!deletedList.includes(p.id)) {
+        const finalStatus = statusOverrides[p.id] !== undefined ? statusOverrides[p.id] : p.is_active;
+        map.set(p.id, { ...p, is_active: finalStatus });
+      }
+    });
     const list = Array.from(map.values());
     list.sort((a, b) => {
       const timeA = new Date(a.created_at || 0).getTime();
@@ -170,6 +188,41 @@ export default function App() {
 
       if (error) {
         console.warn('Usando catálogo local:', error.message);
+        let custom = [];
+        try {
+          const stored = localStorage.getItem('joufab_custom_perfumes');
+          if (stored) custom = JSON.parse(stored);
+        } catch {}
+
+        let deletedList = [];
+        try {
+          const deletedStored = localStorage.getItem('joufab_deleted_perfumes');
+          if (deletedStored) deletedList = JSON.parse(deletedStored);
+        } catch {}
+
+        let statusOverrides = {};
+        try {
+          const statusStored = localStorage.getItem('joufab_status_overrides');
+          if (statusStored) statusOverrides = JSON.parse(statusStored);
+        } catch {}
+
+        const map = new Map();
+        [...perfumesData, ...custom].forEach(p => {
+          if (!deletedList.includes(p.id)) {
+            const finalStatus = statusOverrides[p.id] !== undefined ? statusOverrides[p.id] : p.is_active;
+            map.set(p.id, { ...p, is_active: finalStatus });
+          }
+        });
+        const list = Array.from(map.values());
+        list.sort((a, b) => {
+          const timeA = new Date(a.created_at || 0).getTime();
+          const timeB = new Date(b.created_at || 0).getTime();
+          if (timeB !== timeA) return timeB - timeA;
+          const numA = parseInt(a.num, 10) || 999;
+          const numB = parseInt(b.num, 10) || 999;
+          return numA - numB;
+        });
+        setPerfumes(list.filter(p => p.is_active !== false));
         return;
       }
       if (data && data.length > 0) {
