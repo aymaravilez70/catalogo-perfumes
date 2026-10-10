@@ -1065,7 +1065,16 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                               <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 rounded-xl bg-stone-950 border border-stone-800 overflow-hidden flex-shrink-0 flex items-center justify-center">
                                   {p.image ? (
-                                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                                    <img 
+                                      src={p.image} 
+                                      alt={p.name} 
+                                      onError={(e) => {
+                                        if (!e.currentTarget.src.includes('aymar.png')) {
+                                          e.currentTarget.src = '/assets/perfumes/aymar.png';
+                                        }
+                                      }}
+                                      className="w-full h-full object-cover" 
+                                    />
                                   ) : (
                                     <ImageIcon size={20} className="text-stone-600" />
                                   )}
@@ -1911,7 +1920,16 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                   <div className="flex flex-col sm:flex-row items-center gap-5">
                     <div className="w-24 h-24 rounded-2xl bg-stone-900 border border-stone-700 overflow-hidden flex-shrink-0 flex items-center justify-center">
                       {formData.image ? (
-                        <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                        <img 
+                          src={formData.image} 
+                          alt="Preview" 
+                          onError={(e) => {
+                            if (!e.currentTarget.src.includes('aymar.png')) {
+                              e.currentTarget.src = '/assets/perfumes/aymar.png';
+                            }
+                          }}
+                          className="w-full h-full object-cover" 
+                        />
                       ) : (
                         <ImageIcon size={32} className="text-stone-600" />
                       )}
