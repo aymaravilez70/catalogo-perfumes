@@ -1,7 +1,959 @@
 [
   {
-    "id": "khamrah",
+    "id": "club-de-nuit-intense-man",
+    "num": "01",
+    "name": "Club de Nuit Intense Man",
+    "brand": "Armaf",
+    "page": null,
+    "category": "Gourmand Especiado",
+    "gender": "Masculino",
+    "description": "Una fragancia magnética y viril que abre con una explosión cítrica brillante de limón, piña y grosellas negras. Rápidamente evoluciona hacia un corazón floral y ahumado de abedul y jazmín, para asentarse en un fondo icónico, rico y seductor dominado por el almizcle, el ámbar gris y maderas oscuras.",
+    "occasions": "Extremadamente versátil; ideal para la oficina, uso diario casual, reuniones de negocios, eventos formales o salidas nocturnas. Funciona perfecto en cualquier estación del año y combina con vestimenta formal, semi-formal o casual elegante.",
+    "votes": {
+      "dia": 7200,
+      "noche": 6800,
+      "otoño": 6400,
+      "verano": 5800,
+      "reviews": [],
+      "sillage": "Alta / Pesada (Excelente presencia y ráfaga de proyectividad)",
+      "invierno": 6500,
+      "longevity": "8 - 10 horas",
+      "primavera": 7000,
+      "inspired_by": "Aventus",
+      "niche_house": "Creed (Nicho)",
+      "similar_ids": [],
+      "olfactory_profile": {
+        "dulzor": 2,
+        "duracion": 5,
+        "frescura": 4,
+        "intensidad": 5,
+        "proyeccion": 4,
+        "versatilidad": 5
+      }
+    },
+    "notes": {
+      "base": [
+        "Almizcle",
+        "Ámbar gris",
+        "Pachulí",
+        "Vainilla"
+      ],
+      "salida": [
+        "Limón (lima ácida)",
+        "Piña",
+        "Bergamota",
+        "Grosellas negras",
+        "Manzana"
+      ],
+      "corazon": [
+        "Abedul",
+        "Jazmín",
+        "Rosa"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997451/iehwd0yy37fjg3hcxl30.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Bestia Negra🔥",
+    "season_badge": "Versátil / Todo el Año",
+    "best_season": "todo-el-ano",
+    "best_moment": "versatil",
+    "tags": [
+      "Club de Nuit",
+      "Armaf",
+      "Aventus",
+      "Limón",
+      "Piña",
+      "Ahumado",
+      "Best Seller",
+      "Cumplidos",
+      "Oficina",
+      "Versátil",
+      "Masculino",
+      "CDN"
+    ],
+    "accords": [
+      "Cítrico",
+      "Ahumado",
+      "Amaderado",
+      "Afrutado",
+      "Cuero",
+      "Aromático",
+      "Verde"
+    ],
+    "price": 70,
+    "rating": 4.5,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:36.693Z",
+    "updated_at": "2026-09-30T02:47:25.547+00:00"
+  },
+  {
+    "id": "vulcan-feu",
+    "num": "02",
+    "name": "Vulcan Feu",
+    "brand": "French Avenue",
+    "page": null,
+    "category": "Frutal Cítrica",
+    "gender": "Unisex",
+    "description": "Una ardiente y jugosa apertura de mango maduro, jengibre picante y ruibarbo que evoluciona hacia un corazón de jazmín, praliné y pimienta rosa, asentándose sobre un fondo cálido y exótico de ámbar gris y haba tonka.",
+    "occasions": "Excelente para días calurosos, salidas de tarde o noche, fiestas al aire libre, eventos sociales y vacaciones donde busques resaltar con un aroma moderno, exótico y magnético.",
+    "votes": {
+      "dia": 13500,
+      "noche": 8200,
+      "otoño": 6500,
+      "verano": 14800,
+      "reviews": [],
+      "sillage": "Alta / Intensa",
+      "invierno": 3500,
+      "longevity": "8 - 10 horas",
+      "primavera": 11200,
+      "inspired_by": "God of Fire",
+      "niche_house": "Stéphane Humbert Lucas 777",
+      "similar_ids": [],
+      "olfactory_profile": {
+        "dulzor": 3,
+        "duracion": 4,
+        "frescura": 4,
+        "intensidad": 4,
+        "proyeccion": 4,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [
+        "Haba Tonka",
+        "Cedro",
+        "Ámbar Gris",
+        "Musgo"
+      ],
+      "salida": [
+        "Mango",
+        "Jengibre",
+        "Limón (Lima Ácida)",
+        "Ruibarbo"
+      ],
+      "corazon": [
+        "Jazmín",
+        "Violeta",
+        "Pimienta Rosa",
+        "Praliné"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997455/duoo70bzjeypvhid068s.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Tendencia ✨",
+    "season_badge": "Verano / Día",
+    "best_season": "todo-el-ano",
+    "best_moment": "versatil",
+    "tags": [
+      "Mango",
+      "Tropical",
+      "Jengibre",
+      "God of Fire",
+      "Exótico",
+      "Verano",
+      "Citas",
+      "Unisex",
+      "Ámbar"
+    ],
+    "accords": [
+      "Frutal",
+      "Cítrico",
+      "Tropical",
+      "Fresco Especiado",
+      "Ámbar",
+      "Amaderado"
+    ],
+    "price": 85,
+    "rating": 4.8,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:35.693Z",
+    "updated_at": "2026-09-30T01:52:51.602+00:00"
+  },
+  {
+    "id": "khamrah-waha",
+    "num": "03",
+    "name": "Khamrah Waha",
+    "brand": "Lattafa",
+    "page": null,
+    "category": "Gourmand Fresco",
+    "gender": "Unisex",
+    "description": "Una propuesta refrescante e innovadora dentro de la saga Khamrah que contrasta una vibrante salida de yuzu, bergamota y jengibre especiado con un corazón ozónico de pepino, sal de mar e iris. Su secado retiene el ADN cremoso y cálido característico de la línea gracias a la vainilla, el haba tonka y el moderno toque de Akigalawood y Ambrofix.",
+    "occasions": "Perfecto para días calurosos, salidas casuales, uso diario en clima templado o cálido, eventos al aire libre y ambientes informales o semi-formales donde se busquet un aroma marino, limpio y con una base dulce seductora.",
+    "votes": {
+      "dia": 2300,
+      "noche": 976,
+      "otoño": 3000,
+      "verano": 5800,
+      "reviews": [],
+      "sillage": "Moderada / Alta",
+      "invierno": 1120,
+      "longevity": "7 - 9 horas",
+      "primavera": 6200,
+      "inspired_by": "Khamrah + Le Beau + Le Beau Le Parfum",
+      "niche_house": "Jean Paul Gaultier",
+      "similar_ids": [],
+      "olfactory_profile": {
+        "dulzor": 3,
+        "duracion": 4,
+        "frescura": 4,
+        "intensidad": 4,
+        "proyeccion": 3,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [
+        "Vainilla",
+        "Haba tonka",
+        "Almizcle",
+        "Akigalawood",
+        "Ambrofix"
+      ],
+      "salida": [
+        "Bergamota",
+        "Yuzu",
+        "Enebro",
+        "Jengibre"
+      ],
+      "corazon": [
+        "Pepino",
+        "Sal de mar",
+        "Iris",
+        "Salvia"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997453/xs69ycbipyqrsssdho4l.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Nuevo ⚡",
+    "season_badge": "Verano / Día",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Khamrah Waha",
+      "Lattafa",
+      "Azul",
+      "Acuatico",
+      "Marino",
+      "Fresco",
+      "Vainilla",
+      "Verano",
+      "Versatil",
+      "Yuzu",
+      "Unisex",
+      "Nuevo"
+    ],
+    "accords": [
+      "Acuático",
+      "Ozónico",
+      "Cítrico",
+      "Fresco Especiado",
+      "Salado",
+      "Avainillado",
+      "Almizclado"
+    ],
+    "price": 80,
+    "rating": 4.6,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:34.693Z",
+    "updated_at": "2026-09-30T02:45:31.712+00:00"
+  },
+  {
+    "id": "yara-candy",
+    "num": "04",
+    "name": "Yara Candy",
+    "brand": "Lattafa",
+    "page": null,
+    "category": "Floral Frutal Gourmand",
+    "gender": "Femenino",
+    "description": "Una adictiva explosión de dulzura jugosa y coqueta que combina grosellas negras chispeantes y efervescencia de mandarina verde con un corazón chispeante de dulces de caramelo de fresa y gardenia. Su secado envuelve la piel en una estela cremosa de vainilla de Madagascar, almizcle blanco y un toque de ámbar cálido.",
+    "occasions": "Ideal para uso diario, salidas informales, citas románticas, reuniones con amigas y eventos donde quieras destacar por una presencia juvenil, alegre, ultra femenina y deliciosamente irresistible.",
+    "votes": {
+      "dia": 7200,
+      "noche": 2800,
+      "otoño": 6400,
+      "verano": 5800,
+      "reviews": [],
+      "sillage": "Moderada / Alta",
+      "invierno": 6450,
+      "longevity": "7 - 9 horas",
+      "primavera": 7000,
+      "inspired_by": "Kayali Eden Sparkling Lychee",
+      "niche_house": "Kayali (Nicho)",
+      "similar_ids": [
+        "yara-pink",
+        "honor-and-glory",
+        "tropical-vibe"
+      ],
+      "olfactory_profile": {
+        "dulzor": 5,
+        "duracion": 4,
+        "frescura": 3,
+        "intensidad": 4,
+        "proyeccion": 4,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [],
+      "salida": [
+        "Grosellas negras",
+        "Mandarina verde"
+      ],
+      "corazon": [
+        "Caramelo de fresa",
+        "Gardenia"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997456/dfywz56qmfwjjgyhffxv.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Tendencia ✨",
+    "season_badge": "Versátil / Todo el Año",
+    "best_season": "todo-el-ano",
+    "best_moment": "versatil",
+    "tags": [],
+    "accords": [
+      "Vainilla de Madagascar",
+      "Ámbar",
+      "Jarabe de fresa",
+      "Almizcle",
+      "Sándalo"
+    ],
+    "price": 65,
+    "rating": 4.9,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:33.693Z",
+    "updated_at": "2026-10-06T21:31:55.033+00:00"
+  },
+  {
+    "id": "asad-bourbon",
     "num": "05",
+    "name": "Asad Bourbon",
+    "brand": "Lattafa",
+    "page": null,
+    "category": "Amaderada Gourmand / Especiada Cálida",
+    "gender": "Masculino",
+    "description": "Una interpretación oscura, magnética y opulenta que combina la fuerza especiada del Asad original con la calidez licorosa del whisky bourbon.",
+    "occasions": "Ideal para noches frías, eventos formales, citas románticas, salidas nocturnas y ocasiones donde se busque proyectar elegancia, sofisticación y un carácter masculino imponente.",
+    "votes": {
+      "dia": 197,
+      "noche": 920,
+      "otoño": 9500,
+      "verano": 800,
+      "reviews": [],
+      "sillage": "Alta / Intensa",
+      "invierno": 12500,
+      "longevity": "8 - 10 horas",
+      "primavera": 2000,
+      "inspired_by": "The Most Wanted",
+      "niche_house": "Azzaro",
+      "similar_ids": [
+        "khamrah",
+        "asad",
+        "khamrah-qahwa"
+      ],
+      "olfactory_profile": {
+        "dulzor": 4,
+        "duracion": 5,
+        "frescura": 1,
+        "intensidad": 5,
+        "proyeccion": 4,
+        "versatilidad": 3
+      }
+    },
+    "notes": {
+      "base": [
+        "Vainilla Bourbon",
+        "Ámbar",
+        "Vetiver"
+      ],
+      "salida": [
+        "Lavanda",
+        "Ciruela Mirabel",
+        "Pimienta rosa"
+      ],
+      "corazon": [
+        "CAcao",
+        "Nuez moscada",
+        "Davana"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997449/ezsrsgsxpuecbgqoswlt.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Top Ventas ✨",
+    "season_badge": "Invierno / Noches",
+    "best_season": "invierno",
+    "best_moment": "noche",
+    "tags": [
+      "Asad Bourbon",
+      "Whisky",
+      "Vainilla",
+      "Licoroso",
+      "Tabaco",
+      "Clima Frío",
+      "Noche",
+      "Elegante",
+      "Lattafa",
+      "Masculino"
+    ],
+    "accords": [
+      "Licoroso",
+      "Avainillado",
+      "Cálido Especiado",
+      "Amaderado",
+      "Acanelado",
+      "Chocolate"
+    ],
+    "price": 65,
+    "rating": 5,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:32.693Z",
+    "updated_at": "2026-10-06T21:44:07.168+00:00"
+  },
+  {
+    "id": "atlantis-extrait",
+    "num": "06",
+    "name": "Atlantis Extrait",
+    "brand": "French Avenue (Fragrance World)",
+    "page": null,
+    "category": "Cítrica Aromática / Frutal",
+    "gender": "Unisex",
+    "description": "Una adictiva y jugosa experiencia tropical que abre con un radiante estallido de naranja, mandarina y limón. Su corazón se sumerge en un refrescante acorde de sandía jugosa y coco cremoso, para evolucionar hacia un secado reconfortante y sensual de cacao, ámbar gris y maderas ambaradas.",
+    "occasions": "Excelente para días calurosos, vacaciones de verano, piscina, playa, salidas casuales y eventos al aire libre.",
+    "votes": {
+      "dia": 15200,
+      "noche": 5100,
+      "otoño": 3000,
+      "verano": 16800,
+      "reviews": [],
+      "sillage": "Alta / Intensa",
+      "invierno": 1200,
+      "longevity": "8 - 10 horas",
+      "primavera": 11500,
+      "inspired_by": "Pacific Chill",
+      "niche_house": "Louis Vuitton",
+      "similar_ids": [
+        "tropical-vibe"
+      ],
+      "olfactory_profile": {
+        "dulzor": 4,
+        "duracion": 4,
+        "frescura": 4,
+        "intensidad": 4,
+        "proyeccion": 4,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [
+        "Cacao",
+        "Ámbar gris",
+        "Amberwood"
+      ],
+      "salida": [
+        "Naranja",
+        "Mandarina",
+        "Limón (lima ácida)"
+      ],
+      "corazon": [
+        "Sandía",
+        "Coco"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997450/kz5v6rv4lpt7cbhqxh2o.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Nuevo ⚡",
+    "season_badge": "Verano / Día",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Atlantis Extrait",
+      "French Avenue",
+      "Wavechild",
+      "Sandía",
+      "Coco",
+      "Cacao",
+      "Cítrico",
+      "Tropical",
+      "Verano",
+      "Playa",
+      "Unisex"
+    ],
+    "accords": [
+      "Cítrico",
+      "Frutal",
+      "Dulce",
+      "Acuático",
+      "Tropical",
+      "Cacao",
+      "Ambarado"
+    ],
+    "price": 85,
+    "rating": 4.5,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:31.693Z",
+    "updated_at": "2026-10-07T04:19:54.221+00:00"
+  },
+  {
+    "id": "stallion-53",
+    "num": "07",
+    "name": "Stallion 53",
+    "brand": "Emper Perfumes",
+    "page": null,
+    "category": "Amaderada Aromática / Cuero Especiado",
+    "gender": "Masculino",
+    "description": "Una composición amaderada sofisticada y magnética que evoca la libertad del espíritu libre y el lujo contemporáneo. Abre con matices ahumados de cardamomo y violeta, dando paso a un majestuoso cuerpo de sándalo australiano y papiro, envuelto en una base cálida de cuero, ámbar y cedro seco.",
+    "occasions": "Perfecto para uso diario elegante, ambientes de oficina, reuniones creativas, salidas de tarde-noche y eventos donde quieras proyectar una personalidad distintiva, vanguardista y segura.",
+    "votes": {
+      "dia": 7200,
+      "noche": 6800,
+      "otoño": 6400,
+      "verano": 5800,
+      "reviews": [],
+      "sillage": "Moderada / Alta",
+      "invierno": 6500,
+      "longevity": "7 - 9 horas",
+      "primavera": 7000,
+      "inspired_by": "Santal 33",
+      "niche_house": "Le Labo (Nicho)",
+      "similar_ids": [],
+      "olfactory_profile": {
+        "dulzor": 1,
+        "duracion": 4,
+        "frescura": 3,
+        "intensidad": 4,
+        "proyeccion": 4,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [
+        "Sándalo",
+        "Papiro de Egipto",
+        "Cuero",
+        "Cedro de Virginia"
+      ],
+      "salida": [
+        "Cardamomo",
+        "Violeta"
+      ],
+      "corazon": [
+        "Ámbar",
+        "Iris"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997453/ubcvhn8tfcr4cqbdkokz.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Imponente 🔥",
+    "season_badge": "Versátil / Todo el Año",
+    "best_season": "todo-el-ano",
+    "best_moment": "versatil",
+    "tags": [
+      "Stallion 53",
+      "Emper",
+      "Santal 33 Dupe",
+      "Sándalo",
+      "Cuero",
+      "Amaderado",
+      "Niche Style",
+      "Unisex",
+      "Elegante",
+      "Minimalista"
+    ],
+    "accords": [
+      "Powdery (Apolvado)",
+      "Cuero",
+      "Warm Spicy (Cálido Especiado)",
+      "Balsámico",
+      "Verde / Herbal"
+    ],
+    "price": 65,
+    "rating": 4.6,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:30.693Z",
+    "updated_at": "2026-10-06T21:54:58.563+00:00"
+  },
+  {
+    "id": "aquatica",
+    "num": "08",
+    "name": "Aquatica",
+    "brand": "Rayhaan",
+    "page": null,
+    "category": "Aromática Acuática Tropical",
+    "gender": "Masculino",
+    "description": "Un deslumbrante cóctel tropical que transporta de inmediato a un paraíso caribeño. Su salida estalla con lima chispeante y bergamota refrescada por un toque cremoso de leche de coco, evolucionando hacia un corazón dulce de caña de azúcar y flores exóticas, asentándose sobre un seductor fondo de ron dorado y almizcle.",
+    "occasions": "Perfecto para días calurosos de verano, escapadas a la playa, eventos al aire libre, vacaciones tropicales y un uso casual elegante durante el día donde busques transmitir vitalidad, pulcritud y sofisticación fresca.",
+    "votes": {
+      "dia": 750,
+      "noche": 250,
+      "otoño": 2000,
+      "verano": 13900,
+      "reviews": [],
+      "sillage": "Moderada / Alta",
+      "invierno": 1200,
+      "longevity": "6 - 8 horas",
+      "primavera": 7500,
+      "inspired_by": "Virgin Island Water",
+      "niche_house": "Creed (Nicho)",
+      "similar_ids": [
+        "tropical-vibe",
+        "vulcan-feu",
+        "hawas-ice",
+        "nitro-red"
+      ],
+      "olfactory_profile": {
+        "dulzor": 3,
+        "duracion": 3,
+        "frescura": 5,
+        "intensidad": 4,
+        "proyeccion": 4,
+        "versatilidad": 3
+      }
+    },
+    "notes": {
+      "base": [
+        "Ron",
+        "Haba tonka",
+        "Almizcle",
+        "Pachulí"
+      ],
+      "salida": [
+        "Lima (limón verde)",
+        "Leche de coco",
+        "Bergamota",
+        "Mandarina"
+      ],
+      "corazon": [
+        "Caña de azúcar",
+        "Jazmín",
+        "Hibisco (flor de Jamaica)",
+        "Gardenia"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997448/qkdumryjfuyxnkjffx9w.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Tendencia ✨",
+    "season_badge": "Verano / Día",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Cítrico",
+      "Coco",
+      "Ron",
+      "Verano",
+      "Playa",
+      "Vacaciones",
+      "Fresco",
+      "Creed Dupe",
+      "Unisex",
+      "Clima Cálido"
+    ],
+    "accords": [
+      "Cítrico",
+      "Dulce",
+      "Coco",
+      "Dulce Gourmand",
+      "Fresco Especiado",
+      "Acuático Tropical",
+      "Aromatico"
+    ],
+    "price": 75,
+    "rating": 4.8,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:29.693Z",
+    "updated_at": "2026-10-07T03:32:23.67+00:00"
+  },
+  {
+    "id": "tropical-vibe",
+    "num": "09",
+    "name": "Tropical Vibe",
+    "brand": "Rayhaan",
+    "page": null,
+    "category": "Cítrica Aromática / Frutal",
+    "gender": "Unisex",
+    "description": "Un vibrante coctel tropical que despierta los sentidos con un estallido energizante de mango jugoso, piña, ron y cítricos radiantes.",
+    "occasions": "Ideal para días calurosos de verano, vacaciones, playa, piscina, salidas casuales y actividades al aire libre o de uso diario en climas tropicales. Combina a la perfección con vestimenta casual, fresca y de lino.",
+    "votes": {
+      "dia": 550,
+      "noche": 183,
+      "otoño": 110,
+      "verano": 633,
+      "reviews": [],
+      "sillage": "Moderada / Alta",
+      "invierno": 48,
+      "longevity": "6 - 8 horas",
+      "primavera": 461,
+      "inspired_by": "Summer Hummer",
+      "niche_house": "Lorenzo Pazzaglia",
+      "similar_ids": [],
+      "olfactory_profile": {
+        "dulzor": 3,
+        "duracion": 3,
+        "frescura": 5,
+        "intensidad": 3,
+        "proyeccion": 3,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [
+        "Almizcle",
+        "Ámbar",
+        "Sándalo",
+        "Vétiver"
+      ],
+      "salida": [
+        "Mango",
+        "Piña",
+        "Bergamota",
+        "Ron"
+      ],
+      "corazon": [
+        "Coco",
+        "Flores blancas",
+        "Notas marinas"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997454/udyznodcjl6j5kwsrzzo.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Tendencia ✨",
+    "season_badge": "Verano / Día",
+    "best_season": "verano",
+    "best_moment": "dia",
+    "tags": [
+      "Rayhaan",
+      "Tropical Vibe",
+      "Pacific Chill",
+      "Louis Vuitton",
+      "Mango",
+      "Menta",
+      "Fresco",
+      "Verano",
+      "Playa",
+      "Unisex",
+      "Cítrico",
+      "Frutal"
+    ],
+    "accords": [
+      "Aomático",
+      "Frutal",
+      "Cítrico",
+      "Fresco Especiado",
+      "Verde",
+      "Dulce",
+      "Tropical"
+    ],
+    "price": 75,
+    "rating": 4.5,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:28.693Z",
+    "updated_at": "2026-10-07T03:40:15.123+00:00"
+  },
+  {
+    "id": "bade-e-al-oud-amethyst",
+    "num": "10",
+    "name": "Bade'e Al Oud Amethyst",
+    "brand": "Lattafa",
+    "page": null,
+    "category": "Oriental Vainilla",
+    "gender": "Unisex",
+    "description": "Una creación opulenta y magnética que fusiona la sofisticación de las rosas búlgaras y turcas con un toque de pimienta rosa, sobre un fondo cálido y sensual de madera de oud, ámbar y vainilla. Es una fragancia envolvente, misteriosa y profundamente seductora.",
+    "occasions": "Ideal para eventos nocturnos, cenas formales, citas especiales o días fríos donde se busque destacar con una presencia refinada y memorable. Marida a la perfección con vestimenta elegante o semiformal.",
+    "votes": {
+      "dia": 2800,
+      "noche": 11800,
+      "otoño": 9500,
+      "verano": 800,
+      "reviews": [],
+      "sillage": "Alta / Intensa",
+      "invierno": 12500,
+      "longevity": "8 - 12 horas",
+      "primavera": 2000,
+      "inspired_by": "Atomic Rose",
+      "niche_house": "Initio Parfums Privés",
+      "similar_ids": [
+        "yara-candy"
+      ],
+      "olfactory_profile": {
+        "dulzor": 4,
+        "duracion": 4,
+        "frescura": 2,
+        "intensidad": 5,
+        "proyeccion": 4,
+        "versatilidad": 5
+      }
+    },
+    "notes": {
+      "base": [
+        "Madera de Oud",
+        "Ámbar",
+        "Vainilla"
+      ],
+      "salida": [
+        "Pimienta rosa",
+        "Bergamota"
+      ],
+      "corazon": [
+        "Rosa de Bulgaria",
+        "Rosa turca",
+        "Jazmín"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997451/oq2dmoufgzbtgt6ah3mo.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "Sensual 🔥",
+    "season_badge": "Invierno / Noches",
+    "best_season": "invierno",
+    "best_moment": "noche",
+    "tags": [
+      "Rosa",
+      "Oud",
+      "Ámbar",
+      "Dulce",
+      "Nocturno",
+      "Clima Frío",
+      "Elegante",
+      "Seductor",
+      "Arab Perfume",
+      "Unisex"
+    ],
+    "accords": [
+      "Rosa",
+      "Oud",
+      "Warm Spicy",
+      "Ámbar",
+      "Avainillado",
+      "Cítrico"
+    ],
+    "price": 60,
+    "rating": 4.8,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:27.693Z",
+    "updated_at": "2026-10-07T04:17:18.999+00:00"
+  },
+  {
+    "id": "hawas-black",
+    "num": "11",
+    "name": "Hawas Black",
+    "brand": "Rasasi",
+    "page": null,
+    "category": "Aromática Frutal",
+    "gender": "Masculino",
+    "description": "Una interpretación oscura, poderosa y magnética de la legendaria firma frutal-amaderada. Su apertura estalla con piña jugosa, bergamota y grosella negra, abriéndose paso hacia un corazón sofisticado de pachulí, jazmín y especias, para asentarse sobre una imponente base de musgo de roble, madera de abedul ahumada y ámbar gris.",
+    "occasions": "Excelente para eventos de gala, reuniones ejecutivas, noches de fiesta, citas importantes o cualquier contexto donde se busque proyectar liderazgo, elegancia alfa y dejar una huella olfativa imborrable.",
+    "votes": {
+      "dia": 7200,
+      "noche": 6800,
+      "otoño": 2400,
+      "verano": 2200,
+      "reviews": [],
+      "sillage": "Alta / Intensa",
+      "invierno": 2100,
+      "longevity": "9 - 12 horas",
+      "primavera": 2400,
+      "inspired_by": "Creed Aventus Absolu",
+      "niche_house": "Creed (Nicho)",
+      "similar_ids": [
+        "club-de-nuit-intense-man"
+      ],
+      "olfactory_profile": {
+        "dulzor": 2,
+        "duracion": 5,
+        "frescura": 4,
+        "intensidad": 5,
+        "proyeccion": 5,
+        "versatilidad": 4
+      }
+    },
+    "notes": {
+      "base": [
+        "Musgo de roble",
+        "Ámbar gris",
+        "Almizcle",
+        "Notas amaderadas",
+        "Vetiver"
+      ],
+      "salida": [
+        "Piña",
+        "Bergamota",
+        "Grosellas negras",
+        "Toronja"
+      ],
+      "corazon": [
+        "Pachulí",
+        "Jazmín",
+        "Pimienta rosa",
+        "Madera de abedul"
+      ]
+    },
+    "banner_page": null,
+    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997452/klzntm7mwtqk28iiqnfz.jpg",
+    "page_image": null,
+    "banner_image": null,
+    "bottle_side": "LEFT",
+    "badge": "BEstial Mode⚡",
+    "season_badge": "Versátil / Todo el Año",
+    "best_season": "todo-el-ano",
+    "best_moment": "versatil",
+    "tags": [
+      "Hawas Black",
+      "Rasasi",
+      "Creed Aventus",
+      "Aventus Absolu",
+      "Piña Ahumada",
+      "Bestial",
+      "Masculino",
+      "Lujo",
+      "Elegante",
+      "Nocturno"
+    ],
+    "accords": [
+      "Afrutado",
+      "Amaderado",
+      "Cítrico",
+      "Ahumado",
+      "Cuero / Musgo",
+      "Fresco Especiado",
+      "Ámbar"
+    ],
+    "price": 75,
+    "rating": 4.7,
+    "is_active": true,
+    "created_at": "2026-10-14T17:10:26.693Z",
+    "updated_at": "2026-10-07T18:59:42.355+00:00"
+  },
+  {
+    "id": "khamrah",
+    "num": "12",
     "name": "Khamrah",
     "brand": "Lattafa",
     "page": 7,
@@ -97,7 +1049,7 @@
     "price": 65,
     "rating": 4.9,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:25.693Z",
     "updated_at": "2026-09-28T02:43:49.536+00:00"
   },
   {
@@ -175,12 +1127,12 @@
     "price": 70,
     "rating": 4.9,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:24.693Z",
     "updated_at": "2026-09-24T18:16:31.244+00:00"
   },
   {
     "id": "9-am-dive",
-    "num": "10",
+    "num": "14",
     "name": "9 AM Dive",
     "brand": "Afnan",
     "page": 17,
@@ -245,12 +1197,12 @@
     "price": 65,
     "rating": 4.9,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:23.693Z",
     "updated_at": "2026-09-14T05:32:15.707+00:00"
   },
   {
     "id": "nitro-red",
-    "num": "12",
+    "num": "15",
     "name": "Nitro Red",
     "brand": "Dumont",
     "page": 20,
@@ -326,12 +1278,12 @@
     "price": 65,
     "rating": 4.9,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:22.693Z",
     "updated_at": "2026-09-24T18:11:40.208+00:00"
   },
   {
     "id": "yara-pink",
-    "num": "15",
+    "num": "16",
     "name": "Yara Pink",
     "brand": "Lattafa",
     "page": 23,
@@ -404,12 +1356,12 @@
     "price": 60,
     "rating": 4.8,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:21.693Z",
     "updated_at": "2026-09-24T17:36:44.035+00:00"
   },
   {
     "id": "odyssey-mandarin-sky",
-    "num": "14",
+    "num": "17",
     "name": "Odyssey Mandarin Sky",
     "brand": "Armaf",
     "page": 12,
@@ -489,12 +1441,12 @@
     "price": 65,
     "rating": 5,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:20.693Z",
     "updated_at": "2026-09-28T01:52:16.042+00:00"
   },
   {
     "id": "9-pm",
-    "num": "09",
+    "num": "18",
     "name": "9 PM",
     "brand": "Afnan",
     "page": 16,
@@ -570,12 +1522,12 @@
     "price": 65,
     "rating": 5,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:19.693Z",
     "updated_at": "2026-09-24T18:05:59.265+00:00"
   },
   {
     "id": "honor-and-glory",
-    "num": "06",
+    "num": "19",
     "name": "Honor & Glory",
     "brand": "Lattafa",
     "page": 8,
@@ -651,12 +1603,12 @@
     "price": 60,
     "rating": 4.9,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:18.693Z",
     "updated_at": "2026-09-24T18:20:49.4+00:00"
   },
   {
     "id": "odyssey-homme",
-    "num": "07",
+    "num": "20",
     "name": "Odyssey Homme White Edition",
     "brand": "Armaf",
     "page": 10,
@@ -747,12 +1699,12 @@
     "price": 65,
     "rating": 4.6,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:17.693Z",
     "updated_at": "2026-09-28T02:17:48.661+00:00"
   },
   {
     "id": "hawas-ice",
-    "num": "03",
+    "num": "21",
     "name": "Hawas Ice",
     "brand": "Rasasi",
     "page": 4,
@@ -870,12 +1822,12 @@
     "price": 75,
     "rating": 4.9,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:16.693Z",
     "updated_at": "2026-09-24T17:56:22.663+00:00"
   },
   {
     "id": "fakhar-black",
-    "num": "04",
+    "num": "22",
     "name": "Fakhar Black",
     "brand": "Lattafa",
     "page": 6,
@@ -956,12 +1908,12 @@
     "price": 65,
     "rating": 4.7,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:15.693Z",
     "updated_at": "2026-09-28T02:06:16.49+00:00"
   },
   {
     "id": "club-de-nuit-milestone",
-    "num": "08",
+    "num": "23",
     "name": "Club De Nuit Milestone",
     "brand": "Armaf",
     "page": 14,
@@ -1033,12 +1985,12 @@
     "price": 65,
     "rating": 4.8,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:14.693Z",
     "updated_at": "2026-09-28T02:25:01.822+00:00"
   },
   {
     "id": "asad",
-    "num": "11",
+    "num": "24",
     "name": "Asad",
     "brand": "Lattafa",
     "page": 19,
@@ -1113,12 +2065,12 @@
     "price": 65,
     "rating": 4.8,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:13.693Z",
     "updated_at": "2026-09-28T02:38:00+00:00"
   },
   {
     "id": "khamrah-qahwa",
-    "num": "01",
+    "num": "25",
     "name": "Khamrah Qahwa",
     "brand": "Lattafa",
     "page": 2,
@@ -1215,12 +2167,12 @@
     "price": 65,
     "rating": 5,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:12.693Z",
     "updated_at": "2026-09-29T02:34:33.893+00:00"
   },
   {
     "id": "hawas-kobra",
-    "num": "02",
+    "num": "26",
     "name": "Hawas Kobra",
     "brand": "Rasasi",
     "page": 3,
@@ -1328,959 +2280,7 @@
     "price": 70,
     "rating": 4.8,
     "is_active": true,
-    "created_at": "2026-09-10T01:17:52.098057+00:00",
+    "created_at": "2026-09-14T17:10:11.693Z",
     "updated_at": "2026-09-28T02:51:43.264+00:00"
-  },
-  {
-    "id": "club-de-nuit-intense-man",
-    "num": "18",
-    "name": "Club de Nuit Intense Man",
-    "brand": "Armaf",
-    "page": null,
-    "category": "Gourmand Especiado",
-    "gender": "Masculino",
-    "description": "Una fragancia magnética y viril que abre con una explosión cítrica brillante de limón, piña y grosellas negras. Rápidamente evoluciona hacia un corazón floral y ahumado de abedul y jazmín, para asentarse en un fondo icónico, rico y seductor dominado por el almizcle, el ámbar gris y maderas oscuras.",
-    "occasions": "Extremadamente versátil; ideal para la oficina, uso diario casual, reuniones de negocios, eventos formales o salidas nocturnas. Funciona perfecto en cualquier estación del año y combina con vestimenta formal, semi-formal o casual elegante.",
-    "votes": {
-      "dia": 7200,
-      "noche": 6800,
-      "otoño": 6400,
-      "verano": 5800,
-      "reviews": [],
-      "sillage": "Alta / Pesada (Excelente presencia y ráfaga de proyectividad)",
-      "invierno": 6500,
-      "longevity": "8 - 10 horas",
-      "primavera": 7000,
-      "inspired_by": "Aventus",
-      "niche_house": "Creed (Nicho)",
-      "similar_ids": [],
-      "olfactory_profile": {
-        "dulzor": 2,
-        "duracion": 5,
-        "frescura": 4,
-        "intensidad": 5,
-        "proyeccion": 4,
-        "versatilidad": 5
-      }
-    },
-    "notes": {
-      "base": [
-        "Almizcle",
-        "Ámbar gris",
-        "Pachulí",
-        "Vainilla"
-      ],
-      "salida": [
-        "Limón (lima ácida)",
-        "Piña",
-        "Bergamota",
-        "Grosellas negras",
-        "Manzana"
-      ],
-      "corazon": [
-        "Abedul",
-        "Jazmín",
-        "Rosa"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997451/iehwd0yy37fjg3hcxl30.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Bestia Negra🔥",
-    "season_badge": "Versátil / Todo el Año",
-    "best_season": "todo-el-ano",
-    "best_moment": "versatil",
-    "tags": [
-      "Club de Nuit",
-      "Armaf",
-      "Aventus",
-      "Limón",
-      "Piña",
-      "Ahumado",
-      "Best Seller",
-      "Cumplidos",
-      "Oficina",
-      "Versátil",
-      "Masculino",
-      "CDN"
-    ],
-    "accords": [
-      "Cítrico",
-      "Ahumado",
-      "Amaderado",
-      "Afrutado",
-      "Cuero",
-      "Aromático",
-      "Verde"
-    ],
-    "price": 70,
-    "rating": 4.5,
-    "is_active": true,
-    "created_at": "2026-09-29T22:07:52.58+00:00",
-    "updated_at": "2026-09-30T02:47:25.547+00:00"
-  },
-  {
-    "id": "vulcan-feu",
-    "num": "16",
-    "name": "Vulcan Feu",
-    "brand": "French Avenue",
-    "page": null,
-    "category": "Frutal Cítrica",
-    "gender": "Unisex",
-    "description": "Una ardiente y jugosa apertura de mango maduro, jengibre picante y ruibarbo que evoluciona hacia un corazón de jazmín, praliné y pimienta rosa, asentándose sobre un fondo cálido y exótico de ámbar gris y haba tonka.",
-    "occasions": "Excelente para días calurosos, salidas de tarde o noche, fiestas al aire libre, eventos sociales y vacaciones donde busques resaltar con un aroma moderno, exótico y magnético.",
-    "votes": {
-      "dia": 13500,
-      "noche": 8200,
-      "otoño": 6500,
-      "verano": 14800,
-      "reviews": [],
-      "sillage": "Alta / Intensa",
-      "invierno": 3500,
-      "longevity": "8 - 10 horas",
-      "primavera": 11200,
-      "inspired_by": "God of Fire",
-      "niche_house": "Stéphane Humbert Lucas 777",
-      "similar_ids": [],
-      "olfactory_profile": {
-        "dulzor": 3,
-        "duracion": 4,
-        "frescura": 4,
-        "intensidad": 4,
-        "proyeccion": 4,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [
-        "Haba Tonka",
-        "Cedro",
-        "Ámbar Gris",
-        "Musgo"
-      ],
-      "salida": [
-        "Mango",
-        "Jengibre",
-        "Limón (Lima Ácida)",
-        "Ruibarbo"
-      ],
-      "corazon": [
-        "Jazmín",
-        "Violeta",
-        "Pimienta Rosa",
-        "Praliné"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997455/duoo70bzjeypvhid068s.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Tendencia ✨",
-    "season_badge": "Verano / Día",
-    "best_season": "todo-el-ano",
-    "best_moment": "versatil",
-    "tags": [
-      "Mango",
-      "Tropical",
-      "Jengibre",
-      "God of Fire",
-      "Exótico",
-      "Verano",
-      "Citas",
-      "Unisex",
-      "Ámbar"
-    ],
-    "accords": [
-      "Frutal",
-      "Cítrico",
-      "Tropical",
-      "Fresco Especiado",
-      "Ámbar",
-      "Amaderado"
-    ],
-    "price": 85,
-    "rating": 4.8,
-    "is_active": true,
-    "created_at": "2026-09-29T21:40:20.009+00:00",
-    "updated_at": "2026-09-30T01:52:51.602+00:00"
-  },
-  {
-    "id": "khamrah-waha",
-    "num": "17",
-    "name": "Khamrah Waha",
-    "brand": "Lattafa",
-    "page": null,
-    "category": "Gourmand Fresco",
-    "gender": "Unisex",
-    "description": "Una propuesta refrescante e innovadora dentro de la saga Khamrah que contrasta una vibrante salida de yuzu, bergamota y jengibre especiado con un corazón ozónico de pepino, sal de mar e iris. Su secado retiene el ADN cremoso y cálido característico de la línea gracias a la vainilla, el haba tonka y el moderno toque de Akigalawood y Ambrofix.",
-    "occasions": "Perfecto para días calurosos, salidas casuales, uso diario en clima templado o cálido, eventos al aire libre y ambientes informales o semi-formales donde se busquet un aroma marino, limpio y con una base dulce seductora.",
-    "votes": {
-      "dia": 2300,
-      "noche": 976,
-      "otoño": 3000,
-      "verano": 5800,
-      "reviews": [],
-      "sillage": "Moderada / Alta",
-      "invierno": 1120,
-      "longevity": "7 - 9 horas",
-      "primavera": 6200,
-      "inspired_by": "Khamrah + Le Beau + Le Beau Le Parfum",
-      "niche_house": "Jean Paul Gaultier",
-      "similar_ids": [],
-      "olfactory_profile": {
-        "dulzor": 3,
-        "duracion": 4,
-        "frescura": 4,
-        "intensidad": 4,
-        "proyeccion": 3,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [
-        "Vainilla",
-        "Haba tonka",
-        "Almizcle",
-        "Akigalawood",
-        "Ambrofix"
-      ],
-      "salida": [
-        "Bergamota",
-        "Yuzu",
-        "Enebro",
-        "Jengibre"
-      ],
-      "corazon": [
-        "Pepino",
-        "Sal de mar",
-        "Iris",
-        "Salvia"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997453/xs69ycbipyqrsssdho4l.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Nuevo ⚡",
-    "season_badge": "Verano / Día",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Khamrah Waha",
-      "Lattafa",
-      "Azul",
-      "Acuatico",
-      "Marino",
-      "Fresco",
-      "Vainilla",
-      "Verano",
-      "Versatil",
-      "Yuzu",
-      "Unisex",
-      "Nuevo"
-    ],
-    "accords": [
-      "Acuático",
-      "Ozónico",
-      "Cítrico",
-      "Fresco Especiado",
-      "Salado",
-      "Avainillado",
-      "Almizclado"
-    ],
-    "price": 80,
-    "rating": 4.6,
-    "is_active": true,
-    "created_at": "2026-09-29T21:58:56.704+00:00",
-    "updated_at": "2026-09-30T02:45:31.712+00:00"
-  },
-  {
-    "id": "yara-candy",
-    "num": "22",
-    "name": "Yara Candy",
-    "brand": "Lattafa",
-    "page": null,
-    "category": "Floral Frutal Gourmand",
-    "gender": "Femenino",
-    "description": "Una adictiva explosión de dulzura jugosa y coqueta que combina grosellas negras chispeantes y efervescencia de mandarina verde con un corazón chispeante de dulces de caramelo de fresa y gardenia. Su secado envuelve la piel en una estela cremosa de vainilla de Madagascar, almizcle blanco y un toque de ámbar cálido.",
-    "occasions": "Ideal para uso diario, salidas informales, citas románticas, reuniones con amigas y eventos donde quieras destacar por una presencia juvenil, alegre, ultra femenina y deliciosamente irresistible.",
-    "votes": {
-      "dia": 7200,
-      "noche": 2800,
-      "otoño": 6400,
-      "verano": 5800,
-      "reviews": [],
-      "sillage": "Moderada / Alta",
-      "invierno": 6450,
-      "longevity": "7 - 9 horas",
-      "primavera": 7000,
-      "inspired_by": "Kayali Eden Sparkling Lychee",
-      "niche_house": "Kayali (Nicho)",
-      "similar_ids": [
-        "yara-pink",
-        "honor-and-glory",
-        "tropical-vibe"
-      ],
-      "olfactory_profile": {
-        "dulzor": 5,
-        "duracion": 4,
-        "frescura": 3,
-        "intensidad": 4,
-        "proyeccion": 4,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [],
-      "salida": [
-        "Grosellas negras",
-        "Mandarina verde"
-      ],
-      "corazon": [
-        "Caramelo de fresa",
-        "Gardenia"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997456/dfywz56qmfwjjgyhffxv.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Tendencia ✨",
-    "season_badge": "Versátil / Todo el Año",
-    "best_season": "todo-el-ano",
-    "best_moment": "versatil",
-    "tags": [],
-    "accords": [
-      "Vainilla de Madagascar",
-      "Ámbar",
-      "Jarabe de fresa",
-      "Almizcle",
-      "Sándalo"
-    ],
-    "price": 65,
-    "rating": 4.9,
-    "is_active": true,
-    "created_at": "2026-10-06T21:31:55.033+00:00",
-    "updated_at": "2026-10-06T21:31:55.033+00:00"
-  },
-  {
-    "id": "asad-bourbon",
-    "num": "23",
-    "name": "Asad Bourbon",
-    "brand": "Lattafa",
-    "page": null,
-    "category": "Amaderada Gourmand / Especiada Cálida",
-    "gender": "Masculino",
-    "description": "Una interpretación oscura, magnética y opulenta que combina la fuerza especiada del Asad original con la calidez licorosa del whisky bourbon.",
-    "occasions": "Ideal para noches frías, eventos formales, citas románticas, salidas nocturnas y ocasiones donde se busque proyectar elegancia, sofisticación y un carácter masculino imponente.",
-    "votes": {
-      "dia": 197,
-      "noche": 920,
-      "otoño": 9500,
-      "verano": 800,
-      "reviews": [],
-      "sillage": "Alta / Intensa",
-      "invierno": 12500,
-      "longevity": "8 - 10 horas",
-      "primavera": 2000,
-      "inspired_by": "The Most Wanted",
-      "niche_house": "Azzaro",
-      "similar_ids": [
-        "khamrah",
-        "asad",
-        "khamrah-qahwa"
-      ],
-      "olfactory_profile": {
-        "dulzor": 4,
-        "duracion": 5,
-        "frescura": 1,
-        "intensidad": 5,
-        "proyeccion": 4,
-        "versatilidad": 3
-      }
-    },
-    "notes": {
-      "base": [
-        "Vainilla Bourbon",
-        "Ámbar",
-        "Vetiver"
-      ],
-      "salida": [
-        "Lavanda",
-        "Ciruela Mirabel",
-        "Pimienta rosa"
-      ],
-      "corazon": [
-        "CAcao",
-        "Nuez moscada",
-        "Davana"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997449/ezsrsgsxpuecbgqoswlt.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Top Ventas ✨",
-    "season_badge": "Invierno / Noches",
-    "best_season": "invierno",
-    "best_moment": "noche",
-    "tags": [
-      "Asad Bourbon",
-      "Whisky",
-      "Vainilla",
-      "Licoroso",
-      "Tabaco",
-      "Clima Frío",
-      "Noche",
-      "Elegante",
-      "Lattafa",
-      "Masculino"
-    ],
-    "accords": [
-      "Licoroso",
-      "Avainillado",
-      "Cálido Especiado",
-      "Amaderado",
-      "Acanelado",
-      "Chocolate"
-    ],
-    "price": 65,
-    "rating": 5,
-    "is_active": true,
-    "created_at": "2026-10-06T21:44:07.168+00:00",
-    "updated_at": "2026-10-06T21:44:07.168+00:00"
-  },
-  {
-    "id": "atlantis-extrait",
-    "num": "20",
-    "name": "Atlantis Extrait",
-    "brand": "French Avenue (Fragrance World)",
-    "page": null,
-    "category": "Cítrica Aromática / Frutal",
-    "gender": "Unisex",
-    "description": "Una adictiva y jugosa experiencia tropical que abre con un radiante estallido de naranja, mandarina y limón. Su corazón se sumerge en un refrescante acorde de sandía jugosa y coco cremoso, para evolucionar hacia un secado reconfortante y sensual de cacao, ámbar gris y maderas ambaradas.",
-    "occasions": "Excelente para días calurosos, vacaciones de verano, piscina, playa, salidas casuales y eventos al aire libre.",
-    "votes": {
-      "dia": 15200,
-      "noche": 5100,
-      "otoño": 3000,
-      "verano": 16800,
-      "reviews": [],
-      "sillage": "Alta / Intensa",
-      "invierno": 1200,
-      "longevity": "8 - 10 horas",
-      "primavera": 11500,
-      "inspired_by": "Pacific Chill",
-      "niche_house": "Louis Vuitton",
-      "similar_ids": [
-        "tropical-vibe"
-      ],
-      "olfactory_profile": {
-        "dulzor": 4,
-        "duracion": 4,
-        "frescura": 4,
-        "intensidad": 4,
-        "proyeccion": 4,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [
-        "Cacao",
-        "Ámbar gris",
-        "Amberwood"
-      ],
-      "salida": [
-        "Naranja",
-        "Mandarina",
-        "Limón (lima ácida)"
-      ],
-      "corazon": [
-        "Sandía",
-        "Coco"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997450/kz5v6rv4lpt7cbhqxh2o.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Nuevo ⚡",
-    "season_badge": "Verano / Día",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Atlantis Extrait",
-      "French Avenue",
-      "Wavechild",
-      "Sandía",
-      "Coco",
-      "Cacao",
-      "Cítrico",
-      "Tropical",
-      "Verano",
-      "Playa",
-      "Unisex"
-    ],
-    "accords": [
-      "Cítrico",
-      "Frutal",
-      "Dulce",
-      "Acuático",
-      "Tropical",
-      "Cacao",
-      "Ambarado"
-    ],
-    "price": 85,
-    "rating": 4.5,
-    "is_active": true,
-    "created_at": "2026-10-06T21:01:57.494+00:00",
-    "updated_at": "2026-10-07T04:19:54.221+00:00"
-  },
-  {
-    "id": "stallion-53",
-    "num": "24",
-    "name": "Stallion 53",
-    "brand": "Emper Perfumes",
-    "page": null,
-    "category": "Amaderada Aromática / Cuero Especiado",
-    "gender": "Masculino",
-    "description": "Una composición amaderada sofisticada y magnética que evoca la libertad del espíritu libre y el lujo contemporáneo. Abre con matices ahumados de cardamomo y violeta, dando paso a un majestuoso cuerpo de sándalo australiano y papiro, envuelto en una base cálida de cuero, ámbar y cedro seco.",
-    "occasions": "Perfecto para uso diario elegante, ambientes de oficina, reuniones creativas, salidas de tarde-noche y eventos donde quieras proyectar una personalidad distintiva, vanguardista y segura.",
-    "votes": {
-      "dia": 7200,
-      "noche": 6800,
-      "otoño": 6400,
-      "verano": 5800,
-      "reviews": [],
-      "sillage": "Moderada / Alta",
-      "invierno": 6500,
-      "longevity": "7 - 9 horas",
-      "primavera": 7000,
-      "inspired_by": "Santal 33",
-      "niche_house": "Le Labo (Nicho)",
-      "similar_ids": [],
-      "olfactory_profile": {
-        "dulzor": 1,
-        "duracion": 4,
-        "frescura": 3,
-        "intensidad": 4,
-        "proyeccion": 4,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [
-        "Sándalo",
-        "Papiro de Egipto",
-        "Cuero",
-        "Cedro de Virginia"
-      ],
-      "salida": [
-        "Cardamomo",
-        "Violeta"
-      ],
-      "corazon": [
-        "Ámbar",
-        "Iris"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997453/ubcvhn8tfcr4cqbdkokz.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Imponente 🔥",
-    "season_badge": "Versátil / Todo el Año",
-    "best_season": "todo-el-ano",
-    "best_moment": "versatil",
-    "tags": [
-      "Stallion 53",
-      "Emper",
-      "Santal 33 Dupe",
-      "Sándalo",
-      "Cuero",
-      "Amaderado",
-      "Niche Style",
-      "Unisex",
-      "Elegante",
-      "Minimalista"
-    ],
-    "accords": [
-      "Powdery (Apolvado)",
-      "Cuero",
-      "Warm Spicy (Cálido Especiado)",
-      "Balsámico",
-      "Verde / Herbal"
-    ],
-    "price": 65,
-    "rating": 4.6,
-    "is_active": true,
-    "created_at": "2026-10-06T21:54:58.563+00:00",
-    "updated_at": "2026-10-06T21:54:58.563+00:00"
-  },
-  {
-    "id": "aquatica",
-    "num": "21",
-    "name": "Aquatica",
-    "brand": "Rayhaan",
-    "page": null,
-    "category": "Aromática Acuática Tropical",
-    "gender": "Masculino",
-    "description": "Un deslumbrante cóctel tropical que transporta de inmediato a un paraíso caribeño. Su salida estalla con lima chispeante y bergamota refrescada por un toque cremoso de leche de coco, evolucionando hacia un corazón dulce de caña de azúcar y flores exóticas, asentándose sobre un seductor fondo de ron dorado y almizcle.",
-    "occasions": "Perfecto para días calurosos de verano, escapadas a la playa, eventos al aire libre, vacaciones tropicales y un uso casual elegante durante el día donde busques transmitir vitalidad, pulcritud y sofisticación fresca.",
-    "votes": {
-      "dia": 750,
-      "noche": 250,
-      "otoño": 2000,
-      "verano": 13900,
-      "reviews": [],
-      "sillage": "Moderada / Alta",
-      "invierno": 1200,
-      "longevity": "6 - 8 horas",
-      "primavera": 7500,
-      "inspired_by": "Virgin Island Water",
-      "niche_house": "Creed (Nicho)",
-      "similar_ids": [
-        "tropical-vibe",
-        "vulcan-feu",
-        "hawas-ice",
-        "nitro-red"
-      ],
-      "olfactory_profile": {
-        "dulzor": 3,
-        "duracion": 3,
-        "frescura": 5,
-        "intensidad": 4,
-        "proyeccion": 4,
-        "versatilidad": 3
-      }
-    },
-    "notes": {
-      "base": [
-        "Ron",
-        "Haba tonka",
-        "Almizcle",
-        "Pachulí"
-      ],
-      "salida": [
-        "Lima (limón verde)",
-        "Leche de coco",
-        "Bergamota",
-        "Mandarina"
-      ],
-      "corazon": [
-        "Caña de azúcar",
-        "Jazmín",
-        "Hibisco (flor de Jamaica)",
-        "Gardenia"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997448/qkdumryjfuyxnkjffx9w.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Tendencia ✨",
-    "season_badge": "Verano / Día",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Cítrico",
-      "Coco",
-      "Ron",
-      "Verano",
-      "Playa",
-      "Vacaciones",
-      "Fresco",
-      "Creed Dupe",
-      "Unisex",
-      "Clima Cálido"
-    ],
-    "accords": [
-      "Cítrico",
-      "Dulce",
-      "Coco",
-      "Dulce Gourmand",
-      "Fresco Especiado",
-      "Acuático Tropical",
-      "Aromatico"
-    ],
-    "price": 75,
-    "rating": 4.8,
-    "is_active": true,
-    "created_at": "2026-10-06T21:22:18.841+00:00",
-    "updated_at": "2026-10-07T03:32:23.67+00:00"
-  },
-  {
-    "id": "tropical-vibe",
-    "num": "19",
-    "name": "Tropical Vibe",
-    "brand": "Rayhaan",
-    "page": null,
-    "category": "Cítrica Aromática / Frutal",
-    "gender": "Unisex",
-    "description": "Un vibrante coctel tropical que despierta los sentidos con un estallido energizante de mango jugoso, piña, ron y cítricos radiantes.",
-    "occasions": "Ideal para días calurosos de verano, vacaciones, playa, piscina, salidas casuales y actividades al aire libre o de uso diario en climas tropicales. Combina a la perfección con vestimenta casual, fresca y de lino.",
-    "votes": {
-      "dia": 550,
-      "noche": 183,
-      "otoño": 110,
-      "verano": 633,
-      "reviews": [],
-      "sillage": "Moderada / Alta",
-      "invierno": 48,
-      "longevity": "6 - 8 horas",
-      "primavera": 461,
-      "inspired_by": "Summer Hummer",
-      "niche_house": "Lorenzo Pazzaglia",
-      "similar_ids": [],
-      "olfactory_profile": {
-        "dulzor": 3,
-        "duracion": 3,
-        "frescura": 5,
-        "intensidad": 3,
-        "proyeccion": 3,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [
-        "Almizcle",
-        "Ámbar",
-        "Sándalo",
-        "Vétiver"
-      ],
-      "salida": [
-        "Mango",
-        "Piña",
-        "Bergamota",
-        "Ron"
-      ],
-      "corazon": [
-        "Coco",
-        "Flores blancas",
-        "Notas marinas"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997454/udyznodcjl6j5kwsrzzo.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Tendencia ✨",
-    "season_badge": "Verano / Día",
-    "best_season": "verano",
-    "best_moment": "dia",
-    "tags": [
-      "Rayhaan",
-      "Tropical Vibe",
-      "Pacific Chill",
-      "Louis Vuitton",
-      "Mango",
-      "Menta",
-      "Fresco",
-      "Verano",
-      "Playa",
-      "Unisex",
-      "Cítrico",
-      "Frutal"
-    ],
-    "accords": [
-      "Aomático",
-      "Frutal",
-      "Cítrico",
-      "Fresco Especiado",
-      "Verde",
-      "Dulce",
-      "Tropical"
-    ],
-    "price": 75,
-    "rating": 4.5,
-    "is_active": true,
-    "created_at": "2026-09-29T22:09:02.285+00:00",
-    "updated_at": "2026-10-07T03:40:15.123+00:00"
-  },
-  {
-    "id": "bade-e-al-oud-amethyst",
-    "num": "26",
-    "name": "Bade'e Al Oud Amethyst",
-    "brand": "Lattafa",
-    "page": null,
-    "category": "Oriental Vainilla",
-    "gender": "Unisex",
-    "description": "Una creación opulenta y magnética que fusiona la sofisticación de las rosas búlgaras y turcas con un toque de pimienta rosa, sobre un fondo cálido y sensual de madera de oud, ámbar y vainilla. Es una fragancia envolvente, misteriosa y profundamente seductora.",
-    "occasions": "Ideal para eventos nocturnos, cenas formales, citas especiales o días fríos donde se busque destacar con una presencia refinada y memorable. Marida a la perfección con vestimenta elegante o semiformal.",
-    "votes": {
-      "dia": 2800,
-      "noche": 11800,
-      "otoño": 9500,
-      "verano": 800,
-      "reviews": [],
-      "sillage": "Alta / Intensa",
-      "invierno": 12500,
-      "longevity": "8 - 12 horas",
-      "primavera": 2000,
-      "inspired_by": "Atomic Rose",
-      "niche_house": "Initio Parfums Privés",
-      "similar_ids": [
-        "yara-candy"
-      ],
-      "olfactory_profile": {
-        "dulzor": 4,
-        "duracion": 4,
-        "frescura": 2,
-        "intensidad": 5,
-        "proyeccion": 4,
-        "versatilidad": 5
-      }
-    },
-    "notes": {
-      "base": [
-        "Madera de Oud",
-        "Ámbar",
-        "Vainilla"
-      ],
-      "salida": [
-        "Pimienta rosa",
-        "Bergamota"
-      ],
-      "corazon": [
-        "Rosa de Bulgaria",
-        "Rosa turca",
-        "Jazmín"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997451/oq2dmoufgzbtgt6ah3mo.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "Sensual 🔥",
-    "season_badge": "Invierno / Noches",
-    "best_season": "invierno",
-    "best_moment": "noche",
-    "tags": [
-      "Rosa",
-      "Oud",
-      "Ámbar",
-      "Dulce",
-      "Nocturno",
-      "Clima Frío",
-      "Elegante",
-      "Seductor",
-      "Arab Perfume",
-      "Unisex"
-    ],
-    "accords": [
-      "Rosa",
-      "Oud",
-      "Warm Spicy",
-      "Ámbar",
-      "Avainillado",
-      "Cítrico"
-    ],
-    "price": 60,
-    "rating": 4.8,
-    "is_active": true,
-    "created_at": "2026-10-07T04:17:18.998+00:00",
-    "updated_at": "2026-10-07T04:17:18.999+00:00"
-  },
-  {
-    "id": "hawas-black",
-    "num": "25",
-    "name": "Hawas Black",
-    "brand": "Rasasi",
-    "page": null,
-    "category": "Aromática Frutal",
-    "gender": "Masculino",
-    "description": "Una interpretación oscura, poderosa y magnética de la legendaria firma frutal-amaderada. Su apertura estalla con piña jugosa, bergamota y grosella negra, abriéndose paso hacia un corazón sofisticado de pachulí, jazmín y especias, para asentarse sobre una imponente base de musgo de roble, madera de abedul ahumada y ámbar gris.",
-    "occasions": "Excelente para eventos de gala, reuniones ejecutivas, noches de fiesta, citas importantes o cualquier contexto donde se busque proyectar liderazgo, elegancia alfa y dejar una huella olfativa imborrable.",
-    "votes": {
-      "dia": 7200,
-      "noche": 6800,
-      "otoño": 2400,
-      "verano": 2200,
-      "reviews": [],
-      "sillage": "Alta / Intensa",
-      "invierno": 2100,
-      "longevity": "9 - 12 horas",
-      "primavera": 2400,
-      "inspired_by": "Creed Aventus Absolu",
-      "niche_house": "Creed (Nicho)",
-      "similar_ids": [
-        "club-de-nuit-intense-man"
-      ],
-      "olfactory_profile": {
-        "dulzor": 2,
-        "duracion": 5,
-        "frescura": 4,
-        "intensidad": 5,
-        "proyeccion": 5,
-        "versatilidad": 4
-      }
-    },
-    "notes": {
-      "base": [
-        "Musgo de roble",
-        "Ámbar gris",
-        "Almizcle",
-        "Notas amaderadas",
-        "Vetiver"
-      ],
-      "salida": [
-        "Piña",
-        "Bergamota",
-        "Grosellas negras",
-        "Toronja"
-      ],
-      "corazon": [
-        "Pachulí",
-        "Jazmín",
-        "Pimienta rosa",
-        "Madera de abedul"
-      ]
-    },
-    "banner_page": null,
-    "image": "https://res.cloudinary.com/notdzlmv/image/upload/v1791997452/klzntm7mwtqk28iiqnfz.jpg",
-    "page_image": null,
-    "banner_image": null,
-    "bottle_side": "LEFT",
-    "badge": "BEstial Mode⚡",
-    "season_badge": "Versátil / Todo el Año",
-    "best_season": "todo-el-ano",
-    "best_moment": "versatil",
-    "tags": [
-      "Hawas Black",
-      "Rasasi",
-      "Creed Aventus",
-      "Aventus Absolu",
-      "Piña Ahumada",
-      "Bestial",
-      "Masculino",
-      "Lujo",
-      "Elegante",
-      "Nocturno"
-    ],
-    "accords": [
-      "Afrutado",
-      "Amaderado",
-      "Cítrico",
-      "Ahumado",
-      "Cuero / Musgo",
-      "Fresco Especiado",
-      "Ámbar"
-    ],
-    "price": 75,
-    "rating": 4.7,
-    "is_active": true,
-    "created_at": "2026-10-07T04:05:49.558+00:00",
-    "updated_at": "2026-10-07T18:59:42.355+00:00"
   }
 ]
