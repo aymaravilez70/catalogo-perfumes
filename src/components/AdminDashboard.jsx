@@ -499,6 +499,10 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         },
         tags: (formData.tags || '').split(',').map(s => s.trim()).filter(Boolean),
         accords: (formData.accords || '').split(',').map(s => s.trim()).filter(Boolean),
+        inspired_by: formData.inspired_by?.trim() || '',
+        niche_house: formData.niche_house?.trim() || '',
+        longevity: formData.longevity?.trim() || '8 - 10 horas',
+        sillage: formData.sillage?.trim() || 'Alta / Pesada',
         is_active: formData.is_active,
         created_at: isEditing 
           ? (products.find(p => p.id === currentEditId)?.created_at || new Date().toISOString())
@@ -526,7 +530,13 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
 
       // Try syncing to Supabase if available
       try {
-        await supabase.from('perfumes').upsert(payload);
+        const { error: supaErr } = await supabase.from('perfumes').upsert(payload);
+        if (supaErr) {
+          console.error('Supabase upsert error:', supaErr);
+          showToast('Error Supabase: ' + supaErr.message, 'error');
+        } else {
+          console.log('✅ Supabase sincronizado con éxito');
+        }
       } catch (supaErr) {
         console.warn('Supabase offline/restricted:', supaErr);
       }
