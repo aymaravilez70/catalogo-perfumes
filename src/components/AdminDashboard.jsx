@@ -13,6 +13,29 @@ import {
 
 const DEFAULT_PIN = 'admin123';
 
+const CLOUDINARY_CLOUD_NAME = 'notdzlmv';
+const CLOUDINARY_UPLOAD_PRESET = 'joufab';
+const CLOUDINARY_API_KEY = '379157839212515';
+const CLOUDINARY_CATALOG_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/raw/upload/joufab_catalog.json`;
+
+export const syncCatalogToCloudinary = async (fullList) => {
+  try {
+    const blob = new Blob([JSON.stringify(fullList)], { type: 'application/json' });
+    const fd = new FormData();
+    fd.append('file', blob);
+    fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    fd.append('api_key', CLOUDINARY_API_KEY);
+    fd.append('public_id', 'joufab_catalog.json');
+    await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`, {
+      method: 'POST',
+      body: fd
+    });
+    console.log('✅ Catálogo sincronizado en la nube global Cloudinary');
+  } catch (err) {
+    console.warn('Error sincronizando catálogo a Cloudinary:', err);
+  }
+};
+
 export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   // Auth state (safeguarded for Safari Private Mode)
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -108,6 +131,20 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   // Fetch from Supabase
   const loadData = async () => {
     setLoading(true);
+    try {
+      const cloudRes = await fetch(`${CLOUDINARY_CATALOG_URL}?t=${Date.now()}`);
+      if (cloudRes.ok) {
+        const cloudData = await cloudRes.json();
+        if (Array.isArray(cloudData) && cloudData.length > 0) {
+          setProducts(cloudData);
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (cloudErr) {
+      console.warn('Cloudinary catalog fetch failed, checking local:', cloudErr);
+    }
+
     try {
       const { data, error } = await supabase
         .from('perfumes')
@@ -377,31 +414,31 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     setActiveTab('create');
   };
 
-  // Upload image to Supabase bucket
+  // Upload image to Cloudinary CDN
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploadingImage(true);
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `perfume_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
-      const filePath = `products/${fileName}`;
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      fd.append('api_key', CLOUDINARY_API_KEY);
 
-      const { error: uploadError } = await supabase.storage
-        .from('perfume-images')
-        .upload(filePath, file, { cacheControl: '3600', upsert: true });
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: 'POST',
+        body: fd
+      });
+      const data = await res.json();
+      if (!res.ok || !data.secure_url) {
+        throw new Error(data.error?.message || 'Error al subir a Cloudinary');
+      }
 
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('perfume-images')
-        .getPublicUrl(filePath);
-
-      setFormData(prev => ({ ...prev, image: publicUrl }));
-      showToast('¡Imagen subida correctamente!');
+      setFormData(prev => ({ ...prev, image: data.secure_url }));
+      showToast('¡Foto subida a la nube exitosamente!');
     } catch (err) {
-      console.warn('Supabase Storage restringido, usando lectura directa:', err);
+      console.warn('Error subiendo a Cloudinary, usando respaldo:', err);
       try {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -494,6 +531,13 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         console.warn('LocalStorage error:', e);
       }
 
+      // Sync globally to Cloudinary
+      const currentMap = new Map();
+      products.forEach(p => currentMap.set(p.id, p));
+      currentMap.set(payload.id, payload);
+      const fullUpdatedList = Array.from(currentMap.values());
+      syncCatalogToCloudinary(fullUpdatedList);
+
       // Try syncing to Supabase if available
       try {
         await supabase.from('perfumes').upsert(payload);
@@ -501,7 +545,7 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         console.warn('Supabase offline/restricted:', supaErr);
       }
 
-      showToast(isEditing ? '¡Fragancia actualizada!' : '¡Nueva fragancia añadida!');
+      showToast(isEditing ? '¡Fragancia actualizada y sincronizada en la nube!' : '¡Nueva fragancia añadida y sincronizada!');
       setActiveTab('inventory');
       loadData();
       if (onDataChanged) onDataChanged();
@@ -536,8 +580,10 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         }
       } catch {}
 
-      // 3. Immediately update UI state
-      setProducts(prev => prev.filter(p => p.id !== id));
+      // 3. Immediately update UI state & sync to Cloudinary
+      const remainingList = products.filter(p => p.id !== id);
+      setProducts(remainingList);
+      syncCatalogToCloudinary(remainingList);
 
       // 4. Also try Supabase if connected
       try {
@@ -561,6 +607,10 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
         statusMap[product.id] = newStatus;
         localStorage.setItem('joufab_status_overrides', JSON.stringify(statusMap));
       } catch {}
+
+      const toggledList = products.map(p => p.id === product.id ? { ...p, is_active: newStatus } : p);
+      setProducts(toggledList);
+      syncCatalogToCloudinary(toggledList);
 
       try {
         await supabase
