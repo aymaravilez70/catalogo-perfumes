@@ -177,23 +177,9 @@ export default function App() {
     }
   };
 
-  // Fetch perfumes from Cloudinary CDN, Supabase, or fallback to local
+  // Fetch perfumes from Supabase or fallback to local
   const loadPerfumes = async () => {
     try {
-      // 1. Fetch real-time shared catalog from Cloudinary CDN
-      try {
-        const cloudRes = await fetch(`https://res.cloudinary.com/notdzlmv/raw/upload/joufab_catalog.json?t=${Date.now()}`);
-        if (cloudRes.ok) {
-          const cloudData = await cloudRes.json();
-          if (Array.isArray(cloudData) && cloudData.length > 0) {
-            setPerfumes(cloudData.filter(p => p.is_active !== false));
-            return;
-          }
-        }
-      } catch (cloudErr) {
-        console.warn('Cloudinary CDN fetch error, falling back:', cloudErr);
-      }
-
       const { data, error } = await supabase
         .from('perfumes')
         .select('*')

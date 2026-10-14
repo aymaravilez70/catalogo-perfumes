@@ -132,20 +132,6 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   const loadData = async () => {
     setLoading(true);
     try {
-      const cloudRes = await fetch(`${CLOUDINARY_CATALOG_URL}?t=${Date.now()}`);
-      if (cloudRes.ok) {
-        const cloudData = await cloudRes.json();
-        if (Array.isArray(cloudData) && cloudData.length > 0) {
-          setProducts(cloudData);
-          setLoading(false);
-          return;
-        }
-      }
-    } catch (cloudErr) {
-      console.warn('Cloudinary catalog fetch failed, checking local:', cloudErr);
-    }
-
-    try {
       const { data, error } = await supabase
         .from('perfumes')
         .select('*')
