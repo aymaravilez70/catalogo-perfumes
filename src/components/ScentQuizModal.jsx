@@ -25,8 +25,22 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-// Pre-crafted sensory justifications for each fragrance
+// Pre-crafted sensory justifications for each fragrance (covering all catalog fragrances)
 const PERFUME_JUSTIFICATIONS = {
+  // Las 11 nuevas fragancias en los primeros lugares
+  'club-de-nuit-intense-man': 'La legendaria "Bestia Negra": cítricos chispeantes de limón y piña con secado ahumado de abedul, cuero y almizcle; una máquina arrolladora de cumplidos para destacar con presencia dominante.',
+  'vulcan-feu': 'Inspirado en la alta perfumería de nicho: adictiva apertura de mango jugoso, jengibre y bayas sobre un fondo cálido de ámbar; sensual, vibrante y con magnetismo instantáneo.',
+  'khamrah-waha': 'Fusión sublime de la saga Khamrah: conserva el fondo dulce y cálido pero enriquecido con bergamota fresca, coco y toques acuáticos; ideal para proyectar calidez sin saturar.',
+  'yara-candy': 'Adictiva explosión femenina de caramelos de fresa, grosella negra confitada y vainilla cremosa; ultra coqueto, alegre y delicioso para citas o diario.',
+  'asad-bourbon': 'Evolución refinada con licor de bourbon, café tostado, cacao dulce y maderas especiadas; ideal para noches frescas, citas y hombres de porte distinguido.',
+  'atlantis-extrait': 'Inspirado en la Riviera: mandarina brillante, menta fresca, albahaca y notas marinas cristalinas; la definición de pulcritud, estatus y brisa marina.',
+  'stallion-53': 'Inspirado en el icónico Santal 33: sándalo ahumado, cardamomo noble, violeta e iris con fondo de cuero; sofisticación minimalista y presencia artística de nicho.',
+  'aquatica': 'Brisa marina exótica con leche de coco, lima ácida y azúcar de caña; una escapada tropical perfecta para clima cálido, sol y momentos relajados.',
+  'tropical-vibe': 'Festín frutal veraniego de maracuyá, piña dorada y almizcle blanco; alegre, radiante y refrescante para proyectar dinamismo juvenil.',
+  'bade-e-al-oud-amethyst': 'Majestuosa rosa oscura aterciopelada combinada con pimienta rosa, jazmín y oud avainillado; sensual, opulento y con fijación extrema para noches inolvidables.',
+  'hawas-black': 'Versión nocturna y misteriosa de Hawas: cítricos oscuros con corazón aromático especiado y base profunda de musgo y maderas; seducción pura de alto rendimiento.',
+
+  // Las 15 fragancias clásicas
   'khamrah': 'Recomendado por su legendario perfil cálido de canela, dátiles dulces y praliné con estela potente, perfecto para citas nocturnas y clima frío.',
   'khamrah-qahwa': 'Recomendado por su toque de café tostado, cardamomo y praliné gourmand; una opción más compleja, acogedora y envolvente para destacar de noche.',
   'fakhar-black': 'El comodín profesional definitivo: notas de manzana crujiente, lavanda y bergamota que proyectan una limpieza pulcra y elegancia moderna para oficina y diario.',
@@ -42,6 +56,22 @@ const PERFUME_JUSTIFICATIONS = {
   'yara-pink': 'El favorito femenino por excelencia: notas cremosas de orquídea, heliotropo, frutas tropicales y vainilla suave; un obsequio tierno, dulce e inolvidable.',
   'eclaire': 'Una delicia gourmand adictiva de leche tibia, caramelo fundido y vainilla dulce con miel; suave, reconfortante y de encanto irresistible.',
   'nitro-red': 'Una bomba frutal acuática de sandía cristalizada, lavanda y maderas; explosivo, juvenil y con proyección masiva para llamar la atención.'
+};
+
+// Generador de justificación sensorial dinámica para fragancias nuevas creadas en el panel
+const getDynamicJustification = (p) => {
+  if (PERFUME_JUSTIFICATIONS[p.id]) {
+    return PERFUME_JUSTIFICATIONS[p.id];
+  }
+  const topAccords = Array.isArray(p.accords) && p.accords.length > 0 ? p.accords.slice(0, 3).join(', ') : '';
+  const topNotes = p.notes?.salida?.length ? p.notes.salida.slice(0, 2).join(' y ') : '';
+  if (topAccords && topNotes) {
+    return `Recomendado por sus distinguidos acordes de ${topAccords} y salida de ${topNotes}; una opción de alta fijación (${p.longevity || '8-10 horas'}) que encaja con tus preferencias.`;
+  }
+  if (p.description) {
+    return p.description.length > 180 ? p.description.substring(0, 177) + '...' : p.description;
+  }
+  return 'Fragancia de alta gama equilibrada y con excelente fijación para tu perfil seleccionado.';
 };
 
 export default function ScentQuizModal({ 
@@ -211,129 +241,145 @@ export default function ScentQuizModal({
   };
 
   const calculateResults = (finalAnswers) => {
+    // Helper to evaluate text properties across the entire perfume profile
+    const getSearchable = (p) => {
+      const notesText = [
+        ...(p.notes?.salida || []),
+        ...(p.notes?.corazon || []),
+        ...(p.notes?.base || [])
+      ].join(' ');
+      const accordsText = (p.accords || []).join(' ');
+      const tagsText = (p.tags || []).join(' ');
+      return `${p.name} ${p.brand || ''} ${p.category || ''} ${p.description || ''} ${p.occasions || ''} ${p.inspired_by || ''} ${accordsText} ${notesText} ${tagsText}`.toLowerCase();
+    };
+
+    const hasAny = (text, keywords) => keywords.some(k => text.includes(k.toLowerCase()));
+
     const scored = perfumes.map((p) => {
       let score = 50; // base score
       let matchTag = 'Acierto Garantizado';
+      const text = getSearchable(p);
+      const gender = (p.gender || '').toLowerCase();
+      const isMan = gender.includes('hombre') || gender.includes('masculino');
+      const isWoman = gender.includes('mujer') || gender.includes('femenino');
+      const isUnisex = gender.includes('unisex');
 
-      // --- SCORING: MODE QUICK ---
+      // --- SCORING: MODE QUICK (3 Preguntas) ---
       if (activeMode === 'quick') {
         if (finalAnswers.occasion === 'citas') {
-          if (['khamrah-qahwa', 'khamrah', 'honor-and-glory', '9-pm', 'eclaire'].includes(p.id)) score += 35;
+          if (hasAny(text, ['cita', 'romántic', 'seducc', 'sensual', 'íntim', 'envolvente', 'pareja']) || p.best_moment === 'noche' || ['khamrah-qahwa', 'khamrah', 'honor-and-glory', '9-pm', 'eclaire', 'yara-candy', 'vulcan-feu', 'asad-bourbon'].includes(p.id)) score += 35;
           if (p.votes && p.votes.noche > 5000) score += 15;
           matchTag = 'Ideal para Citas & Romance';
         } else if (finalAnswers.occasion === 'oficina') {
-          if (['fakhar-black', 'club-de-nuit-milestone', '9-am-dive', 'odyssey-homme', 'yara-pink'].includes(p.id)) score += 35;
+          if (hasAny(text, ['oficina', 'trabajo', 'formal', 'pulcr', 'limpi', 'elegante', 'diario', 'comodín']) || p.best_moment === 'dia' || p.best_moment === 'versatil' || ['fakhar-black', 'club-de-nuit-milestone', '9-am-dive', 'odyssey-homme', 'yara-pink', 'atlantis-extrait', 'stallion-53'].includes(p.id)) score += 35;
           if (p.votes && p.votes.dia > 4000) score += 15;
           matchTag = 'Elegancia para Oficina & Diario';
         } else if (finalAnswers.occasion === 'fiesta') {
-          if (['9-pm', 'asad', 'khamrah', 'nitro-red', 'honor-and-glory'].includes(p.id)) score += 35;
+          if (hasAny(text, ['fiesta', 'noche', 'club', 'potente', 'imponente', 'estela', 'cumplido', 'fijación', 'bestia']) || (p.olfactory_profile?.proyeccion >= 4 && p.best_moment === 'noche') || ['9-pm', 'asad', 'khamrah', 'nitro-red', 'honor-and-glory', 'club-de-nuit-intense-man', 'vulcan-feu', 'hawas-black'].includes(p.id)) score += 35;
           matchTag = 'Estela Potente para Fiestas';
         } else if (finalAnswers.occasion === 'casual') {
-          if (['hawas-ice', '9-am-dive', 'club-de-nuit-milestone', 'nitro-red'].includes(p.id)) score += 35;
+          if (hasAny(text, ['casual', 'verano', 'aire libre', 'fresco', 'acuátic', 'playa', 'sol', 'todoterreno', 'versátil']) || p.best_season === 'verano' || p.best_season === 'todo-el-ano' || ['hawas-ice', '9-am-dive', 'club-de-nuit-milestone', 'nitro-red', 'aquatica', 'tropical-vibe', 'atlantis-extrait'].includes(p.id)) score += 35;
           matchTag = 'Fresco & Todoterreno';
         }
 
-        if (finalAnswers.vibe === 'gourmand' && ['khamrah-qahwa', 'khamrah', 'honor-and-glory', 'eclaire'].includes(p.id)) score += 35;
-        if (finalAnswers.vibe === 'acuatico' && ['hawas-ice', 'club-de-nuit-milestone', '9-am-dive', 'nitro-red'].includes(p.id)) score += 35;
-        if (finalAnswers.vibe === 'citrico' && ['hawas-kobra', 'odyssey-mandarin-sky', 'fakhar-black', '9-am-dive'].includes(p.id)) score += 35;
-        if (finalAnswers.vibe === 'especiado' && ['asad', 'hawas-kobra', 'khamrah-qahwa', 'odyssey-homme'].includes(p.id)) score += 35;
-        if (finalAnswers.vibe === 'frutal' && ['nitro-red', 'honor-and-glory', 'hawas-ice', 'yara-pink'].includes(p.id)) score += 35;
+        // Vibe
+        if (finalAnswers.vibe === 'gourmand' && (hasAny(text, ['gourmand', 'dulce', 'café', 'canela', 'vainilla', 'caramelo', 'praliné', 'chocolate', 'miel', 'tonka', 'cacao']) || ['khamrah-qahwa', 'khamrah', 'honor-and-glory', 'eclaire', 'yara-candy', 'asad-bourbon', 'khamrah-waha'].includes(p.id))) score += 35;
+        if (finalAnswers.vibe === 'acuatico' && (hasAny(text, ['acuátic', 'marino', 'marina', 'menta', 'gélid', 'brisa', 'agua', 'ozón']) || ['hawas-ice', 'club-de-nuit-milestone', '9-am-dive', 'nitro-red', 'aquatica', 'atlantis-extrait'].includes(p.id))) score += 35;
+        if (finalAnswers.vibe === 'citrico' && (hasAny(text, ['cítric', 'bergamota', 'mandarina', 'limón', 'pomelo', 'naranja', 'lima', 'neroli']) || ['hawas-kobra', 'odyssey-mandarin-sky', 'fakhar-black', '9-am-dive', 'club-de-nuit-intense-man', 'atlantis-extrait'].includes(p.id))) score += 35;
+        if (finalAnswers.vibe === 'especiado' && (hasAny(text, ['especiad', 'tabaco', 'ámbar', 'pimienta', 'cuero', 'incienso', 'cardamomo', 'oud', 'madera', 'sándalo']) || ['asad', 'hawas-kobra', 'khamrah-qahwa', 'odyssey-homme', 'stallion-53', 'bade-e-al-oud-amethyst', 'asad-bourbon', 'hawas-black'].includes(p.id))) score += 35;
+        if (finalAnswers.vibe === 'frutal' && (hasAny(text, ['frutal', 'fruta', 'sandía', 'piña', 'manzana', 'mango', 'maracuyá', 'grosella', 'fresa', 'coco', 'litchi']) || ['nitro-red', 'honor-and-glory', 'hawas-ice', 'yara-pink', 'yara-candy', 'vulcan-feu', 'tropical-vibe', 'aquatica'].includes(p.id))) score += 35;
 
-        if (finalAnswers.climate === 'frio' && p.votes && p.votes.invierno > 6000) score += 20;
-        if (finalAnswers.climate === 'calor' && p.votes && p.votes.verano > 2000) score += 20;
-        if (finalAnswers.climate === 'versatil' && ['fakhar-black', '9-am-dive', 'odyssey-mandarin-sky', 'nitro-red'].includes(p.id)) score += 20;
+        // Climate
+        if (finalAnswers.climate === 'frio' && (p.best_season === 'invierno' || p.best_season === 'otono' || (p.votes && p.votes.invierno > 5000) || hasAny(text, ['invierno', 'frío', 'cálido']))) score += 20;
+        if (finalAnswers.climate === 'calor' && (p.best_season === 'verano' || (p.votes && p.votes.verano > 2000) || hasAny(text, ['verano', 'calor', 'costa', 'sol']))) score += 20;
+        if (finalAnswers.climate === 'versatil' && (p.best_season === 'todo-el-ano' || hasAny(p.season_badge || '', ['versátil', 'todo el año']) || (p.olfactory_profile?.versatilidad >= 4))) score += 20;
       }
 
-      // --- SCORING: MODE ENCUENTRA TU PERFUME (ADVISOR) ---
+      // --- SCORING: MODE ENCUENTRA TU PERFUME (ADVISOR - 5 Preguntas) ---
       else if (activeMode === 'advisor') {
         // Target / Scent Accord
         if (finalAnswers.scent === 'gourmand_sweet') {
-          if (['khamrah-qahwa', 'khamrah', 'eclaire', 'honor-and-glory'].includes(p.id)) score += 35;
-          if (p.accords && p.accords.some(a => a.toLowerCase().includes('dulce') || a.toLowerCase().includes('canela'))) score += 15;
+          if (hasAny(text, ['gourmand', 'dulce', 'vainilla', 'canela', 'praliné', 'café', 'caramelo', 'cacao']) || ['khamrah-qahwa', 'khamrah', 'eclaire', 'honor-and-glory', 'yara-candy', 'khamrah-waha'].includes(p.id)) score += 35;
+          if (p.accords && p.accords.some(a => a.toLowerCase().includes('dulce') || a.toLowerCase().includes('canela') || a.toLowerCase().includes('gourmand'))) score += 15;
           matchTag = 'Gourmand Cálido de Máximo Cumplido';
         } else if (finalAnswers.scent === 'fresh_aquatic') {
-          if (['hawas-ice', '9-am-dive', 'club-de-nuit-milestone', 'nitro-red'].includes(p.id)) score += 35;
-          if (p.accords && p.accords.some(a => a.toLowerCase().includes('acuático') || a.toLowerCase().includes('fresco'))) score += 15;
+          if (hasAny(text, ['acuátic', 'marino', 'menta', 'gélid', 'fresco', 'brisa', 'agua']) || ['hawas-ice', '9-am-dive', 'club-de-nuit-milestone', 'nitro-red', 'aquatica', 'atlantis-extrait'].includes(p.id)) score += 35;
+          if (p.accords && p.accords.some(a => a.toLowerCase().includes('acuático') || a.toLowerCase().includes('fresco') || a.toLowerCase().includes('marino'))) score += 15;
           matchTag = 'Frescura Revitalizante & Estela Limpia';
         } else if (finalAnswers.scent === 'spicy_woods') {
-          if (['asad', 'khamrah-qahwa', 'hawas-kobra', 'odyssey-homme'].includes(p.id)) score += 35;
-          if (p.accords && p.accords.some(a => a.toLowerCase().includes('especiado') || a.toLowerCase().includes('amaderado'))) score += 15;
+          if (hasAny(text, ['especiad', 'madera', 'ámbar', 'oud', 'tabaco', 'cuero', 'sándalo', 'pimienta']) || ['asad', 'khamrah-qahwa', 'hawas-kobra', 'odyssey-homme', 'stallion-53', 'asad-bourbon', 'bade-e-al-oud-amethyst'].includes(p.id)) score += 35;
+          if (p.accords && p.accords.some(a => a.toLowerCase().includes('especiado') || a.toLowerCase().includes('amaderado') || a.toLowerCase().includes('cuero'))) score += 15;
           matchTag = 'Madurez & Especias Imponentes';
         } else if (finalAnswers.scent === 'citrus_bright') {
-          if (['fakhar-black', 'odyssey-mandarin-sky', 'hawas-kobra', '9-am-dive'].includes(p.id)) score += 35;
+          if (hasAny(text, ['cítric', 'bergamota', 'mandarina', 'limón', 'lima', 'té verde', 'neroli']) || ['fakhar-black', 'odyssey-mandarin-sky', 'hawas-kobra', '9-am-dive', 'club-de-nuit-intense-man', 'atlantis-extrait'].includes(p.id)) score += 35;
           matchTag = 'Cítricos Nobles & Porte Ejecutivo';
         } else if (finalAnswers.scent === 'fruity_exotic') {
-          if (['honor-and-glory', 'nitro-red', 'yara-pink', 'hawas-ice'].includes(p.id)) score += 35;
+          if (hasAny(text, ['frutal', 'exótic', 'piña', 'sandía', 'mango', 'maracuyá', 'coco', 'grosella']) || ['honor-and-glory', 'nitro-red', 'yara-pink', 'hawas-ice', 'vulcan-feu', 'yara-candy', 'tropical-vibe'].includes(p.id)) score += 35;
           matchTag = 'Frutas Adictivas & Juventud';
         }
 
         // Moment
         if (finalAnswers.moment === 'romance') {
-          if (['khamrah-qahwa', 'khamrah', '9-pm', 'eclaire', 'odyssey-homme'].includes(p.id)) score += 25;
+          if (hasAny(text, ['cita', 'romántic', 'seducc', 'sensual', 'íntim']) || p.best_moment === 'noche' || ['khamrah-qahwa', 'khamrah', '9-pm', 'eclaire', 'odyssey-homme', 'yara-candy', 'asad-bourbon'].includes(p.id)) score += 25;
         } else if (finalAnswers.moment === 'work') {
-          if (['fakhar-black', '9-am-dive', 'club-de-nuit-milestone', 'odyssey-homme'].includes(p.id)) score += 25;
+          if (hasAny(text, ['oficina', 'trabajo', 'formal', 'pulcr', 'limpi', 'diario']) || p.best_moment === 'dia' || ['fakhar-black', '9-am-dive', 'club-de-nuit-milestone', 'odyssey-homme', 'atlantis-extrait', 'stallion-53'].includes(p.id)) score += 25;
         } else if (finalAnswers.moment === 'party') {
-          if (['9-pm', 'asad', 'nitro-red', 'khamrah', 'honor-and-glory'].includes(p.id)) score += 25;
+          if (hasAny(text, ['fiesta', 'club', 'noche', 'potente', 'estela', 'proyección', 'bestia']) || p.best_moment === 'noche' || ['9-pm', 'asad', 'nitro-red', 'khamrah', 'honor-and-glory', 'club-de-nuit-intense-man', 'vulcan-feu', 'hawas-black'].includes(p.id)) score += 25;
         } else if (finalAnswers.moment === 'casual_all') {
-          if (['hawas-ice', '9-am-dive', 'fakhar-black', 'nitro-red', 'odyssey-mandarin-sky'].includes(p.id)) score += 25;
+          if (hasAny(text, ['casual', 'versátil', 'diario', 'fresco']) || p.best_season === 'todo-el-ano' || ['hawas-ice', '9-am-dive', 'fakhar-black', 'nitro-red', 'odyssey-mandarin-sky', 'aquatica', 'tropical-vibe'].includes(p.id)) score += 25;
         }
 
         // Climate Zone
         if (finalAnswers.climate_zone === 'cold_sierra') {
-          if (p.votes && p.votes.invierno > 6000) score += 20;
+          if (p.best_season === 'invierno' || (p.votes && p.votes.invierno > 5000) || hasAny(text, ['frío', 'invierno', 'cálido'])) score += 20;
         } else if (finalAnswers.climate_zone === 'warm_costa') {
-          if (p.votes && p.votes.verano > 2000) score += 20;
+          if (p.best_season === 'verano' || (p.votes && p.votes.verano > 2000) || hasAny(text, ['verano', 'calor', 'costa', 'sol'])) score += 20;
         } else if (finalAnswers.climate_zone === 'moderate') {
-          if (['fakhar-black', '9-am-dive', 'odyssey-mandarin-sky', 'nitro-red'].includes(p.id)) score += 20;
+          if (p.best_season === 'todo-el-ano' || (p.olfactory_profile?.versatilidad >= 4) || ['fakhar-black', '9-am-dive', 'odyssey-mandarin-sky', 'nitro-red', 'atlantis-extrait'].includes(p.id)) score += 20;
         }
 
         // Impression
-        if (finalAnswers.impression === 'status' && ['khamrah', 'asad', 'club-de-nuit-milestone', 'hawas-kobra'].includes(p.id)) score += 20;
-        if (finalAnswers.impression === 'sexy' && ['9-pm', 'khamrah-qahwa', 'eclaire', 'honor-and-glory'].includes(p.id)) score += 20;
-        if (finalAnswers.impression === 'clean' && ['fakhar-black', '9-am-dive', 'hawas-ice'].includes(p.id)) score += 20;
-        if (finalAnswers.impression === 'bold' && ['asad', 'hawas-kobra', 'nitro-red'].includes(p.id)) score += 20;
-
-        // Budget Matching
-        const price = Number(p.price) || 50;
-        if (finalAnswers.budget === 'under_50' && price <= 48) score += 20;
-        if (finalAnswers.budget === 'mid_range' && price >= 48 && price <= 55) score += 20;
-        if (finalAnswers.budget === 'top_range' && price >= 55) score += 20;
+        if (finalAnswers.impression === 'status' && (hasAny(text, ['lujo', 'estatus', 'elegante', 'prestigio', 'nicho', 'oud', 'cuero', 'sándalo']) || ['khamrah', 'asad', 'club-de-nuit-milestone', 'hawas-kobra', 'stallion-53', 'club-de-nuit-intense-man', 'bade-e-al-oud-amethyst'].includes(p.id))) score += 20;
+        if (finalAnswers.impression === 'sexy' && (hasAny(text, ['sensual', 'magnétic', 'seducc', 'cumplido', 'adictiv', 'dulce', 'vainilla']) || ['9-pm', 'khamrah-qahwa', 'eclaire', 'honor-and-glory', 'yara-candy', 'vulcan-feu', 'asad-bourbon'].includes(p.id))) score += 20;
+        if (finalAnswers.impression === 'clean' && (hasAny(text, ['limpi', 'pulcr', 'ducha', 'fresco', 'cítric', 'vital']) || ['fakhar-black', '9-am-dive', 'hawas-ice', 'atlantis-extrait'].includes(p.id))) score += 20;
+        if (finalAnswers.impression === 'bold' && (hasAny(text, ['imponente', 'carácter', 'bestia', 'fuerte', 'presencia', 'dominante', 'oscur']) || ['asad', 'hawas-kobra', 'nitro-red', 'club-de-nuit-intense-man', 'hawas-black', 'vulcan-feu'].includes(p.id))) score += 20;
       }
 
-      // --- SCORING: MODE ESPECIAL REGALOS (GIFT) ---
+      // --- SCORING: MODE ESPECIAL REGALOS (GIFT - 3 Preguntas) ---
       else if (activeMode === 'gift') {
-        const gender = (p.gender || '').toLowerCase();
         if (finalAnswers.recipient === 'gift_man') {
-          if (gender.includes('hombre') || gender.includes('masculino')) score += 40;
-          if (gender.includes('unisex')) score += 20;
+          if (isMan) score += 45;
+          else if (isUnisex) score += 25;
+          else score -= 30; // Evitar fragancias estrictamente femeninas para un hombre
         } else if (finalAnswers.recipient === 'gift_woman') {
-          if (gender.includes('mujer') || gender.includes('femenino')) score += 50;
-          if (gender.includes('unisex')) score += 25;
-          if (['yara-pink', 'eclaire', 'khamrah'].includes(p.id)) score += 30;
+          if (isWoman) score += 50;
+          else if (isUnisex) score += 25;
+          else score -= 30; // Evitar fragancias estrictamente masculinas para una mujer
+          if (['yara-pink', 'yara-candy', 'eclaire', 'khamrah', 'bade-e-al-oud-amethyst'].includes(p.id)) score += 25;
         } else if (finalAnswers.recipient === 'gift_unisex') {
-          if (gender.includes('unisex')) score += 45;
+          if (isUnisex) score += 45;
         }
 
         // Relation
         if (finalAnswers.relation === 'partner') {
-          if (['khamrah-qahwa', '9-pm', 'eclaire', 'yara-pink', 'honor-and-glory'].includes(p.id)) score += 30;
+          if (hasAny(text, ['romántic', 'seducc', 'sensual', 'íntim', 'dulce', 'adictiv']) || p.best_moment === 'noche' || ['khamrah-qahwa', '9-pm', 'eclaire', 'yara-pink', 'honor-and-glory', 'yara-candy', 'vulcan-feu', 'asad-bourbon'].includes(p.id)) score += 30;
           matchTag = 'Regalo Romántico & Seductor';
         } else if (finalAnswers.relation === 'family') {
-          if (['fakhar-black', 'asad', 'khamrah', 'club-de-nuit-milestone'].includes(p.id)) score += 30;
+          if (hasAny(text, ['prestigio', 'elegante', 'maduro', 'madera', 'clásico', 'formal']) || ['fakhar-black', 'asad', 'khamrah', 'club-de-nuit-milestone', 'stallion-53', 'atlantis-extrait'].includes(p.id)) score += 30;
           matchTag = 'Regalo de Prestigio Familiar';
         } else if (finalAnswers.relation === 'friend') {
-          if (['hawas-ice', 'nitro-red', '9-am-dive', 'odyssey-mandarin-sky'].includes(p.id)) score += 30;
+          if (hasAny(text, ['juvenil', 'alegre', 'versátil', 'fresco', 'cumplido']) || ['hawas-ice', 'nitro-red', '9-am-dive', 'odyssey-mandarin-sky', 'aquatica', 'tropical-vibe', 'yara-candy'].includes(p.id)) score += 30;
           matchTag = 'Acierto Seguro para Amigos';
         } else if (finalAnswers.relation === 'colleague') {
-          if (['fakhar-black', 'club-de-nuit-milestone', 'odyssey-homme'].includes(p.id)) score += 30;
+          if (hasAny(text, ['oficina', 'profesional', 'formal', 'pulcr', 'limpi', 'diario']) || ['fakhar-black', 'club-de-nuit-milestone', 'odyssey-homme', 'atlantis-extrait'].includes(p.id)) score += 30;
           matchTag = 'Elegancia Impecable para Compromiso';
         }
 
         // Personality
-        if (finalAnswers.personality === 'p_elegant' && ['fakhar-black', 'asad', 'club-de-nuit-milestone', 'khamrah'].includes(p.id)) score += 25;
-        if (finalAnswers.personality === 'p_sweet' && ['khamrah-qahwa', 'eclaire', 'yara-pink', 'honor-and-glory'].includes(p.id)) score += 25;
-        if (finalAnswers.personality === 'p_active' && ['hawas-ice', '9-am-dive', 'nitro-red'].includes(p.id)) score += 25;
-        if (finalAnswers.personality === 'p_bold' && ['9-pm', 'asad', 'hawas-kobra', 'khamrah'].includes(p.id)) score += 25;
+        if (finalAnswers.personality === 'p_elegant' && (hasAny(text, ['elegante', 'lujo', 'estatus', 'sándalo', 'iris', 'cuero']) || ['fakhar-black', 'asad', 'club-de-nuit-milestone', 'khamrah', 'stallion-53', 'club-de-nuit-intense-man', 'bade-e-al-oud-amethyst'].includes(p.id))) score += 25;
+        if (finalAnswers.personality === 'p_sweet' && (hasAny(text, ['dulce', 'gourmand', 'vainilla', 'caramelo', 'fresa', 'praliné']) || ['khamrah-qahwa', 'eclaire', 'yara-pink', 'honor-and-glory', 'yara-candy', 'khamrah-waha'].includes(p.id))) score += 25;
+        if (finalAnswers.personality === 'p_active' && (hasAny(text, ['fresco', 'acuátic', 'cítric', 'energ', 'marino', 'deporte', 'sol']) || ['hawas-ice', '9-am-dive', 'nitro-red', 'aquatica', 'tropical-vibe', 'atlantis-extrait'].includes(p.id))) score += 25;
+        if (finalAnswers.personality === 'p_bold' && (hasAny(text, ['imponente', 'bestia', 'fuerte', 'presencia', 'proyección', 'noche']) || ['9-pm', 'asad', 'hawas-kobra', 'khamrah', 'club-de-nuit-intense-man', 'vulcan-feu', 'hawas-black'].includes(p.id))) score += 25;
       }
 
       // Calculate affinity percentage
@@ -341,7 +387,7 @@ export default function ScentQuizModal({
       const affinity = Math.min(99, Math.max(82, Math.round((score / maxPossibleScore) * 100)));
 
       // Contextual reason
-      const reason = PERFUME_JUSTIFICATIONS[p.id] || p.description || 'Fragancia equilibrada de alta calidad de la casa.';
+      const reason = getDynamicJustification(p);
 
       return {
         ...p,
