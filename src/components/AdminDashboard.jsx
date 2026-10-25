@@ -11,8 +11,6 @@ import {
   CloudSnow, Flower2, Umbrella, Leaf, Sun, Moon, Clock, Compass, Hash, Star
 } from 'lucide-react';
 
-const DEFAULT_PIN = 'admin123';
-
 const CLOUDINARY_CLOUD_NAME = 'notdzlmv';
 const CLOUDINARY_UPLOAD_PRESET = 'joufab';
 const CLOUDINARY_API_KEY = '379157839212515';
@@ -37,17 +35,12 @@ export const syncCatalogToCloudinary = async (fullList) => {
 };
 
 export default function AdminDashboard({ onBackToStore, onDataChanged }) {
-  // Auth state (safeguarded for Safari Private Mode)
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    try {
-      return sessionStorage.getItem('joufab_admin_auth') === 'true' || localStorage.getItem('joufab_admin_auth') === 'true';
-    } catch {
-      return false;
-    }
-  });
-  const [pinInput, setPinInput] = useState('');
+  // Auth state backed by Supabase Auth
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState('');
-  const [rememberMe, setRememberMe] = useState(true);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   // Navigation tab
   const [activeTab, setActiveTab] = useState('inventory'); // 'dashboard', 'inventory', 'create', 'settings'
@@ -113,15 +106,8 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
   };
   const [formData, setFormData] = useState(initialForm);
 
-  // Custom Settings (Saved in LocalStorage for client convenience)
-  const [customPin, setCustomPin] = useState(() => {
-    try {
-      return localStorage.getItem('joufab_custom_pin') || DEFAULT_PIN;
-    } catch {
-      return DEFAULT_PIN;
-    }
-  });
-  const [newPinInput, setNewPinInput] = useState('');
+  // Password change state
+  const [newPasswordInput, setNewPasswordInput] = useState('');
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -241,41 +227,67 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     }
   };
 
+  // Supabase session check and auth state listener
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setIsAuthenticated(true);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
+  }, []);
+
   useEffect(() => {
     if (isAuthenticated) {
       loadData();
     }
   }, [isAuthenticated]);
 
-  // Login handler
-  const handleLogin = (e) => {
+  // Login handler with Supabase Auth
+  const handleLogin = async (e) => {
     e.preventDefault();
-    let validPin = DEFAULT_PIN;
+    setAuthError('');
+    if (!emailInput.trim() || !passwordInput.trim()) {
+      setAuthError('Por favor ingresa tu correo y contraseña.');
+      return;
+    }
+    setIsAuthenticating(true);
     try {
-      validPin = localStorage.getItem('joufab_custom_pin') || DEFAULT_PIN;
-    } catch {}
-    if (pinInput.trim() === validPin || pinInput.trim() === 'admin123') {
-      setIsAuthenticated(true);
-      try {
-        if (rememberMe) {
-          localStorage.setItem('joufab_admin_auth', 'true');
-        }
-        sessionStorage.setItem('joufab_admin_auth', 'true');
-      } catch {}
-      setAuthError('');
-      loadData();
-    } else {
-      setAuthError('PIN incorrecto. (Por defecto: admin123)');
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: emailInput.trim(),
+        password: passwordInput.trim()
+      });
+      if (error) throw error;
+      if (data?.session) {
+        setIsAuthenticated(true);
+        setAuthError('');
+      }
+    } catch (err) {
+      console.error('Error de autenticación:', err);
+      setAuthError(err.message === 'Invalid login credentials' 
+        ? 'Credenciales incorrectas. Verifica tu correo y contraseña.' 
+        : err.message || 'Error al iniciar sesión.');
+    } finally {
+      setIsAuthenticating(false);
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setIsAuthenticated(false);
     try {
-      sessionStorage.removeItem('joufab_admin_auth');
-      localStorage.removeItem('joufab_admin_auth');
-    } catch {}
-    setPinInput('');
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.warn('Error al cerrar sesión:', err);
+    }
+    setEmailInput('');
+    setPasswordInput('');
   };
 
   // Switch to Create Mode
@@ -731,17 +743,22 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
     }
   };
 
-  // Update PIN in settings
-  const handleUpdatePin = (e) => {
+  // Update password in Supabase Auth
+  const handleUpdatePassword = async (e) => {
     e.preventDefault();
-    if (newPinInput.trim().length < 4) {
-      showToast('El PIN debe tener al menos 4 caracteres', 'error');
+    if (newPasswordInput.trim().length < 6) {
+      showToast('La nueva contraseña debe tener al menos 6 caracteres', 'error');
       return;
     }
-    localStorage.setItem('joufab_custom_pin', newPinInput.trim());
-    setCustomPin(newPinInput.trim());
-    setNewPinInput('');
-    showToast('¡Contraseña de administrador actualizada con éxito!');
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPasswordInput.trim() });
+      if (error) throw error;
+      setNewPasswordInput('');
+      showToast('¡Contraseña de administrador actualizada con éxito en Supabase!');
+    } catch (err) {
+      console.error(err);
+      showToast(err.message || 'Error al actualizar contraseña', 'error');
+    }
   };
 
   // Computed Metrics for Dashboard
@@ -811,40 +828,45 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
             Ingresa tu clave de administrador para gestionar los productos, precios y fotos del catálogo.
           </p>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-4 text-left">
             <div>
+              <label className="block text-xs font-medium text-stone-300 mb-1.5">Correo de Administrador</label>
               <input
-                type="password"
-                placeholder="Contraseña / PIN"
-                value={pinInput}
-                onChange={(e) => setPinInput(e.target.value)}
-                className="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 text-stone-100 px-4 py-3.5 rounded-2xl text-center text-lg tracking-widest focus:outline-none transition shadow-inner"
+                type="email"
+                placeholder="tu-correo@ejemplo.com"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                className="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 text-stone-100 px-4 py-3 rounded-2xl text-sm focus:outline-none transition shadow-inner"
                 autoFocus
+                required
               />
-              {authError && (
-                <p className="text-rose-400 text-xs mt-2 font-medium flex items-center justify-center gap-1.5 animate-fadeIn">
-                  <AlertCircle size={14} /> {authError}
-                </p>
-              )}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-stone-400 px-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input 
-                  type="checkbox" 
-                  checked={rememberMe} 
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded bg-stone-950 border-stone-700 text-amber-500 focus:ring-0" 
-                />
-                <span>Recordar sesión en este equipo</span>
-              </label>
+            <div>
+              <label className="block text-xs font-medium text-stone-300 mb-1.5">Contraseña</label>
+              <input
+                type="password"
+                placeholder="••••••••••••"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                className="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 text-stone-100 px-4 py-3 rounded-2xl text-sm focus:outline-none transition shadow-inner"
+                required
+              />
             </div>
+
+            {authError && (
+              <p className="text-rose-400 text-xs mt-2 font-medium flex items-center gap-1.5 animate-fadeIn">
+                <AlertCircle size={14} className="shrink-0" /> {authError}
+              </p>
+            )}
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-stone-950 font-bold py-3.5 rounded-2xl transition shadow-xl shadow-amber-500/20 active:scale-[0.98]"
+              disabled={isAuthenticating}
+              className="w-full mt-2 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 disabled:opacity-50 text-stone-950 font-bold py-3.5 rounded-2xl transition shadow-xl shadow-amber-500/20 active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              Iniciar Sesión
+              {isAuthenticating && <RefreshCw size={16} className="animate-spin" />}
+              <span>{isAuthenticating ? 'Verificando sesión...' : 'Iniciar Sesión'}</span>
             </button>
           </form>
 
@@ -2216,18 +2238,18 @@ export default function AdminDashboard({ onBackToStore, onDataChanged }) {
                   </div>
                   <div>
                     <h3 className="font-serif font-bold text-base text-stone-100">Contraseña del Panel</h3>
-                    <p className="text-xs text-stone-400">Cambia el PIN de acceso para tu cliente</p>
+                    <p className="text-xs text-stone-400">Actualiza tu contraseña de administrador en Supabase</p>
                   </div>
                 </div>
 
-                <form onSubmit={handleUpdatePin} className="space-y-4 pt-2">
+                <form onSubmit={handleUpdatePassword} className="space-y-4 pt-2">
                   <div>
-                    <label className="block text-xs font-medium text-stone-400 mb-1.5">Nuevo PIN / Contraseña</label>
+                    <label className="block text-xs font-medium text-stone-400 mb-1.5">Nueva Contraseña (mínimo 6 caracteres)</label>
                     <input
                       type="password"
-                      placeholder="Escribe la nueva clave..."
-                      value={newPinInput}
-                      onChange={(e) => setNewPinInput(e.target.value)}
+                      placeholder="Escribe la nueva contraseña..."
+                      value={newPasswordInput}
+                      onChange={(e) => setNewPasswordInput(e.target.value)}
                       className="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 text-stone-100 px-4 py-3 rounded-xl text-sm focus:outline-none"
                     />
                   </div>
